@@ -1,0 +1,9 @@
+---
+es:
+  decidim:
+    components:
+      stratified_sortitions:
+        name: Sorteos estratificados
+        settings:
+          global:
+            announcement: Aviso
