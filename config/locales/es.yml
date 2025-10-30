@@ -1,5 +1,14 @@
 ---
 es:
+  activemodel:
+    attributes:
+      stratified_sortition:
+        created_at: Fecha de creación
+        title: Título
+        description: Descripción
+        num_candidates: Número de candidatos
+        selection_criteria: Criterios de selección
+        selected_profiles_description: Descripción de los perfiles seleccionados
   decidim:
     components:
       stratified_sortitions:

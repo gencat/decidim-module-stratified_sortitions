@@ -1,5 +1,14 @@
 ---
 en:
+  activemodel:
+    attributes:
+      stratified_sortition:
+        created_at: Created At
+        title: Title
+        description: Description
+        num_candidates: Number of Candidates
+        selection_criteria: Selection Criteria
+        selected_profiles_description: Selected Profiles Description
   decidim:
     components:
       stratified_sortitions:
