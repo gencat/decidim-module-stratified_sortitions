@@ -1,0 +1,36 @@
+<div class="form__wrapper">
+  <div class="card pt-4">
+    <div class="card-section">
+      <div class="row column hashtags__container">
+        <%= form.translated :text_field, :title, autofocus: true, class: "js-hashtags", hashtaggable: true, aria: { label: :title } %>
+      </div>
+
+      <div class="row column">
+        <%= form.number_field :num_candidates %>
+      </div>
+
+      <div class="row column hashtags__container">
+        <%= form.translated :editor, :description %>
+      </div>
+
+      <div class="row column hashtags__container">
+        <%= form.translated :editor, :selection_criteria %>
+      </div>
+
+      <div class="row column hashtags__container">
+        <%= form.translated :editor, :selected_profiles_description %>
+      </div>
+
+      <% if params[:component_id] %>
+        <% if Decidim::Component.where(participatory_space: Decidim::Component.find(params[:component_id]).participatory_space).pluck(:manifest_name).include? 'sdgs' %>
+          <div class="row column hashtags__container">
+            <%= form.select :sdg_code,
+                            @form.select_sdg_collection,
+                            selected: [t_sdg(@form.sdg_code), @form.sdg_code],
+                            label: t("models.challenge.fields.sdg", scope: "decidim.challenges.admin") %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

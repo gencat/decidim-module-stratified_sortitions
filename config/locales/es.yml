@@ -7,3 +7,19 @@ es:
         settings:
           global:
             announcement: Aviso
+    stratified_sortitions:
+      admin:
+        actions:
+          new_stratified_sortition: "Nuevo sorteo estratificado"
+          title: "Acciones"
+        models:
+          stratified_sortition:
+            fields:
+              title: Título
+              description: Descripción
+              num_candidates: Número de candidatos
+              selection_criteria: Criterios de selección
+              selected_profiles_description: Descripción de los perfiles seleccionados
+        stratified_sortitions:
+          index:
+            selected: Sorteos estratificados seleccionados

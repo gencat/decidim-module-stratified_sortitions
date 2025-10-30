@@ -1,2 +1,20 @@
 ---
 ca:
+  decidim:
+    components:
+      stratified_sortitions:
+        name: Stratified Sortitions
+    stratified_sortitions:
+      admin:
+        stratified_sortitions:
+          index:
+            title: "Sortejos estratificats"
+            no_stratified_sortitions: "No hi ha sorteigs estratificats creats encara."
+            new_stratified_sortition: "Nou sorteig estratificat"
+          form:
+            name: "Nom"
+            description: "Descripció"
+            published: "Publicat"
+          show:
+            title: "Sorteig estratificat: %{name}"
+            edit_stratified_sortition: "Edita el sorteig estratificat"
