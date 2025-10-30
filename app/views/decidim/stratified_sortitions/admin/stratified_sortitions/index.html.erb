@@ -47,6 +47,9 @@
               <%= l(stratified_sortition.created_at, format: :decidim_short) if stratified_sortition.created_at %>
             </td>
             <td class="table-list__actions">
+              <% if allowed_to? :duplicate, :stratified_sortition %>
+                <%= icon_link_to "file-copy-line", duplicate_stratified_sortition_path(stratified_sortition), t("actions.duplicate", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--new", method: :post %>
+              <% end %>
               <% if allowed_to? :edit, :stratified_sortition %>
                 <%= icon_link_to "pencil-line", edit_stratified_sortition_path(stratified_sortition), t("actions.configure", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--new" %>
               <% end %>

@@ -63,6 +63,22 @@ module Decidim
           end
         end
 
+        def duplicate
+          enforce_permission_to(:duplicate, :stratified_sortition, stratified_sortition:)
+
+          Decidim::StratifiedSortitions::Admin::DuplicateStratifiedSortition.call(stratified_sortition, current_user) do
+            on(:ok) do |_new_stratified_sortition|
+              flash[:notice] = I18n.t("stratified_sortitions.duplicate.success", scope: "decidim.stratified_sortitions.admin")
+              redirect_to stratified_sortitions_path(assembly_slug: -1, component_id: -1)
+            end
+
+            on(:invalid) do
+              flash[:alert] = I18n.t("stratified_sortitions.duplicate.error", scope: "decidim.stratified_sortitions.admin")
+              redirect_to stratified_sortitions_path(assembly_slug: -1, component_id: -1)
+            end
+          end
+        end
+
         def destroy
           enforce_permission_to(:destroy, :stratified_sortition, stratified_sortition:)
 

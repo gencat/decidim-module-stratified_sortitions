@@ -14,6 +14,7 @@ en:
           configure: Configure
           confirm_destroy: Are you sure you want to delete this %{name}?
           destroy: Delete
+          duplicate: Duplicate
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
         models:
@@ -33,6 +34,9 @@ en:
             error: There's been a problem deleting this stratified sortition
             has_problems: This stratified sortition couldn't be deleted due to related problems
             success: Stratified sortition successfully deleted
+          duplicate:
+            error: There's been a problem duplicating this stratified sortition
+            success: Stratified sortition successfully duplicated
           index:
             selected: Selected Stratified Sortitions
             title: Stratified Sortitions

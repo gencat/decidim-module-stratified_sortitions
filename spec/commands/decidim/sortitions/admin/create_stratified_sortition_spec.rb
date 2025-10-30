@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  module Sortitions
+  module StratifiedSortitions
     module Admin
       describe CreateStratifiedSortition do
         let(:organization) { create(:organization) }
@@ -14,6 +14,9 @@ module Decidim
         let(:target_items) { ::Faker::Number.number(digits: 2) }
         let(:witnesses) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) } }
         let(:additional_info) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) } }
+    let(:description) { witnesses }
+    let(:selection_criteria) { additional_info }
+    let(:selected_profiles_description) { additional_info }
         let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
         let(:category) { create(:category, participatory_space: participatory_process) }
         let(:category_id) { nil }
@@ -21,11 +24,16 @@ module Decidim
           {
             decidim_proposals_component_id: proposal_component.id,
             decidim_category_id: category_id,
-            dice:,
-            title:,
+            dice:, # kept for compatibility with selection logic
             target_items:,
-            witnesses:,
-            additional_info:
+            stratified_sortition: {
+              title:,
+              description:,
+              selection_criteria:,
+              selected_profiles_description:,
+              num_candidates: 3,
+              decidim_component_id: stratified_sortition_component.id
+            },
           }
         end
 
@@ -34,7 +42,7 @@ module Decidim
         let(:context) do
           {
             current_component: stratified_sortition_component,
-            current_user: author
+            current_user: author,
           }
         end
 

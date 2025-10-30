@@ -12,7 +12,9 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
-        resources :stratified_sortitions
+        resources :stratified_sortitions do
+          post :duplicate, on: :member
+        end
 
         root to: "stratified_sortitions#index"
       end

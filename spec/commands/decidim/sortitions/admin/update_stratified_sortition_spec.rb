@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  module Sortitions
+  module StratifiedSortitions
     module Admin
       describe UpdateStratifiedSortition do
         let(:description) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) }.except("machine_translations") }

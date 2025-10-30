@@ -18,6 +18,8 @@ module Decidim
 
           allow! if permission_action.subject == :stratified_sortition && publish_permission_action?
 
+          allow! if permission_action.subject == :stratified_sortition && duplicate_permission_action?
+
           allow! if permission_action.subject == :stratified_sortition && export_permission_action?
 
           allow! if permission_action.subject == :questionnaire && update_permission_action?
@@ -69,6 +71,10 @@ module Decidim
 
         def export_answers_permission_action?
           permission_action.action == :export_answers
+        end
+
+        def duplicate_permission_action?
+          permission_action.action == :duplicate
         end
 
         def index_permission_action?

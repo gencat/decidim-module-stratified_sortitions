@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  module Sortitions
+  module StratifiedSortitions
     module Admin
       describe StratifiedSortitionsController do
         routes { Decidim::StratifiedSortitions::AdminEngine.routes }
@@ -46,17 +46,11 @@ module Decidim
         end
 
         describe "create" do
-          let(:decidim_category_id) { nil }
-          let(:dice) { ::Faker::Number.between(from: 1, to: 6) }
-          let(:target_items) { ::Faker::Number.between(from: 1, to: 10) }
           let(:params) do
             {
               participatory_process_slug: stratified_sortition.component.participatory_space.slug,
               stratified_sortition: {
                 decidim_proposals_component_id:,
-                decidim_category_id:,
-                dice:,
-                target_items:,
                 title: {
                   en: "Title",
                   es: "Título",

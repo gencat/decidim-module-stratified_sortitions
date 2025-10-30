@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim
-  module Sortitions
+  module StratifiedSortitions
     module Admin
       describe DestroyStratifiedSortition do
         let(:organization) { create(:organization) }
