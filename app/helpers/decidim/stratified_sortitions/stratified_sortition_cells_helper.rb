@@ -13,9 +13,8 @@ module Decidim
       include Decidim::ResourceReferenceHelper
       include Decidim::TranslatableAttributes
       include Decidim::CardHelper
-      include WithSdgs
 
-      delegate :title, :state, :published_state?, :withdrawn?, :amendable?, :emendation?, to: :model
+      delegate :title, to: :model
 
       def has_actions?
         return context[:has_actions] if context[:has_actions].present?

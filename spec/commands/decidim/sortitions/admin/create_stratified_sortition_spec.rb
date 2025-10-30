@@ -9,10 +9,6 @@ module Decidim
         let(:organization) { create(:organization) }
         let(:author) { create(:user, :admin, organization:) }
         let(:participatory_process) { create(:participatory_process, organization:) }
-        let(:dice) { ::Faker::Number.between(from: 1, to: 6) }
-        let(:target_items) { ::Faker::Number.number(digits: 2) }
-        let(:witnesses) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) } }
-        let(:additional_info) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) } }
         let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
         let(:params) do
           {
@@ -73,15 +69,6 @@ module Decidim
             expect { command.call }.to change(Decidim::ActionLog, :count)
             action_log = Decidim::ActionLog.last
             expect(action_log.version).to be_present
-          end
-
-          it "sends a notification to the participatory space followers" do
-            follower = create(:user, organization:)
-            create(:follow, followable: participatory_process, user: follower)
-
-            allow(Decidim::EventsManager).to receive(:publish)
-
-            command.call
           end
         end
       end

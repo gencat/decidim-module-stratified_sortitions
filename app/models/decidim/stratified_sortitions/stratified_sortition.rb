@@ -13,17 +13,14 @@ module Decidim
       include Decidim::Searchable
       include Decidim::Traceable
       include Decidim::TranslatableAttributes
-      include Decidim::Forms::HasQuestionnaire
       include Decidim::Randomable
       include Decidim::HasUploadValidations
-
 
       component_manifest_name "stratified_sortitions"
 
       scope :search_text_cont, lambda { |search_text|
         where("title ->> '#{I18n.locale}' ILIKE ?", "%#{search_text}%")
       }
-
 
       def self.ransackable_scopes(_auth_object = nil)
         [:search_text_cont]
@@ -35,7 +32,6 @@ module Decidim
                           B: :description,
                           datetime: :published_at,
                         })
-
     end
   end
 end

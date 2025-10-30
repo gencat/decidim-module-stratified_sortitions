@@ -30,8 +30,6 @@ module Decidim
 
           allow! if permission_action.subject == :questionnaire && export_answers_permission_action?
 
-          allow! if permission_action.subject == :questionnaire_answers && export_response_permission_action?
-
           permission_action
         end
 

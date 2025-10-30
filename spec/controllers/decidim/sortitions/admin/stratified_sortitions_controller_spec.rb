@@ -55,7 +55,7 @@ module Decidim
                   ca: "<p>Perfils</p>",
                 },
                 num_candidates: 3,
-              }
+              },
             }
           end
 
@@ -69,44 +69,35 @@ module Decidim
                   selection_criteria: { en: "", es: "", ca: "" },
                   selected_profiles_description: { en: "", es: "", ca: "" },
                   num_candidates: nil,
-                }
+                },
               }
             end
 
             it "renders the new template" do
-              post(:create, params: params)
+              post(:create, params:)
               expect(response).to render_template(:new)
             end
           end
 
           context "with valid params" do
             it "redirects to the stratified sortitions list" do
-              post(:create, params: params)
+              post(:create, params:)
               expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
             end
 
             it "creates a stratified sortition associated with the current component" do
-              post(:create, params: params)
+              post(:create, params:)
               expect(StratifiedSortition.last.component).to eq(component)
             end
           end
         end
 
         describe "destroy" do
-          let(:cancel_reason) do
-            {
-              en: "Cancel reason",
-              es: "Motivo de la cancelación",
-              ca: "Motiu de la cancelació",
-            }
-          end
           let(:params) do
             {
               participatory_process_slug: component.participatory_space.slug,
               id: stratified_sortition.id,
-              stratified_sortition: {
-                cancel_reason:,
-              }
+              stratified_sortition:,
             }
           end
 
@@ -120,14 +111,14 @@ module Decidim
             end
 
             it "redirects back to the listing with an error flash" do
-              delete(:destroy, params: params)
+              delete(:destroy, params:)
               expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
             end
           end
 
           context "with valid params" do
             it "redirects to the stratified sortitions list" do
-              delete(:destroy, params: params)
+              delete(:destroy, params:)
               expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
             end
           end
@@ -188,7 +179,7 @@ module Decidim
                 selection_criteria:,
                 selected_profiles_description:,
                 num_candidates: 3,
-              }
+              },
             }
           end
 
@@ -209,7 +200,7 @@ module Decidim
 
           context "with valid params" do
             it "redirects to stratified sortitions list newly created stratified sortition" do
-              patch(:update, params: params)
+              patch(:update, params:)
               expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
             end
           end

@@ -17,7 +17,7 @@ module Decidim
           {
             en: "Title",
             es: "Título",
-            ca: "Títol"
+            ca: "Títol",
           }
         end
 
@@ -25,7 +25,7 @@ module Decidim
           {
             en: "Description",
             es: "Descripción",
-            ca: "Descripció"
+            ca: "Descripció",
           }
         end
 
@@ -33,7 +33,7 @@ module Decidim
           {
             en: "Selection criteria",
             es: "Criterios de selección",
-            ca: "Criteris de selecció"
+            ca: "Criteris de selecció",
           }
         end
 
@@ -41,15 +41,15 @@ module Decidim
           {
             en: "Profiles",
             es: "Perfiles",
-            ca: "Perfils"
+            ca: "Perfils",
           }
         end
 
         let(:params) do
           {
             stratified_sortition: {
-              decidim_component_id: decidim_component_id,
-              num_candidates: num_candidates,
+              decidim_component_id:,
+              num_candidates:,
               title_en: title[:en],
               title_es: title[:es],
               title_ca: title[:ca],
@@ -61,8 +61,8 @@ module Decidim
               selection_criteria_ca: selection_criteria[:ca],
               selected_profiles_description_en: selected_profiles_description[:en],
               selected_profiles_description_es: selected_profiles_description[:es],
-              selected_profiles_description_ca: selected_profiles_description[:ca]
-            }
+              selected_profiles_description_ca: selected_profiles_description[:ca],
+            },
           }
         end
 

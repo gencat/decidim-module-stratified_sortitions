@@ -3,12 +3,13 @@
 module Decidim
   module StratifiedSortitions
     module Admin
-      # Command that creates a stratified sortition that selects proposals
+      # Command that creates a stratified sortition
       class CreateStratifiedSortition < Decidim::Command
         # Public: Initializes the command.
         #
         # form - A form object with the params.
         def initialize(form)
+          super()
           @form = form
         end
 
@@ -22,7 +23,7 @@ module Decidim
           return broadcast(:invalid) if form.invalid?
 
           transaction do
-            stratified_sortition = create_stratified_sortition!
+            create_stratified_sortition!
           end
 
           broadcast(:ok, stratified_sortition)
@@ -36,7 +37,8 @@ module Decidim
           parsed_title = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.title, current_organization: form.current_organization).rewrite
           parsed_description = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.description, current_organization: form.current_organization).rewrite
           parsed_selection_criteria = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.selection_criteria, current_organization: form.current_organization).rewrite
-          parsed_selected_profiles_description = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.selected_profiles_description, current_organization: form.current_organization).rewrite
+          parsed_selected_profiles_description = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.selected_profiles_description,
+                                                                                                current_organization: form.current_organization).rewrite
           params = {
             title: parsed_title,
             description: parsed_description,

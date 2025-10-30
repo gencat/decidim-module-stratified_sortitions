@@ -29,7 +29,7 @@ module Decidim
             expect(duplicated.component).to eq(stratified_sortition.component)
           end
 
-          it "traces the action", versioning: true do
+          it "traces the action, versioning: true" do
             expect(Decidim.traceability)
               .to receive(:perform_action!)
               .with(:duplicate, stratified_sortition, admin)

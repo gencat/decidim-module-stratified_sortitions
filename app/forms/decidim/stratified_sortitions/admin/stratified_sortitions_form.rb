@@ -26,7 +26,7 @@ module Decidim
                   presence: true,
                   numericality: {
                     only_integer: true,
-                    greater_than_or_equal_to: 1
+                    greater_than_or_equal_to: 1,
                   }
 
         alias organization current_organization

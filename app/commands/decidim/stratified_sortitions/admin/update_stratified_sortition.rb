@@ -49,8 +49,9 @@ module Decidim
           parsed_title = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.title, current_organization: form.current_organization).rewrite
           parsed_description = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.description, current_organization: form.current_organization).rewrite
           parsed_selection_criteria = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.selection_criteria, current_organization: form.current_organization).rewrite
-          parsed_selected_profiles_description = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.selected_profiles_description, current_organization: form.current_organization).rewrite
-          params = {
+          parsed_selected_profiles_description = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.selected_profiles_description,
+                                                                                                current_organization: form.current_organization).rewrite
+          {
             title: parsed_title,
             description: parsed_description,
             selection_criteria: parsed_selection_criteria,

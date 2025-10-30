@@ -9,16 +9,14 @@ module Decidim
       include FilterResource
       include Paginable
       include OrderableStratifiedSortitions
-      include WithSdgs
       include WithDefaultFilters
 
       helper Decidim::CheckBoxesTreeHelper
-      helper Decidim::Sdgs::SdgsHelper
       helper Decidim::ShowFiltersHelper
       helper Decidim::StratifiedSortitions::StratifiedSortitionsHelper
       helper Decidim::PaginateHelper
 
-      helper_method :stratified_sortitions, :has_sdgs?, :new_solution_path, :solutions_component, :default_filter_scope_params
+      helper_method :stratified_sortitions, :default_filter_scope_params
 
       def index
         @stratified_sortitions = search.result
@@ -29,8 +27,6 @@ module Decidim
       def show
         @stratified_sortition = StratifiedSortition.find(params[:id])
         @stratified_sortition_scope = stratified_sortition_scope
-        @sdg = @stratified_sortition.sdg_code if @stratified_sortition.sdg_code.present?
-        @sdg_index = (1 + Decidim::Sdgs::Sdg.index_from_code(@stratified_sortition.sdg_code.to_sym)).to_s.rjust(2, "0") if @sdg
       end
 
       private
@@ -52,18 +48,8 @@ module Decidim
           search_text_cont: "",
           with_any_state: %w(execution finished),
           with_any_scope: default_filter_scope_params,
-          with_any_sdgs_codes: [],
           related_to: "",
         }
-      end
-
-      def new_solution_path
-        component = solutions_component
-        Decidim::EngineRouter.main_proxy(component).new_solution_path
-      end
-
-      def solutions_component
-        current_participatory_space.components.find_by(manifest_name: "solutions")
       end
     end
   end
