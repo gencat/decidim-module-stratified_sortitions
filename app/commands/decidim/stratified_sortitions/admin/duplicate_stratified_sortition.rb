@@ -27,7 +27,7 @@ module Decidim
             duplicate_stratified_sortition
           end
 
-          broadcast(:ok, stratified_sortition)
+          broadcast(:ok)
         end
 
         private
