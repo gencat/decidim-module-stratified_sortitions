@@ -9,7 +9,7 @@ module Decidim
         include Decidim::ApplicationHelper
 
         helper StratifiedSortitions::ApplicationHelper
-        helper Decidim::Sdgs::SdgsHelper
+        # helper Decidim::Sdgs::SdgsHelper
         helper Decidim::PaginateHelper
 
         helper_method :stratified_sortitions, :stratified_sortition, :form_presenter

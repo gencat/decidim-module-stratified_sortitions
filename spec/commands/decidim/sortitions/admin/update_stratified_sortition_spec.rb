@@ -6,7 +6,6 @@ module Decidim
   module StratifiedSortitions
     module Admin
       describe UpdateStratifiedSortition do
-        let(:description) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) }.except("machine_translations") }
         let(:title) { Decidim::Faker::Localized.sentence(word_count: 3).except(:machine_translations) }
         let(:stratified_sortition) { create(:stratified_sortition) }
         let(:user) { create(:user, :admin, :confirmed) }
@@ -15,7 +14,7 @@ module Decidim
             id: stratified_sortition.id,
             stratified_sortition: {
               title:,
-              description:,
+              num_candidates: 3,
             },
           }
         end
@@ -55,10 +54,10 @@ module Decidim
             expect(stratified_sortition.title.except("machine_translations")).to eq(title)
           end
 
-          it "Updates the description" do
+          it "Updates the num_candidates" do
             command.call
             stratified_sortition.reload
-            expect(stratified_sortition.description.except("machine_translations")).to eq(description)
+            expect(stratified_sortition.num_candidates).to eq(3)
           end
 
           it "traces the action", versioning: true do

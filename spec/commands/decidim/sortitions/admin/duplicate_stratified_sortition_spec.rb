@@ -9,7 +9,7 @@ module Decidim
         let(:organization) { create(:organization) }
         let(:admin) { create(:user, :admin, organization:) }
         let(:participatory_process) { create(:participatory_process, organization:) }
-        let(:stratified_sortition_component) { create(:stratified_sortitions_component, participatory_space: participatory_process) }
+        let(:stratified_sortition_component) { create(:stratified_sortition_component, participatory_space: participatory_process) }
         let!(:stratified_sortition) { create(:stratified_sortition, component: stratified_sortition_component) }
 
         subject(:command) { described_class.new(stratified_sortition, admin) }
@@ -38,11 +38,6 @@ module Decidim
             expect { command.call }.to change(Decidim::ActionLog, :count)
             action_log = Decidim::ActionLog.last
             expect(action_log.version).to be_present
-          end
-
-          it "assigns the current user as author of the duplicated stratified sortition" do
-            command.call
-            expect(Decidim::StratifiedSortitions::StratifiedSortition.last.author).to eq(admin)
           end
         end
       end

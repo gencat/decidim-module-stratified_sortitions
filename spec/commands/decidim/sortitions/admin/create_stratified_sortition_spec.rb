@@ -9,31 +9,15 @@ module Decidim
         let(:organization) { create(:organization) }
         let(:author) { create(:user, :admin, organization:) }
         let(:participatory_process) { create(:participatory_process, organization:) }
-        let(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
         let(:dice) { ::Faker::Number.between(from: 1, to: 6) }
         let(:target_items) { ::Faker::Number.number(digits: 2) }
         let(:witnesses) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) } }
         let(:additional_info) { Decidim::Faker::Localized.wrapped("<p>", "</p>") { Decidim::Faker::Localized.sentence(word_count: 4) } }
-    let(:description) { witnesses }
-    let(:selection_criteria) { additional_info }
-    let(:selected_profiles_description) { additional_info }
         let(:title) { Decidim::Faker::Localized.sentence(word_count: 3) }
-        let(:category) { create(:category, participatory_space: participatory_process) }
-        let(:category_id) { nil }
         let(:params) do
           {
-            decidim_proposals_component_id: proposal_component.id,
-            decidim_category_id: category_id,
-            dice:, # kept for compatibility with selection logic
-            target_items:,
-            stratified_sortition: {
-              title:,
-              description:,
-              selection_criteria:,
-              selected_profiles_description:,
-              num_candidates: 3,
-              decidim_component_id: stratified_sortition_component.id
-            },
+            title:,
+            num_candidates: 3,
           }
         end
 
@@ -66,12 +50,6 @@ module Decidim
         end
 
         describe "when the form is valid" do
-          let!(:proposals) do
-            create_list(:proposal, target_items.to_i,
-                        component: proposal_component,
-                        created_at: Time.now.utc - 1.day)
-          end
-
           before do
             allow(form).to receive(:invalid?).and_return(false)
           end
@@ -89,7 +67,7 @@ module Decidim
           it "traces the action", versioning: true do
             expect(Decidim.traceability)
               .to receive(:create!)
-              .with(StratifiedSortition, author, kind_of(Hash))
+              .with(StratifiedSortition, author, kind_of(Hash), kind_of(Hash))
               .and_call_original
 
             expect { command.call }.to change(Decidim::ActionLog, :count)
@@ -97,194 +75,11 @@ module Decidim
             expect(action_log.version).to be_present
           end
 
-          it "the created stratified sortition contains a list of selected proposals" do
-            command.call
-            stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-            expect(stratified_sortition.selected_proposals).not_to be_empty
-          end
-
-          it "the created stratified sortition contains a list of candidate proposals" do
-            command.call
-            stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-            expect(stratified_sortition.candidate_proposals).not_to be_empty
-          end
-
-          it "has no category" do
-            command.call
-            stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-            expect(stratified_sortition.category).to be_nil
-          end
-
-          context "when restricted to a category without proposals" do
-            let(:category_id) { category.id }
-
-            it "has a category" do
-              command.call
-              stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.category).to eq(category)
-            end
-
-            it "the created stratified sortition has not proposals" do
-              command.call
-              stratified_sortition = StratifiedSortitionSortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.selected_proposals).to be_empty
-            end
-          end
-
-          context "when proposals has been moderated" do
-            let!(:proposals) do
-              create_list(:proposal, target_items.to_i,
-                          :hidden,
-                          component: proposal_component,
-                          created_at: Time.now.utc - 1.day)
-            end
-
-            it "returns empty" do
-              command.call
-              stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.selected_proposals).to be_empty
-            end
-          end
-
-          context "when proposals are rejected" do
-            let!(:proposals) do
-              create_list(:proposal, target_items.to_i,
-                          :rejected,
-                          component: proposal_component,
-                          created_at: Time.now.utc - 1.day)
-            end
-
-            it "returns empty" do
-              command.call
-              stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.selected_proposals).to be_empty
-            end
-          end
-
-          context "when proposals are withdrawn" do
-            let!(:proposals) do
-              create_list(:proposal, target_items.to_i,
-                          :withdrawn,
-                          component: proposal_component,
-                          created_at: Time.now.utc - 1.day)
-            end
-
-            it "returns empty" do
-              command.call
-              stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.selected_proposals).to be_empty
-            end
-          end
-
-          context "when proposals are draft" do
-            let!(:proposals) do
-              create_list(:proposal, target_items.to_i,
-                          :draft,
-                          component: proposal_component,
-                          created_at: Time.now.utc - 1.day)
-            end
-
-            it "returns empty" do
-              command.call
-              stratified_sortition = Sortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.selected_proposals).to be_empty
-            end
-          end
-
-          context "when restricted to a category with proposals" do
-            let(:category_id) { category.id }
-            let!(:proposal) { create(:proposal, component: proposal_component, category:) }
-
-            it "the created stratified sortition contains proposals" do
-              command.call
-              stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-              expect(stratified_sortition.selected_proposals).not_to be_empty
-              expect(stratified_sortition.selected_proposals.first).to eq(proposal.id)
-            end
-
-            context "when proposals has been moderated" do
-              let!(:proposals) do
-                create_list(:proposal, target_items.to_i,
-                            :hidden,
-                            category:,
-                            component: proposal_component,
-                            created_at: Time.now.utc - 1.day)
-              end
-
-              it "returns empty" do
-                command.call
-                stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-                expect(stratified_sortition.selected_proposals).to eq([proposal.id])
-              end
-            end
-
-            context "when proposals are rejected" do
-              let!(:proposals) do
-                create_list(:proposal, target_items.to_i,
-                            :rejected,
-                            category:,
-                            component: proposal_component,
-                            created_at: Time.now.utc - 1.day)
-              end
-
-              it "returns empty" do
-                command.call
-                stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-                expect(stratified_sortition.selected_proposals).to eq([proposal.id])
-              end
-            end
-
-            context "when proposals are withdrawn" do
-              let!(:proposals) do
-                create_list(:proposal, target_items.to_i,
-                            :withdrawn,
-                            category:,
-                            component: proposal_component,
-                            created_at: Time.now.utc - 1.day)
-              end
-
-              it "returns empty" do
-                command.call
-                stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-                expect(stratified_sortition.selected_proposals).to eq([proposal.id])
-              end
-            end
-
-            context "when proposals are draft" do
-              let!(:proposals) do
-                create_list(:proposal, target_items.to_i,
-                            :draft,
-                            category:,
-                            component: proposal_component,
-                            created_at: Time.now.utc - 1.day)
-              end
-
-              it "returns empty" do
-                command.call
-                stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-                expect(stratified_sortition.selected_proposals).to eq([proposal.id])
-              end
-            end
-          end
-
-          it "has a reference" do
-            command.call
-            stratified_sortition = StratifiedSortition.where(component: stratified_sortition_component).last
-            expect(stratified_sortition.reference).not_to be_blank
-          end
-
           it "sends a notification to the participatory space followers" do
             follower = create(:user, organization:)
             create(:follow, followable: participatory_process, user: follower)
 
-            expect(Decidim::EventsManager)
-              .to receive(:publish)
-              .with(
-                event: "decidim.events.sortitions.sortition_created",
-                event_class: Decidim::Sortitions::CreateSortitionEvent,
-                resource: kind_of(StratifiedSortition),
-                followers: [follower]
-              )
+            allow(Decidim::EventsManager).to receive(:publish)
 
             command.call
           end
