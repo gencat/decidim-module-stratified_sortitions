@@ -3,18 +3,53 @@ ca:
   decidim:
     components:
       stratified_sortitions:
-        name: Stratified Sortitions
+        name: Sorteigs estratificats
+        settings:
+          global:
+            announcement: Aviso
+            publish_sortitions: Publicar sorteigs estratificats
     stratified_sortitions:
       admin:
+        actions:
+          configure: Configurar
+          confirm_destroy: ¿Estás seguro de que quieres eliminar este %{name}?
+          destroy: Eliminar
+          duplicate: Duplicar
+          new_stratified_sortition: "Nou sorteig estratificat"
+          title: "Accions"
+        models:
+          stratified_sortition:
+            fields:
+              created_at: Data de creació
+              title: Títol
+              description: Descripció
+              num_candidates: Número de candidats
+              selection_criteria: Criteris de selecció
+              selected_profiles_description: Descripció dels perfils seleccionats
         stratified_sortitions:
+          create:
+            error: Ha habido un problema al crear este sorteig estratificat
+            success: Sorteig estratificat creat amb èxit
+          destroy:
+            error: Ha habido un problema al eliminar este sorteig estratificat
+            has_problems: Este sorteig estratificat no se pudo eliminar debido a problemas relacionados
+            success: Sorteig estratificat eliminat amb èxit
+          duplicate:
+            error: Ha habido un problema al duplicar este sorteig estratificat
+            success: Sorteig estratificat duplicat amb èxit
           index:
-            title: "Sortejos estratificats"
-            no_stratified_sortitions: "No hi ha sorteigs estratificats creats encara."
-            new_stratified_sortition: "Nou sorteig estratificat"
+            selected: Sorteigs estratificats seleccionats
+            title: Sorteigs estratificats
+          new:
+            create: Crear
+            title: Nou sorteig estratificat
+          edit:
+            title: Editar sorteig estratificat
+            update: Actualitzar
           form:
-            name: "Nom"
-            description: "Descripció"
-            published: "Publicat"
-          show:
-            title: "Sorteig estratificat: %{name}"
-            edit_stratified_sortition: "Edita el sorteig estratificat"
+            name: Nom
+            description: Descripció
+            published: Publicat
+          update:
+            error: Ha habido un problema al actualizar este sorteig estratificat
+            success: Sorteig estratificat actualitzat amb èxit

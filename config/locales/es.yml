@@ -7,19 +7,49 @@ es:
         settings:
           global:
             announcement: Aviso
+            publish_sortitions: Publicar sorteos estratificados
     stratified_sortitions:
       admin:
         actions:
+          configure: Configurar
+          confirm_destroy: ¿Estás seguro de que quieres eliminar este %{name}?
+          destroy: Eliminar
+          duplicate: Duplicar
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
         models:
           stratified_sortition:
             fields:
+              created_at: Fecha de creación
               title: Título
               description: Descripción
               num_candidates: Número de candidatos
               selection_criteria: Criterios de selección
               selected_profiles_description: Descripción de los perfiles seleccionados
         stratified_sortitions:
+          create:
+            error: Ha habido un problema al crear este sorteo estratificado
+            success: Sorteo estratificado creado con éxito
+          destroy:
+            error: Ha habido un problema al eliminar este sorteo estratificado
+            has_problems: Este sorteo estratificado no se pudo eliminar debido a problemas relacionados
+            success: Sorteo estratificado eliminado con éxito
+          duplicate:
+            error: Ha habido un problema al duplicar este sorteo estratificado
+            success: Sorteo estratificado duplicado con éxito
           index:
             selected: Sorteos estratificados seleccionados
+            title: Sorteos estratificados
+          new:
+            create: Crear
+            title: Nuevo sorteo estratificado
+          edit:
+            title: Editar sorteo estratificado
+            update: Actualizar
+          form:
+            name: Nombre
+            description: Descripción
+            published: Publicado
+          update:
+            error: Ha habido un problema al actualizar este sorteo estratificado
+            success: Sorteo estratificado actualizado con éxito
