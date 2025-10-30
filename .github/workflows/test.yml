@@ -14,8 +14,6 @@ env:
 jobs:
   test-report:
     runs-on: ubuntu-latest
-    env:
-      DISABLE_SPRING: '1'
 
     services:
       postgres:
