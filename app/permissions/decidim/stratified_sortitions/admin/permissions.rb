@@ -22,14 +22,6 @@ module Decidim
 
           allow! if permission_action.subject == :stratified_sortition && export_permission_action?
 
-          allow! if permission_action.subject == :questionnaire && update_permission_action?
-
-          allow! if permission_action.subject == :questionnaire_answers && index_permission_action?
-
-          allow! if permission_action.subject == :questionnaire_answers && show_permission_action?
-
-          allow! if permission_action.subject == :questionnaire && export_answers_permission_action?
-
           permission_action
         end
 
@@ -63,24 +55,8 @@ module Decidim
           permission_action.action == :export_surveys
         end
 
-        def export_response_permission_action?
-          permission_action.action == :export_response
-        end
-
-        def export_answers_permission_action?
-          permission_action.action == :export_answers
-        end
-
         def duplicate_permission_action?
           permission_action.action == :duplicate
-        end
-
-        def index_permission_action?
-          permission_action.action == :index
-        end
-
-        def show_permission_action?
-          permission_action.action == :show
         end
 
         def stratified_sortition

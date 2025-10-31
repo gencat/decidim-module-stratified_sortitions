@@ -9,14 +9,13 @@ module Decidim
       include FilterResource
       include Paginable
       include OrderableStratifiedSortitions
-      include WithDefaultFilters
 
       helper Decidim::CheckBoxesTreeHelper
       helper Decidim::ShowFiltersHelper
       helper Decidim::StratifiedSortitions::StratifiedSortitionsHelper
       helper Decidim::PaginateHelper
 
-      helper_method :stratified_sortitions, :default_filter_scope_params
+      helper_method :stratified_sortitions
 
       def index
         @stratified_sortitions = search.result
@@ -41,15 +40,6 @@ module Decidim
 
       def search_collection
         ::Decidim::StratifiedSortitions::StratifiedSortition.where(component: current_component).published
-      end
-
-      def default_filter_params
-        {
-          search_text_cont: "",
-          with_any_state: %w(execution finished),
-          with_any_scope: default_filter_scope_params,
-          related_to: "",
-        }
       end
     end
   end

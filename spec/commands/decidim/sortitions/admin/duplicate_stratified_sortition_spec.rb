@@ -19,7 +19,7 @@ module Decidim
             expect { command.call }.to broadcast(:ok).and change(Decidim::StratifiedSortitions::StratifiedSortition, :count).by(1)
           end
 
-          it "copies translatable attributes and num_candidates and component" do
+          it "copies translatable attributes, num_candidates and component" do
             command.call
             duplicated = Decidim::StratifiedSortitions::StratifiedSortition.last
 
