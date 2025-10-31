@@ -11,7 +11,6 @@ module Decidim
       include OrderableStratifiedSortitions
 
       helper Decidim::CheckBoxesTreeHelper
-      helper Decidim::ShowFiltersHelper
       helper Decidim::StratifiedSortitions::StratifiedSortitionsHelper
       helper Decidim::PaginateHelper
 
