@@ -1,2 +1,64 @@
 ---
 en:
+  activemodel:
+    attributes:
+      stratified_sortition:
+        created_at: Created At
+        title: Title
+        description: Description
+        num_candidates: Number of Candidates
+        selection_criteria: Selection Criteria
+        selected_profiles_description: Selected Profiles Description
+  decidim:
+    components:
+      stratified_sortitions:
+        name: Stratified Sortitions
+        settings:
+          global:
+            announcement: Announcement
+            publish_sortitions: Publish Stratified Sortitions
+    stratified_sortitions:
+      admin:
+        actions:
+          configure: Configure
+          confirm_destroy: Are you sure you want to delete this %{name}?
+          destroy: Delete
+          duplicate: Duplicate
+          new_stratified_sortition: "New Stratified Sortition"
+          title: "Actions"
+        models:
+          stratified_sortition:
+            fields:
+              created_at: Created At
+              title: Title
+              description: Description
+              num_candidates: Number of Candidates
+              selection_criteria: Selection Criteria
+              selected_profiles_description: Selected Profiles Description
+        stratified_sortitions:
+          create:
+            error: There's been a problem creating this stratified sortition
+            success: Stratified sortition successfully created
+          destroy:
+            error: There's been a problem deleting this stratified sortition
+            has_problems: This stratified sortition couldn't be deleted due to related problems
+            success: Stratified sortition successfully deleted
+          duplicate:
+            error: There's been a problem duplicating this stratified sortition
+            success: Stratified sortition successfully duplicated
+          index:
+            selected: Selected Stratified Sortitions
+            title: Stratified Sortitions
+          new:
+            create: Create
+            title: New Stratified Sortition
+          edit:
+            title: Edit Stratified Sortition
+            update: Update
+          form:
+            name: Name
+            description: Description
+            published: Published
+          update:
+            error: There's been a problem updating this stratified sortition
+            success: Stratified sortition successfully updated

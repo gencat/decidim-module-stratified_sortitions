@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Stratified Sortitions component" do
   subject { component }
 
-  let(:component) { create(:stratified_sortitions_component) }
+  let(:component) { create(:stratified_sortition_component) }
 
   context "when create a component" do
     it "save correctly component" do

@@ -1,2 +1,64 @@
 ---
 ca:
+  activemodel:
+    attributes:
+      stratified_sortition:
+        created_at: Data de creació
+        title: Títol
+        description: Descripció
+        num_candidates: Nombre de candidats
+        selection_criteria: Criteris de selecció
+        selected_profiles_description: Descripció dels perfils seleccionats
+  decidim:
+    components:
+      stratified_sortitions:
+        name: Sorteigs estratificats
+        settings:
+          global:
+            announcement: Avís
+            publish_sortitions: Publicar sorteigs estratificats
+    stratified_sortitions:
+      admin:
+        actions:
+          configure: Configura
+          confirm_destroy: Segur que vols eliminar aquest %{name}?
+          destroy: Esborra
+          duplicate: Duplica
+          new_stratified_sortition: "Nou sorteig estratificat"
+          title: "Accions"
+        models:
+          stratified_sortition:
+            fields:
+              created_at: Data de creació
+              title: Títol
+              description: Descripció
+              num_candidates: Nombre de candidats
+              selection_criteria: Criteris de selecció
+              selected_profiles_description: Descripció dels perfils seleccionats
+        stratified_sortitions:
+          create:
+            error: S'ha produït un problema en crear aquest sorteig estratificat
+            success: Sorteig estratificat creat amb èxit
+          destroy:
+            error: S'ha produït un problema en eliminar aquest sorteig estratificat
+            has_problems: Aquest sorteig estratificat no s'ha pogut eliminar degut a problemes relacionats
+            success: Sorteig estratificat eliminat amb èxit
+          duplicate:
+            error: S'ha produït un problema en duplicar aquest sorteig estratificat
+            success: Sorteig estratificat duplicat amb èxit
+          index:
+            selected: Sorteigs estratificats seleccionats
+            title: Sorteigs estratificats
+          new:
+            create: Crear
+            title: Nou sorteig estratificat
+          edit:
+            title: Editar sorteig estratificat
+            update: Actualitzar
+          form:
+            name: Nom
+            description: Descripció
+            published: Publicat
+          update:
+            error: S'ha produït un problema en actualitzar aquest sorteig estratificat
+            success: Sorteig estratificat actualitzat amb èxit

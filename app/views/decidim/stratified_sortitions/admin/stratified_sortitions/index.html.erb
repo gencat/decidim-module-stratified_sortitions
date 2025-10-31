@@ -1,0 +1,67 @@
+<% add_decidim_page_title(t(".title")) %>
+<div class="card">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <div>
+        <%= t(".title") %>
+        <span id="js-selected-stratified_sortitions-count" class="component-counter component-counter--inline" title="<%= t("decidim.stratified_sortitions.admin.stratified_sortitions.index.selected") %>"></span>
+      </div>
+      <div class="flex items-center gap-x-4">
+        <% if allowed_to? :create, :stratified_sortition %>
+          <%= link_to t("actions.new_stratified_sortition", scope: "decidim.stratified_sortitions.admin"),
+          new_stratified_sortition_path,
+          class: "button button__sm button__secondary" %>
+        <% end %>
+
+        <%= render partial: "decidim/admin/components/resource_action" %>
+      </div>
+    </h1>
+  </div>
+
+  <div class="table-scroll mt-16">
+    <table class="table-list">
+      <thead>
+        <tr>
+          <th>
+            <%= t("models.stratified_sortition.fields.title", scope: "decidim.stratified_sortitions.admin") %>
+          </th>
+          <th>
+            <%= t("models.stratified_sortition.fields.num_candidates", scope: "decidim.stratified_sortitions.admin") %>
+          </th>
+          <th>
+            <%= t("models.stratified_sortition.fields.created_at", scope: "decidim.stratified_sortitions.admin") %>
+          </th>
+          <th class="actions"><%= t("actions.title", scope: "decidim.stratified_sortitions.admin") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @stratified_sortitions.each do |stratified_sortition| %>
+          <tr>
+            <td>
+              <%= translated_attribute(stratified_sortition.title) %>
+            </td>
+            <td>
+              <%= stratified_sortition.num_candidates %>
+            </td>
+            <td>
+              <%= l(stratified_sortition.created_at, format: :decidim_short) if stratified_sortition.created_at %>
+            </td>
+            <td class="table-list__actions">
+              <% if allowed_to? :duplicate, :stratified_sortition %>
+                <%= icon_link_to "file-copy-line", duplicate_stratified_sortition_path(stratified_sortition), t("actions.duplicate", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--new", method: :post %>
+              <% end %>
+              <% if allowed_to? :edit, :stratified_sortition %>
+                <%= icon_link_to "pencil-line", edit_stratified_sortition_path(stratified_sortition), t("actions.configure", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--new" %>
+              <% end %>
+              <% if allowed_to? :destroy, :stratified_sortition, stratified_sortition: stratified_sortition %>
+                <%= icon_link_to "close-circle-line", stratified_sortition, t("actions.destroy", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.stratified_sortitions.admin", name: translated_attribute(stratified_sortition.title)) } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= decidim_paginate @stratified_sortitions %>

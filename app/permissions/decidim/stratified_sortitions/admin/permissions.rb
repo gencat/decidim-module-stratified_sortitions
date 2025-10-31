@@ -1,32 +1,66 @@
 # frozen_string_literal: true
 
 module Decidim
-  module Sortitions
+  module StratifiedSortitions
     module Admin
       class Permissions < Decidim::DefaultPermissions
         def permissions
-          return permission_action unless user
-
+          # The public part needs to be implemented yet
           return permission_action if permission_action.scope != :admin
 
-          return permission_action if permission_action.subject != :sortition
+          allow! if permission_action.subject == :stratified_sortitions && read_permission_action?
 
-          case permission_action.action
-          when :destroy
-            permission_action.allow! if sortition.present? && !sortition.cancelled?
-          when :update
-            permission_action.allow! if sortition.present?
-          when :create, :read
-            permission_action.allow!
-          end
+          allow! if permission_action.subject == :stratified_sortition && create_permission_action?
+
+          allow! if permission_action.subject == :stratified_sortition && edit_permission_action?
+
+          allow! if permission_action.subject == :stratified_sortition && destroy_permission_action?
+
+          allow! if permission_action.subject == :stratified_sortition && publish_permission_action?
+
+          allow! if permission_action.subject == :stratified_sortition && duplicate_permission_action?
+
+          allow! if permission_action.subject == :stratified_sortition && export_permission_action?
 
           permission_action
         end
 
         private
 
-        def sortition
-          @sortition ||= context.fetch(:sortition, nil)
+        def read_permission_action?
+          permission_action.action == :read
+        end
+
+        def create_permission_action?
+          permission_action.action == :create
+        end
+
+        def edit_permission_action?
+          permission_action.action == :edit
+        end
+
+        def update_permission_action?
+          permission_action.action == :update
+        end
+
+        def destroy_permission_action?
+          permission_action.action == :destroy
+        end
+
+        def publish_permission_action?
+          permission_action.action == :publish
+        end
+
+        def export_permission_action?
+          permission_action.action == :export_surveys
+        end
+
+        def duplicate_permission_action?
+          permission_action.action == :duplicate
+        end
+
+        def stratified_sortition
+          @stratified_sortition ||= context.fetch(:stratified_sortition, nil)
         end
       end
     end
