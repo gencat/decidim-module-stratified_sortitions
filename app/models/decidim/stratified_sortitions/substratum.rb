@@ -2,15 +2,15 @@
 
 module Decidim
   module StratifiedSortitions
-    class Substratum < Decidim::ApplicationRecord
+    class Substratum < ApplicationRecord
       self.table_name = "decidim_stratified_sortitions_substrata"
 
+      include Decidim::TranslatableResource
       include Decidim::TranslatableAttributes
 
       belongs_to :stratum, class_name: "Decidim::StratifiedSortitions::Stratum"
 
-      translatable_attribute :name, String
-      translatable_attribute :value, String
+      translatable_fields :name, :value
 
       validates :name, translatable_presence: true
       validates :value, translatable_presence: true

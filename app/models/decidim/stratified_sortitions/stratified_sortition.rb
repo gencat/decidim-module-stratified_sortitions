@@ -2,7 +2,7 @@
 
 module Decidim
   module StratifiedSortitions
-    class StratifiedSortition < ::ApplicationRecord
+    class StratifiedSortition < ApplicationRecord
       include Decidim::HasComponent
       include Decidim::FilterableResource
       include Decidim::ScopableResource
