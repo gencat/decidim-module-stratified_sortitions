@@ -17,6 +17,8 @@ es:
           global:
             announcement: Aviso
             publish_sortitions: Publicar sorteos estratificados
+          step:
+            announcement: Aviso
     stratified_sortitions:
       admin:
         actions:
