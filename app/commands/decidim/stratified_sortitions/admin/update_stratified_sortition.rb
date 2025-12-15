@@ -28,6 +28,7 @@ module Decidim
 
           transaction do
             update_stratified_sortition
+            update_strata(stratified_sortition)
           end
 
           broadcast(:ok, stratified_sortition)
@@ -59,6 +60,22 @@ module Decidim
             component: form.current_component,
             num_candidates: form.num_candidates,
           }
+        end
+
+        def update_strata(stratified_sortition)
+          tasks = []
+
+          form.strata_to_persist.each do |stratum|
+            stratum_object = Decidim::StratifiedSortition::Stratum.new(
+              stratified_sortition:,
+              name: stratum.name,
+              kind: stratum.kind
+            )
+            strata << stratum_object
+          end
+
+          stratified_sortition.strata = strata
+          stratified_sortition.save!
         end
       end
     end

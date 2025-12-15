@@ -7,7 +7,9 @@ module Decidim
       #
       class StratifiedSortitionsForm < Decidim::Form
         include TranslatableAttributes
+        include TranslationsHelper
         include Decidim::HasUploadValidations
+        include ApplicationHelper
 
         mimic :stratified_sortition
 
@@ -20,6 +22,7 @@ module Decidim
 
         attribute :decidim_component_id, Integer
         attribute :num_candidates, Integer
+        attribute :strata, [StratumForm]
 
         validates :title, :description, :selection_criteria, :selected_profiles_description, translatable_presence: true
         validates :num_candidates,
@@ -31,7 +34,16 @@ module Decidim
 
         alias organization current_organization
 
-        def map_model(model); end
+        def map_model(model)
+          super
+          self.strata = model.strata.map do |stratum|
+            Decidim::StratifiedSortitions::Admin::StratumForm.from_model(stratum)
+          end
+        end
+
+        def strata_to_persist
+          strata.reject(&:deleted)
+        end
       end
     end
   end

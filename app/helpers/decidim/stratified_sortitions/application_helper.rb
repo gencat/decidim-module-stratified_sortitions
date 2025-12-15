@@ -9,6 +9,10 @@ module Decidim
         i18n_key = "decidim.components.stratified_sortitions.name"
         (defined?(current_component) && translated_attribute(current_component&.name).presence) || t(i18n_key)
       end
+
+      def tabs_id_for_stratum(stratum)
+        "stratified_sortition_stratum_#{stratum.to_param}"
+      end
     end
   end
 end
