@@ -25,6 +25,10 @@ Decidim.register_component(:stratified_sortitions) do |component|
     settings.attribute :publish_sortitions, type: :boolean, default: true
   end
 
+  component.settings(:step) do |settings|
+    settings.attribute :announcement, type: :text, translated: true, editor: true
+  end
+
   component.register_resource(:stratified_sortition) do |resource|
     # Register a optional resource that can be references from other resources.
     resource.model_class_name = "Decidim::StratifiedSortitions::StratifiedSortition"
@@ -32,7 +36,7 @@ Decidim.register_component(:stratified_sortitions) do |component|
     resource.searchable = true
   end
 
-  # component.register_stat :sortitions_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
-  #   Decidim::StratifiedSortitions.count
-  # end
+  component.register_stat :sortitions_count, primary: true, priority: Decidim::StatsRegistry::HIGH_PRIORITY do |components, start_at, end_at|
+    Decidim::StratifiedSortitions::FilteredStratifiedSortitions.for(components, start_at, end_at).count
+  end
 end
