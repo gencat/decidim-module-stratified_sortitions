@@ -46,7 +46,7 @@ module Decidim
             selection_criteria: parsed_selection_criteria,
             selected_profiles_description: parsed_selected_profiles_description,
             component: form.current_component,
-            num_candidates: form.num_candidates
+            num_candidates: form.num_candidates,
           }
 
           @stratified_sortition = Decidim.traceability.create!(

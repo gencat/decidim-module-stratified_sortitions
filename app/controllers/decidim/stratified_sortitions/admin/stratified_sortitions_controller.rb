@@ -11,7 +11,7 @@ module Decidim
         helper StratifiedSortitions::ApplicationHelper
         helper Decidim::PaginateHelper
 
-        helper_method :blank_stratum, :stratified_sortitions, :stratified_sortition, :form_presenter
+        helper_method :stratified_sortitions, :stratified_sortition, :form_presenter, :blank_stratum, :blank_substratum
 
         def index
           enforce_permission_to :read, :stratified_sortitions
@@ -117,6 +117,10 @@ module Decidim
 
         def blank_stratum
           @blank_stratum ||= Decidim::StratifiedSortitions::Admin::StratumForm.new
+        end
+
+        def blank_substratum
+          @blank_substratum ||= Decidim::StratifiedSortitions::Admin::SubstratumForm.new
         end
       end
     end

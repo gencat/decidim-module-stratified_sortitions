@@ -3,12 +3,19 @@
 module Decidim
   module StratifiedSortitions
     module Admin
-      # Form object para substrata, necesario para que cocoon y Decidim::Form funcionen bien con asociaciones anidadas.
       class SubstratumForm < Decidim::Form
-        mimic :substratum
+        include TranslatableAttributes
 
-        def self.reflect_on_association(name)
-          Decidim::StratifiedSortitions::Substratum.reflect_on_association(name)
+        translatable_attribute :name, String
+        translatable_attribute :value, String
+        attribute :range, String
+        attribute :weighing, String
+        attribute :deleted, Boolean, default: false
+
+        def to_param
+          return id if id.present?
+
+          "stratified-sortition-strata-substratum-id"
         end
       end
     end

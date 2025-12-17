@@ -1,0 +1,22 @@
+<h3><%= t(".title") %></h3>
+
+<div id="panel-strata" class="card-section">
+  <%= field_errors_block(form, :strata) %>
+
+  <div class="stratified-sortition-strata row column">
+    <button class="button button__sm button__secondary add-stratum" type="button"><%= t(".add_stratum") %></button>
+    <script type="text/template" class="decidim-template">
+      <%= fields_for "stratified_sortition[strata][#{blank_stratum.to_param}]", blank_stratum do |stratum_form| %>
+        <%= render "stratum", form: stratum_form, id: tabs_id_for_stratum(blank_stratum) %>
+      <% end %>
+    </script>
+
+    <div class="stratified-sortition-strata-list">
+      <% form.object.strata.each do |stratum| %>
+        <%= fields_for "stratified_sortition[strata][]", stratum do |stratum_form| %>
+          <%= render "stratum", form: stratum_form, id: tabs_id_for_stratum(stratum) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

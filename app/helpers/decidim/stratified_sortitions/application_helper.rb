@@ -11,7 +11,22 @@ module Decidim
       end
 
       def tabs_id_for_stratum(stratum)
-        "stratified_sortition_stratum_#{stratum.to_param}"
+        "stratified-sortition-stratum-#{stratum.to_param}"
+      end
+
+      def tabs_id_for_substratum(substratum)
+        "stratified-sortition-stratum-substratum-#{substratum.to_param}"
+      end
+
+      # Renders the errors for a given object field in an HTML block.
+      # If there are no errors renders nothing.
+      def field_errors_block(form, field)
+        return if form.object.errors[field].blank?
+
+        html = <<~EOHTML
+          <div class="row column errors">#{form.error_for(field)}</div>
+        EOHTML
+        html.html_safe
       end
     end
   end

@@ -66,7 +66,7 @@ module Decidim
           tasks = []
 
           form.strata_to_persist.each do |stratum|
-            stratum_object = Decidim::StratifiedSortition::Stratum.new(
+            stratum_object = Decidim::StratifiedSortitions::Stratum.new(
               stratified_sortition:,
               name: stratum.name,
               kind: stratum.kind

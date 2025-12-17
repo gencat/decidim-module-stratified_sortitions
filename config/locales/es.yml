@@ -59,22 +59,31 @@ es:
             name: Nombre
             description: Descripción
             published: Publicado
-          stratum_fields:
-            stratum: Estrato
-            title: Estrato
-            name: Nombre
-            kind: Tipo
-            value: Valor
-            numeric_range: Rango numérico
-            min_value: Valor mínimo
-            max_value: Valor máximo
-            actions:
-              up: Subir estrato
-              down: Bajar estrato
-              remove: Eliminar estrato
+          strata:
+            title: Estratos
+            add_stratum: Añadir estrato
+          stratum:
             up: Subir
             down: Bajar
             remove: Eliminar
+            name: Nombre
+            kind:
+              numeric_range: Rango numérico
+              title: Tipo
+              value: Valor
+            substrata_title: Subestratos
+            title: Estrato
+          substrata:
+            add_substratum: Añadir subestrato
+          substratum:
+            up: Subir
+            down: Bajar
+            remove: Eliminar
+            name: Nombre
+            value: Valor
+            range: Rango
+            title: Subestrato
+            weighing: Ponderación
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito

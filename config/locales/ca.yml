@@ -59,6 +59,31 @@ ca:
             name: Nom
             description: Descripció
             published: Publicat
+          strata:
+            title: Estrats
+            add_stratum: Afegir estrat
+          stratum:
+            up: Amunt
+            down: Avall
+            remove: Eliminar
+            name: Nom
+            kind: 
+              numeric_range: Rang numèric
+              title: Tipus
+              value: Valor
+            substrata_title: Subestrats
+            title: Estrat
+          substrata:
+            add_substratum: Afegir subestrat
+          substratum:
+            up: Amunt
+            down: Avall
+            remove: Eliminar
+            name: Nom
+            value: Valor
+            range: Rang
+            title: Subestrat
+            weighing: Ponderació
           update:
             error: S'ha produït un problema en actualitzar aquest sorteig estratificat
             success: Sorteig estratificat actualitzat amb èxit
