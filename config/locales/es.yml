@@ -70,13 +70,13 @@ es:
             census_file: Elegir un archivo
             census_file_label: Archivo excel.csv con los datos del censo
             count_uploaded_files: "<b>%{count}</b> registros cargados."
-            description: "Debe ser un archivo generado en excel y exportado en CSV con dos columnas:"
-            example: "Document ID, Date of Birth<br>12345678X,12/04/1990<br>B7654321X,04/12/1980<br><br>. . ."
-            filename_data: Nombre archivo, el día %{date}, número de registros %{count}
+            description: "Debe ser un archivo generado en Excel y exportado en CSV con las siguientes columnas:"
+            example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
+            filename_data: Nombre de archivo, el día %{date}, número de registros %{count}
             gender: Género
             last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
+            help: Las cuatro primeras columnas son datos del candidato, por ejemplo correo electrónico, DNI, teléfono o dirección y las siguientes columnas son los estratos definidos en el sorteo estratificado. Cada fila representa un candidato.
             place: Lugar de nacimiento
             target: Objetivo
             title: Subir un nuevo censo
-            uploaded_file: Datos del censo cargado
-            uploaded_files: "Se han agregado los siguientes archivos:"
+            uploaded_file: Datos del censo

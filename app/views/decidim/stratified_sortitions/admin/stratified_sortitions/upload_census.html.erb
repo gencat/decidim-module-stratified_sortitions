@@ -13,6 +13,9 @@
   <div class="card-section mt-4 example-file-census-container">
     <%= t(".example").html_safe %>
   </div>
+  <div class="card-section mt-4">
+    <%= t(".help") %>
+  </div>
   <div class="row mt-4">
     <%= decidim_form_for :stratified_sortition, url: process_census_stratified_sortition_path(@stratified_sortition), html: { multipart: true } do |f| %>
       <div class="row form-upload-census-container">
