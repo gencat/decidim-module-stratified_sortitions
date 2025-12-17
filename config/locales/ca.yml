@@ -28,6 +28,7 @@ ca:
           duplicate: Duplica
           new_stratified_sortition: "Nou sortejo estratificat"
           title: "Accions"
+          upload_census: "Importar cens"
         models:
           stratified_sortition:
             fields:
@@ -64,3 +65,20 @@ ca:
           update:
             error: S'ha produït un problema en actualitzar aquest sortejo estratificat
             success: Sortejo estratificat actualitzat amb èxit
+          upload_census:
+            age: Grup d'edat
+            census_file: Triar un fitxer
+            census_file_label: Arxiu excel.csv amb les dades del cens
+            count_uploaded_files: "<b>%{count}</b> registres carregats."
+            description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
+            example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
+            filename_data: Nom fitxer, el dia %{date}, número de registres %{count}
+            gender: Gènere
+            last_upload_date: La última càrrega va ser el dia Febrer 24, 2025 10:41
+            help: Les quatre primeres columnes són dades del candidat, per exemple correu electrònic, DNI, telèfon o adreça i les següents columnes són els estrats definits en el sorteig estratificat. Cada fila representa un candidat.
+            place: Lloc de naixement
+            target: Target
+            title: Pujar un nou cens
+            uploaded_file: Dades del cens carregat
+            uploaded_files: "S'han agregat els següents fitxers:"
+

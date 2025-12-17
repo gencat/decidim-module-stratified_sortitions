@@ -14,6 +14,8 @@ module Decidim
       routes do
         resources :stratified_sortitions do
           post :duplicate, on: :member
+          get :upload_census, on: :member
+          post :process_census, on: :member
         end
 
         root to: "stratified_sortitions#index"

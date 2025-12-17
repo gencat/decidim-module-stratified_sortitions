@@ -97,6 +97,15 @@ module Decidim
           end
         end
 
+        def upload_census
+          @stratified_sortition = stratified_sortition
+          @filenames = [["01/04/2025", 567], ["15/05/2024", 123]]
+        end
+
+        def process_census
+          redirect_to upload_census_stratified_sortition_path(stratified_sortition)
+        end
+
         private
 
         def collection
