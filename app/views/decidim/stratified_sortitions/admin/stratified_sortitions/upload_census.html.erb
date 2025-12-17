@@ -1,0 +1,128 @@
+<% add_decidim_page_title(t(".title")) %>
+<div class="card">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <div>
+        <%= t(".title") %>
+      </div>
+    </h1>
+  </div>
+  <div class="mt-1">
+    <%= t(".description") %>
+  </div>
+  <div class="card-section mt-4 example-file-census-container">
+    <%= t(".example").html_safe %>
+  </div>
+  <div class="row mt-4">
+    <%= decidim_form_for :stratified_sortition, url: process_census_stratified_sortition_path(@stratified_sortition), html: { multipart: true } do |f| %>
+      <div class="row form-upload-census-container">
+        <%= f.file_field :census_file, label: t(".census_file_label") %>
+        <%= f.submit t(".title"), class: "button button__sm button__secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="card mt-16">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <div>
+        <%= t(".uploaded_file") %>
+      </div>
+    </h1>
+  </div>
+  <div class="mt-4 mb-4">
+    <div class="flex justify-between gap-x-4">
+      <span>
+        <%= t(".count_uploaded_files", count: 5).html_safe %>
+      </span>
+      <span class="last-census-upload">
+        <%= t(".last_upload_date") %>
+      </span>
+    </div>
+  </div>
+  <div class="mt-4 mb-4">
+    <span>
+      <h1 class="item_show__header-title">
+        <%= t(".target") %>
+      </h1>
+    </span>
+    <div class="row chart-images-row">
+      <div class="column chart-image-col">
+        <b><%= t('.gender').upcase %></b>
+        <%= image_tag asset_pack_path("media/images/gender-chart.png"), alt: "gender-chart", class: "chart-image" %>
+      </div>
+      <div class="column chart-image-col">
+        <b><%= t('.age').upcase %></b>
+        <%= image_tag asset_pack_path("media/images/age-chart.png"), alt: "age-chart", class: "chart-image" %>
+      </div>
+      <div class="column chart-image-col chart-place">
+        <b><%= t('.place').upcase %></b>
+        <%= image_tag asset_pack_path("media/images/place-chart.png"), alt: "place-chart", class: "chart-image" %>
+      </div>
+    </div>
+    <div class="mt-16 census_file_type">
+      <span>
+        <%= t(".uploaded_files") %>
+      </span>
+      <div>
+        <% @filenames.each do |filename| %>
+          <p><%= t('.filename_data', date: filename[0], count: filename[1]) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .example-file-census-container {
+    padding:1em;
+    background:#e2e5ee;
+  }
+
+  .form-upload-census-container {
+    display:flex;
+    gap:1em;
+  }
+
+  .last-census-upload {
+    color: #6b7280;
+  }
+
+  .chart-images-row {
+    display: flex;
+    gap: 4em;
+    margin-top: 1em;
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .chart-image-col {
+    flex: 1 1 250px;
+    min-width: 220px;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+  }
+  .chart-image {
+    width: 100%;
+    height: auto;
+    max-width: 420px;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+
+  .chart-place {
+    max-width: 380px;
+  }
+
+  @media (max-width: 900px) {
+    .chart-images-row {
+      gap: 2em;
+    }
+    .chart-image-col {
+      max-width: 100%;
+    }
+    .chart-image {
+      max-width: 100%;
+    }
+  }
+</style>

@@ -3,6 +3,11 @@
   <h1 class="item_show__header-title">
     <%= t(".title") %>
   </h1>
+  <div class="flex items-center gap-x-4">
+    <%= link_to t("actions.upload_census", scope: "decidim.stratified_sortitions.admin"),
+        upload_census_stratified_sortition_path(stratified_sortition),
+        class: "button button__sm button__secondary" %>
+  </div>
 </div>
 <div class="item__edit item__edit-1col">
   <div class="item__edit-form">

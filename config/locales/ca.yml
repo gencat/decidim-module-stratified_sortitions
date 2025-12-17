@@ -28,6 +28,7 @@ ca:
           duplicate: Duplica
           new_stratified_sortition: "Nou sortejo estratificat"
           title: "Accions"
+          upload_census: "Importar cens"
         models:
           stratified_sortition:
             fields:
@@ -64,3 +65,19 @@ ca:
           update:
             error: S'ha produït un problema en actualitzar aquest sortejo estratificat
             success: Sortejo estratificat actualitzat amb èxit
+          upload_census:
+            age: Grup d'edat
+            census_file: Triar un fitxer
+            census_file_label: Arxiu excel.csv amb les dades del cens
+            count_uploaded_files: "<b>%{count}</b> registres carregats."
+            description: "Ha de ser un fitxer generat en excel i exportat en CSV amb dues columnes:"
+            example: "Document ID, Date of Birth<br>12345678X,12/04/1990<br>B7654321X,04/12/1980<br><br>. . ."
+            filename_data: Nom fitxer, el dia %{date}, número de registres %{count}
+            gender: Gènere
+            last_upload_date: La última càrrega va ser el dia Febrer 24, 2025 10:41
+            place: Lloc de naixement
+            target: Target
+            title: Pujar un nou cens
+            uploaded_file: Dades del cens carregat
+            uploaded_files: "S'han agregat els següents fitxers:"
+

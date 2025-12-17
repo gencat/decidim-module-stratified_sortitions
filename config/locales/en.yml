@@ -26,6 +26,7 @@ en:
           duplicate: Duplicate
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
+          upload_census: "Import Census"
         models:
           stratified_sortition:
             fields:
@@ -62,3 +63,18 @@ en:
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated
+          upload_census:
+            age: Age group 
+            census_file: Choose a file
+            census_file_label: Excel.csv file with census data
+            count_uploaded_files: "<b>%{count}</b> records loaded."
+            description: "It must be a file generated in Excel and exported in CSV with two columns:"
+            example: "Document ID, Date of Birth<br>12345678X,12/04/1990<br>B7654321X,04/12/1980<br><br>. . ."
+            filename_data: File name, on %{date}, number of records %{count}
+            gender: GGender
+            last_upload_date: The last upload was on February 24, 2025 10:41
+            place: Place of birth
+            target: Target
+            title: Upload a new census
+            uploaded_file: Census data uploaded
+            uploaded_files: "The following files have been added:"

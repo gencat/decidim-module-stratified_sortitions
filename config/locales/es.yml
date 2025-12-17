@@ -28,6 +28,7 @@ es:
           duplicate: Duplicar
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
+          upload_census: Importar censo
         models:
           stratified_sortition:
             fields:
@@ -64,3 +65,18 @@ es:
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito
+          upload_census:
+            age: Grupo de edad
+            census_file: Elegir un archivo
+            census_file_label: Archivo excel.csv con los datos del censo
+            count_uploaded_files: "<b>%{count}</b> registros cargados."
+            description: "Debe ser un archivo generado en excel y exportado en CSV con dos columnas:"
+            example: "Document ID, Date of Birth<br>12345678X,12/04/1990<br>B7654321X,04/12/1980<br><br>. . ."
+            filename_data: Nombre archivo, el día %{date}, número de registros %{count}
+            gender: Género
+            last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
+            place: Lugar de nacimiento
+            target: Objetivo
+            title: Subir un nuevo censo
+            uploaded_file: Datos del censo cargado
+            uploaded_files: "Se han agregado los siguientes archivos:"
