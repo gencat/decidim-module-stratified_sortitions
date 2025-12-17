@@ -99,7 +99,7 @@ module Decidim
 
         def upload_census
           @stratified_sortition = stratified_sortition
-          @filenames = [['01/04/2025', 567], ['15/05/2024', 123]]
+          @filenames = [["01/04/2025", 567], ["15/05/2024", 123]]
         end
 
         def process_census
