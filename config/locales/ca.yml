@@ -56,8 +56,9 @@ ca:
             title: Editar sorteig estratificat
             update: Actualitzar
           form:
-            name: Nom
+            data: Informació general
             description: Descripció
+            name: Nom
             published: Publicat
           strata:
             title: Estrats
