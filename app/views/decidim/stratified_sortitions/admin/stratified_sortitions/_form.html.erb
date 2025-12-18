@@ -1,25 +1,55 @@
 <div class="form__wrapper">
-  <div class="card pt-4">
-    <div class="card-section">
-      <div class="row column hashtags__container">
-        <%= form.translated :text_field, :title, autofocus: true, class: "js-hashtags", hashtaggable: true, aria: { label: :title } %>
+  <div class="card" data-component="accordion" id="accordion-data">
+    <div class="card-divider">
+      <button class="card-divider-button" data-open="true" data-controls="panel-data" type="button">
+        <%= icon "arrow-right-s-line" %>
+        <h2 class="card-title" id="data">
+          <%= t("data", scope: "decidim.stratified_sortitions.admin.stratified_sortitions.form") %>
+        </h2>
+      </button>
+    </div>
+    <div id="panel-data" class="card-section">
+      <div class="row columns">
+        <%= form.translated :text_field, :title, autofocus: true, aria: { label: :title } %>
       </div>
 
       <div class="row column">
         <%= form.number_field :num_candidates %>
       </div>
 
-      <div class="row column hashtags__container">
+      <div class="row column">
         <%= form.translated :editor, :description %>
       </div>
 
-      <div class="row column hashtags__container">
+      <div class="row column">
         <%= form.translated :editor, :selection_criteria %>
       </div>
 
-      <div class="row column hashtags__container">
+      <div class="row column">
         <%= form.translated :editor, :selected_profiles_description %>
       </div>
     </div>
   </div>
+
+  <div class="card" data-component="accordion" id="accordion-strata">
+    <div class="card-divider">
+      <button class="card-divider-button" data-open="true" data-controls="panel-strata" type="button">
+        <svg viewBox="0 0 24 24" id="ri-arrow-right-s-line">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
+        </svg>
+        <h2 class="card-title" id="strata">
+          <%= t("title", scope: "decidim.stratified_sortitions.admin.stratified_sortitions.strata") %>
+        </h2>
+      </button>
+    </div>
+    <div id="panel-strata" class="card-section">
+      <div class="row column">
+        <%= render "decidim/stratified_sortitions/admin/stratified_sortitions/strata", form: form %>
+      </div>
+    </div>
+  </div>
 </div>
+
+<%= append_javascript_pack_tag "decidim_stratified_sortitions_admin" %>
+<%= append_stylesheet_pack_tag "decidim_stratified_sortitions_admin" %>

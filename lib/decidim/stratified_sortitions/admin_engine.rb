@@ -2,7 +2,7 @@
 
 module Decidim
   module StratifiedSortitions
-    # This is the engine that runs on the administration interface of `decidim_stratified_sorititions`.
+    # This is the engine that runs on the administration interface of `decidim_stratified_sortitions`.
     # It mostly handles rendering the created projects associated to a participatory
     # process.
     class AdminEngine < ::Rails::Engine
@@ -19,6 +19,12 @@ module Decidim
         end
 
         root to: "stratified_sortitions#index"
+      end
+
+      initializer "decidim_sstratified_sortitions_admin.mount_routes" do |_app|
+        Decidim::Core::Engine.routes do
+          mount Decidim::StratifiedSortitions::AdminEngine, at: "/admin", as: "decidim_admin_stratified_sortitions"
+        end
       end
 
       def load_seed

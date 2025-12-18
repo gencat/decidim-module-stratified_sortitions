@@ -1,0 +1,21 @@
+<div id="panel-substrata" class="card-section">
+  <%= field_errors_block(form, :substrata) %>
+
+  <div class="stratified-sortition-substrata row column">
+    <button class="button button__sm button__secondary add-substratum" type="button"><%= t(".add_substratum") %></button>
+
+    <script type="text/template" class="decidim-template">
+      <%= fields_for "stratified_sortition[strata][substrata][#{blank_substratum.to_param}]", blank_substratum do |substratum_form| %>
+        <%= render "substratum", form: substratum_form, id: tabs_id_for_substratum(blank_substratum), stratum: stratum %>
+      <% end %>
+    </script>
+
+    <div class="stratified-sortition-substrata-list">
+      <% stratum.substrata.each do |substratum| %>
+        <%= fields_for "stratified_sortition[strata][substrata][]", substratum do |substratum_form| %>
+          <%= render "substratum", form: substratum_form, id: tabs_id_for_substratum(substratum), stratum: stratum %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

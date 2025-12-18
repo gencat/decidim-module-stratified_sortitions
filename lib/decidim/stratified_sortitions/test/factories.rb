@@ -20,4 +20,18 @@ FactoryBot.define do
     num_candidates { rand(1..10) }
     component { association(:stratified_sortition_component) }
   end
+
+  factory :stratum, class: "Decidim::StratifiedSortitions::Stratum" do
+    sequence(:name) { |n| "Stratum #{n}" }
+    kind { "value" }
+    stratified_sortition { association(:stratified_sortition) }
+  end
+
+  factory :substratum, class: "Decidim::StratifiedSortitions::Substratum" do
+    sequence(:name) { |n| "Substratum #{n}" }
+    value { "A" }
+    range { "0-10" }
+    weighing { 10.0 }
+    stratum { association(:stratum) }
+  end
 end

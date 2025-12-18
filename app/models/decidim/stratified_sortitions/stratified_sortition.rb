@@ -2,8 +2,7 @@
 
 module Decidim
   module StratifiedSortitions
-    # The data store for a StratifiedSortition in the Decidim::StratifiedSortitions component.
-    class StratifiedSortition < Decidim::ApplicationRecord
+    class StratifiedSortition < ApplicationRecord
       include Decidim::HasComponent
       include Decidim::FilterableResource
       include Decidim::ScopableResource
@@ -17,6 +16,8 @@ module Decidim
       include Decidim::HasUploadValidations
 
       component_manifest_name "stratified_sortitions"
+
+      has_many :strata, class_name: "Decidim::StratifiedSortitions::Stratum", foreign_key: "decidim_stratified_sortition_id", dependent: :destroy
 
       scope :search_text_cont, lambda { |search_text|
         where("title ->> '#{I18n.locale}' ILIKE ?", "%#{search_text}%")

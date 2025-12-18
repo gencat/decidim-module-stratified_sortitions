@@ -57,9 +57,35 @@ en:
             title: Edit Stratified Sortition
             update: Update
           form:
-            name: Name
+            data: General Information
             description: Description
+            name: Name
             published: Published
+          strata:
+            title: Strata
+            add_stratum: Add stratum
+          stratum:
+            up: Up
+            down: Down
+            remove: Remove
+            name: Name
+            kind: 
+              title: Kind
+              value: Value
+              numeric_range: Numeric range
+            title: Substrata
+            title: Strata
+          substrata:
+            add_substratum: Add substratum
+          substratum:
+            up: Up
+            down: Down
+            remove: Remove
+            name: Name
+            value: Value
+            range: Range
+            title: Substratum
+            weighing: Weighing
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated

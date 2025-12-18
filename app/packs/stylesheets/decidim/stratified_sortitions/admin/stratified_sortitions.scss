@@ -1,0 +1,11 @@
+.stratum-fields,
+.substratum-fields {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  
+  .translated-field {
+    width: 100%;
+  }
+}

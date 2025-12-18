@@ -24,6 +24,7 @@ module Decidim
 
           transaction do
             create_stratified_sortition!
+            create_strata(stratified_sortition)
           end
 
           broadcast(:ok, stratified_sortition)
@@ -54,6 +55,16 @@ module Decidim
             params,
             visibility: "all"
           )
+        end
+
+        def create_strata(stratified_sortition)
+          form.strata_to_persist.each do |stratum|
+            Decidim::StratifiedSortitions::Stratum.create!(
+              stratified_sortition:,
+              name: stratum.name,
+              kind: stratum.kind
+            )
+          end
         end
       end
     end
