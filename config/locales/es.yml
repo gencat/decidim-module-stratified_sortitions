@@ -28,7 +28,7 @@ es:
           duplicate: Duplicar
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
-          upload_census: Importar censo
+          upload_sample: Importar muestra
         models:
           stratified_sortition:
             fields:
@@ -91,7 +91,7 @@ es:
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito
-          upload_census:
+          upload_sample:
             age: Grupo de edad
             census_file: Elegir un archivo
             census_file_label: Archivo excel.csv con los datos del censo
