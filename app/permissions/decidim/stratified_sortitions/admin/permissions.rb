@@ -22,6 +22,8 @@ module Decidim
 
           allow! if permission_action.subject == :stratified_sortition && export_permission_action?
 
+          allow! if permission_action.subject == :stratified_sortition && upload_sample_permission_action?
+
           permission_action
         end
 
@@ -53,6 +55,10 @@ module Decidim
 
         def export_permission_action?
           permission_action.action == :export_surveys
+        end
+
+        def upload_sample_permission_action?
+          permission_action.action == :upload_sample
         end
 
         def duplicate_permission_action?

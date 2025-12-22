@@ -28,7 +28,7 @@ ca:
           duplicate: Duplica
           new_stratified_sortition: "Nou sortejo estratificat"
           title: "Accions"
-          upload_census: "Importar cens"
+          upload_sample: "Importar mostra"
         models:
           stratified_sortition:
             fields:
@@ -91,7 +91,7 @@ ca:
           update:
             error: S'ha produït un problema en actualitzar aquest sortejo estratificat
             success: Sortejo estratificat actualitzat amb èxit
-          upload_census:
+          upload_sample:
             age: Grup d'edat
             census_file: Triar un fitxer
             census_file_label: Arxiu excel.csv amb les dades del cens

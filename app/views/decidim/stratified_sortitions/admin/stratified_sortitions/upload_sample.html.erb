@@ -17,11 +17,10 @@
     <%= t(".help") %>
   </div>
   <div class="row mt-4">
-    <%= decidim_form_for :stratified_sortition, url: process_census_stratified_sortition_path(@stratified_sortition), html: { multipart: true } do |f| %>
-      <div class="row form-upload-census-container">
-        <%= f.file_field :census_file, label: t(".census_file_label") %>
-        <%= f.submit t(".title"), class: "button button__sm button__secondary" %>
-      </div>
+    <%= form_tag samples_path(id: @stratified_sortition.id), multipart: true, class: 'form' do %>
+      <%= label_tag :name, t('.census_file_label') %>
+      <%= file_field_tag :file %>
+      <%= submit_tag t('.title'), class: 'button button__sm button__secondary hollow tiny button--title' %>
     <% end %>
   </div>
 </div>

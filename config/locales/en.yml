@@ -26,7 +26,7 @@ en:
           duplicate: Duplicate
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
-          upload_census: "Import Census"
+          upload_sample: "Import Census"
         models:
           stratified_sortition:
             fields:
@@ -89,7 +89,7 @@ en:
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated
-          upload_census:
+          upload_sample:
             age: Age group
             census_file: Choose a file
             census_file_label: Excel.csv file with census data
