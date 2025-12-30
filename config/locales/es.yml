@@ -97,6 +97,7 @@ es:
             census_file_label: Archivo excel.csv con los datos del censo
             count_uploaded_files: "<b>%{count}</b> registros cargados."
             description: "Debe ser un archivo generado en Excel y exportado en CSV con las siguientes columnas:"
+            download_template: "Descargar plantilla CSV"
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
             filename_data: Nombre de archivo, el día %{date}, número de registros %{count}
             gender: Género
@@ -106,3 +107,17 @@ es:
             target: Objetivo
             title: Subir un nuevo censo
             uploaded_file: Datos del censo
+        import_mailer:
+          import:
+            ready: "La importación de la muestra ha finalizado correctamente."
+            errors_summary: "Total de filas: %{total}. Importadas correctamente: %{imported}. Filas con errores: %{failed}."
+        samples:
+          template:
+            personal_data_1: "Dato personal 1 (identificador único)"
+            personal_data_2: "Dato personal 2"
+            personal_data_3: "Dato personal 3"
+            personal_data_4: "Dato personal 4"
+          import_success: "La muestra se ha importado correctamente."
+          import_failed: "Ha ocurrido un error al importar la muestra: %{error}"
+          errors:
+            no_file: "No se ha seleccionado ningún archivo."

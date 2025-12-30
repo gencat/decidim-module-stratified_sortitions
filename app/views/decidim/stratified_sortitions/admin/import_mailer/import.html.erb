@@ -1,0 +1,6 @@
+<p class="email-instructions">
+  <%= t(".ready") %>
+</p>
+<p class="email-instructions">
+  <%= t(".errors_summary", total: @sample_import.total_rows, imported: @sample_import.imported_rows, failed: @sample_import.failed_rows) %>
+</p>

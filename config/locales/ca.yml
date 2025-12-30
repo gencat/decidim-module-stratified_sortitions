@@ -97,14 +97,29 @@ ca:
             census_file_label: Arxiu excel.csv amb les dades del cens
             count_uploaded_files: "<b>%{count}</b> registres carregats."
             description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
+            download_template: "Descarregar plantilla CSV"
             example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
             filename_data: Nom fitxer, el dia %{date}, número de registres %{count}
             gender: Gènere
-            last_upload_date: La última càrrega va ser el dia Febrer 24, 2025 10:41
+            last_upload_date: La última càrrega va ser el dia %{date}
             help: Les quatre primeres columnes són dades del candidat, per exemple correu electrònic, DNI, telèfon o adreça i les següents columnes són els estrats definits en el sorteig estratificat. Cada fila representa un candidat.
             place: Lloc de naixement
             target: Target
             title: Pujar un nou cens
             uploaded_file: Dades del cens carregat
             uploaded_files: "S'han agregat els següents fitxers:"
+        import_mailer:
+          import:
+            ready: "La importació de la mostra ha finalitzat correctament."
+            errors_summary: "Total de files: %{total}. Importades correctament: %{imported}. Files amb errors: %{failed}."
+        samples:
+          template:
+            personal_data_1: "Dada personal 1 (identificador únic)"
+            personal_data_2: "Dada personal 2"
+            personal_data_3: "Dada personal 3"
+            personal_data_4: "Dada personal 4"
+          import_success: "La mostra s'ha importat correctament."
+          import_failed: "Hi ha hagut un error en importar la mostra: %{error}"
+          errors:
+            no_file: "No s'ha seleccionat cap fitxer."
 

@@ -18,7 +18,11 @@ module Decidim
           post :process_sample, on: :member
         end
 
-        resources :samples, only: [:show, :create]
+        resources :samples, only: [:show, :create] do
+          collection do
+            get :download_template
+          end
+        end
 
         root to: "stratified_sortitions#index"
       end

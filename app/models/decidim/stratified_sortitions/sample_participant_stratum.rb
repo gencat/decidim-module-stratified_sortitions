@@ -1,11 +1,9 @@
 module Decidim
   module StratifiedSortitions
     class SampleParticipantStratum < ApplicationRecord
-      belongs_to :sample_participant
-      belongs_to :stratum
-      belongs_to :substratum, optional: true
-
-      # Add validations or helper methods as needed
+      belongs_to :decidim_stratified_sortitions_sample_participant, class_name: "Decidim::StratifiedSortitions::SampleParticipant"
+      belongs_to :decidim_stratified_sortitions_stratum, class_name: "Decidim::StratifiedSortitions::Stratum"
+      belongs_to :decidim_stratified_sortitions_substratum, class_name: "Decidim::StratifiedSortitions::Substratum"
     end
   end
 end

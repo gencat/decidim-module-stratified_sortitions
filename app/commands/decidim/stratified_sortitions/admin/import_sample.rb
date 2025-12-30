@@ -3,15 +3,18 @@
 module Decidim
   module StratifiedSortitions
     module Admin
-      # Command that creates a stratified sortition
+      # Command that import samples of a stratified sortition
       class ImportSample < Decidim::Command
         # Public: Initializes the command.
         #
-        # form - A form object with the params.
-        def initialize(file, stratified_sortition)
-          super()
+        # file - The CSV file to import
+        # stratified_sortition - The stratified sortition to import samples to
+        # user - The user performing the import
+        def initialize(file, stratified_sortition, user)
+          super
           @file = file
           @stratified_sortition = stratified_sortition
+          @user = user
         end
 
         # Executes the command. Broadcasts these events:
@@ -21,7 +24,7 @@ module Decidim
         #
         # Returns nothing.
         def call
-          ImportSampleJob.perform_now(@file, stratified_sortition)
+          ImportSampleJob.perform_now(@file, @stratified_sortition, @user)
           broadcast(:ok)
         end
 
@@ -38,8 +41,6 @@ module Decidim
             errors << row
           end
         end
-
-        # attr_reader :form, :stratified_sortition
 
         def create_stratified_sortition!
           parsed_title = Decidim::ContentProcessor.parse_with_processor(:hashtag, form.title, current_organization: form.current_organization).rewrite

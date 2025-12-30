@@ -5,52 +5,65 @@ require "csv"
 class ImportSampleJob < ApplicationJob
   queue_as :default
 
-  # Expects a file as argument
-  def perform(file, stratified_sortition)
-    byebug
+  def perform(file, stratified_sortition, user)
     sample_import = Decidim::StratifiedSortitions::SampleImport.create!(
       stratified_sortition:,
       filename: File.basename(file),
       status: :processing
     )
-
+    processing_errors = []
+    total_rows = 0
+    
     CSV.foreach(file, headers: true, col_sep: ",") do |row|
+      total_rows += 1
       @headers = row.headers
       strata_headers = @headers[4..]
 
-      process_row(row, strata_headers, stratified_sortition, sample_import)
+      errors = process_row(row, strata_headers, stratified_sortition, sample_import)
 
-      # participant_attrs = row.to_h
-
-      # participant = Participant.find_or_create_by(email: participant_attrs[:email]) do |p|
-      #   p.name = participant_attrs[:name]
-      #   p.other_attributes = participant_attrs[:other_attributes]
-      # end
-
-      # stratum = Stratum.find_or_create_by(name: participant_attrs[:stratum_name])
-      # substratum = Substratum.find_or_create_by(name: participant_attrs[:substratum_name], stratum: stratum)
-      # ParticipantSubstratum.find_or_create_by(participant: participant, substratum: substratum)
+      processing_errors << errors if errors.present?
     end
+
+    sample_import.update(
+      status: :completed,
+      total_rows: total_rows,
+      imported_rows: total_rows - processing_errors.flatten.size,
+      failed_rows: processing_errors.flatten.size,
+      import_errors: processing_errors.flatten
+    )
+
+    Decidim::StratifiedSortitions::Admin::ImportMailer.import(user, sample_import).deliver_now
   end
 
   private
 
   def process_row(row, strata_headers, stratified_sortition, sample_import)
-   participant = Decidim::StratifiedSortitions::SampleParticipant.create!(
+    participant = Decidim::StratifiedSortitions::SampleParticipant.find_or_create_by(
+      personal_data_1: row[0])
+    
+    participant.update!(
       decidim_stratified_sortition: stratified_sortition,
-      sample_import:,
-      personal_data_1: row[0],
+      decidim_stratified_sortitions_sample_import: sample_import,
       personal_data_2: row[1],
       personal_data_3: row[2],
-      personal_data_4: row[3]
+      personal_data_4: row[3],
     )
 
-    strata_headers.find_each_with_index do |index, strata|
-      Decidim::StratifiedSortitions::SampleParticipantStratum.create!(
-        sample_participant: participant,
-        stratum: Decidim::StratifiedSortitions::Stratum.find_by(name: strata),
-        substratum: Decidim::StratifiedSortitions::Substratum.find_by(name: row[index])
+    strata_headers.each_with_index do |strata, index|
+      strata_id = strata.split("_").last
+      sps = Decidim::StratifiedSortitions::SampleParticipantStratum.create!(
+        decidim_stratified_sortitions_sample_participant: participant,
+        decidim_stratified_sortitions_stratum: Decidim::StratifiedSortitions::Stratum.find(strata_id),
+        decidim_stratified_sortitions_substratum: Decidim::StratifiedSortitions::Substratum.find_by(value: row[strata])
       )
     end
+    
+    nil
+  rescue StandardError => e
+    {
+      row: row.to_h,
+      error: e.message,
+      backtrace: e.backtrace.first(3)
+    }
   end
 end

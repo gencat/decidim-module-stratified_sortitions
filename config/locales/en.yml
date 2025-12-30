@@ -95,6 +95,7 @@ en:
             census_file_label: Excel.csv file with census data
             count_uploaded_files: "<b>%{count}</b> records uploaded."
             description: "It must be a file generated in Excel and exported as CSV with the following columns:"
+            download_template: "Download CSV template"
             example: "Candidate data 1,Candidate data 2,Candidate data 3,Candidate data 4,Stratum 1,Stratum 2,Stratum 3,Stratum N<br>example@example.com,D,Higher,34<br>example@example.com,E,Higher,24<br><br>. . ."
             filename_data: File name, on %{date}, number of records %{count}
             gender: Gender
@@ -104,3 +105,17 @@ en:
             target: Target
             title: Upload a new census
             uploaded_file: Census data
+        import_mailer:
+          import:
+            ready: "The sample import has been completed successfully."
+            errors_summary: "Total rows: %{total}. Successfully imported: %{imported}. Rows with errors: %{failed}."
+        samples:
+          template:
+            personal_data_1: "Personal data 1 (unique identifier)"
+            personal_data_2: "Personal data 2"
+            personal_data_3: "Personal data 3"
+            personal_data_4: "Personal data 4"
+          import_success: "The sample has been imported successfully."
+          import_failed: "An error occurred while importing the sample: %{error}"
+          errors:
+            no_file: "No file has been selected."
