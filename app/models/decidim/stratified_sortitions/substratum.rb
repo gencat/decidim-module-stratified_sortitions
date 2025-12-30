@@ -10,7 +10,7 @@ module Decidim
 
       belongs_to :stratum, class_name: "Decidim::StratifiedSortitions::Stratum", foreign_key: "decidim_stratified_sortitions_stratum_id"
 
-      translatable_fields :name, :value
+      translatable_fields :name
     end
   end
 end
