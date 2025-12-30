@@ -11,7 +11,7 @@ module Decidim
         # stratified_sortition - The stratified sortition to import samples to
         # user - The user performing the import
         def initialize(file, stratified_sortition, user)
-          super
+          super()
           @file = file
           @stratified_sortition = stratified_sortition
           @user = user

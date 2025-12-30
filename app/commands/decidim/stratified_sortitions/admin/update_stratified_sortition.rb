@@ -67,13 +67,13 @@ module Decidim
 
           stratified_sortition.strata.each do |existing_stratum|
             next if strata_ids_to_keep.include?(existing_stratum.id)
-            
+
             existing_stratum.substrata.each do |substratum|
               Decidim::StratifiedSortitions::SampleParticipantStratum.where(
                 decidim_stratified_sortitions_substratum_id: substratum.id
               ).destroy_all
             end
-            
+
             existing_stratum.destroy!
           end
 
@@ -83,7 +83,7 @@ module Decidim
                 id: stratum_form.id,
                 decidim_stratified_sortition_id: stratified_sortition.id
               )
-              
+
               if stratum_object
                 stratum_object.update!(
                   name: stratum_form.name,
@@ -114,23 +114,23 @@ module Decidim
 
           stratum.substrata.each do |existing_substratum|
             next if substrata_ids_to_keep.include?(existing_substratum.id)
-            
+
             Decidim::StratifiedSortitions::SampleParticipantStratum.where(
               decidim_stratified_sortitions_substratum_id: existing_substratum.id
             ).destroy_all
-            
+
             existing_substratum.destroy!
           end
 
           stratum_form.substrata_to_persist.each do |substratum_form|
             next if substratum_form.deleted
-            
+
             if substratum_form.id.present?
               substratum = Decidim::StratifiedSortitions::Substratum.find_by(
                 id: substratum_form.id,
                 decidim_stratified_sortitions_stratum_id: stratum.id
               )
-              
+
               if substratum
                 substratum.update!(
                   name: substratum_form.name,
@@ -148,7 +148,7 @@ module Decidim
                 )
               end
             else
-              new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
+              Decidim::StratifiedSortitions::Substratum.create!(
                 stratum:,
                 name: substratum_form.name,
                 value: substratum_form.value,

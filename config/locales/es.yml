@@ -108,9 +108,15 @@ es:
             title: Subir un nuevo censo
             uploaded_file: Datos del censo
         import_mailer:
+          subject: "Resultado de la importación de la muestra"
           import:
             ready: "La importación de la muestra ha finalizado correctamente."
+            total_rows: "Total de filas"
+            imported_rows: "Importadas correctamente"
+            failed_rows: "Filas con errores"
             errors_summary: "Total de filas: %{total}. Importadas correctamente: %{imported}. Filas con errores: %{failed}."
+            see_details: "Los identificadores de los participantes los cuales han tenido error son:"
+            participant_id: "Identificador del participante:"
         samples:
           template:
             personal_data_1: "Dato personal 1 (identificador único)"
@@ -121,3 +127,6 @@ es:
           import_failed: "Ha ocurrido un error al importar la muestra: %{error}"
           errors:
             no_file: "No se ha seleccionado ningún archivo."
+        sample_imports:
+          create:
+            success: "La muestra se está cargando en segundo plano. Cuando termine recibirás un correo con el resumen de la importación."

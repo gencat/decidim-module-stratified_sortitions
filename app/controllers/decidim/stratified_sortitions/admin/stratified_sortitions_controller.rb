@@ -106,39 +106,6 @@ module Decidim
           @filenames = [["01/04/2025", 567], ["15/05/2024", 123]]
         end
 
-        def process_sample
-          force_permission_to :upload_sample, :stratified_sortition
-
-          unless params[:file].present?
-            flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.no_file")
-            redirect_back(fallback_location: stratified_sortitions_path) and return
-          end
-
-          uploaded_file = params[:file]
-          tmp_path = Rails.root.join("tmp", "sample_import_#{SecureRandom.hex(8)}.csv")
-          File.open(tmp_path, 'wb') { |f| f.write(uploaded_file.read) }
-
-          sample_import = SampleImport.create!(
-            stratified_sortition: stratified_sortition,
-            filename: uploaded_file.original_filename,
-            status: :pending
-          )
-
-          begin
-            SampleImportService.new(
-              file_path: tmp_path,
-              stratified_sortition: stratified_sortition,
-              sample_import: sample_import
-            ).run
-            flash[:notice] = t("decidim.stratified_sortitions.admin.samples.import_success")
-          rescue => e
-            flash[:alert] = t("decidim.stratified_sortitions.admin.samples.import_failed", error: e.message)
-          ensure
-            File.delete(tmp_path) if File.exist?(tmp_path)
-          end
-          redirect_to stratified_sortition_path(stratified_sortition)
-        end
-
         private
 
         def collection

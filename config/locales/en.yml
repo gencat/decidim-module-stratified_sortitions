@@ -106,9 +106,15 @@ en:
             title: Upload a new census
             uploaded_file: Census data
         import_mailer:
+          subject: "Sample import result"
           import:
             ready: "The sample import has been completed successfully."
+            total_rows: "Total rows"
+            imported_rows: "Successfully imported"
+            failed_rows: "Rows with errors"
             errors_summary: "Total rows: %{total}. Successfully imported: %{imported}. Rows with errors: %{failed}."
+            see_details: "The identifiers of the participants who have had errors are:"
+            participant_id: "Participant ID:"
         samples:
           template:
             personal_data_1: "Personal data 1 (unique identifier)"
@@ -119,3 +125,6 @@ en:
           import_failed: "An error occurred while importing the sample: %{error}"
           errors:
             no_file: "No file has been selected."
+        sample_imports:
+          create:
+            success: "The sample is being loaded in the background. When it finishes you will receive an email with the import summary."

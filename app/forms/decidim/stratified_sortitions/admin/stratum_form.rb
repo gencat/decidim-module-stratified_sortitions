@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable  Lint/ReturnInVoidContext
 module Decidim
   module StratifiedSortitions
     module Admin
@@ -9,7 +12,7 @@ module Decidim
         translatable_attribute :name, String
         attribute :kind, String
         attribute :deleted, Boolean, default: false
-        attribute :substrata, Array[SubstratumForm]
+        attribute :substrata, [SubstratumForm]
 
         validates :name, translatable_presence: true, unless: :deleted
 
@@ -19,9 +22,9 @@ module Decidim
 
         def substrata=(value)
           value = [value] if value.is_a?(Hash) && !value.empty? && value.values.first.is_a?(String)
-          
+
           return @substrata = [] if value.blank?
-          
+
           @substrata = value.map do |substratum_data|
             if substratum_data.is_a?(SubstratumForm)
               substratum_data
@@ -55,3 +58,6 @@ module Decidim
     end
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable  Lint/ReturnInVoidContext

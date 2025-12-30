@@ -2,5 +2,21 @@
   <%= t(".ready") %>
 </p>
 <p class="email-instructions">
-  <%= t(".errors_summary", total: @sample_import.total_rows, imported: @sample_import.imported_rows, failed: @sample_import.failed_rows) %>
+  <ul>
+    <li><strong><%= t(".total_rows") %>:</strong> <%= @sample_import.total_rows %></li>
+    <li><strong><%= t(".imported_rows") %>:</strong> <%= @sample_import.imported_rows %></li>
+    <li><strong><%= t(".failed_rows") %>:</strong> <%= @sample_import.failed_rows %></li>
+  </ul>
+
+  <% if @sample_import.failed_rows.positive? %>
+    <br>
+    <strong><%= t(".see_details") %></strong>
+    <ul>
+      <% @sample_import.import_errors.each do |error| %>
+        <li>
+          <strong><%= t(".participant_id") %> <%= error["row"].values.first %></strong>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </p>

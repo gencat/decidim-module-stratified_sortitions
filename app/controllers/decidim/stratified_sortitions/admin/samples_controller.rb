@@ -25,11 +25,11 @@ module Decidim
 
         def create
           enforce_permission_to :upload_sample, :stratified_sortition
-          
+
           Decidim::StratifiedSortitions::Admin::ImportSample.call(params[:file], stratified_sortition, current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("sample_imports.create.success", scope: "decidim.stratified_sortitions.admin")
-              redirect_to EngineRouter.admin_proxy(current_component).root_path
+              redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
             end
 
             on(:invalid) do
@@ -41,19 +41,17 @@ module Decidim
 
         private
 
-        # Business rule: Block import if no strata or substrata configured
         def ensure_strata_configured
           unless stratified_sortition.strata.any? && stratified_sortition.strata.all? { |s| s.substrata.any? }
             flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.no_strata")
-            redirect_back(fallback_location: stratified_sortitions_path) and return
+            redirect_back(fallback_location: stratified_sortitions_path) && return
           end
         end
 
-        # Business rule: Prevent deletion or import if draw is done
         def ensure_not_drawn
           if stratified_sortition.respond_to?(:drawn?) && stratified_sortition.drawn?
             flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.drawn")
-            redirect_back(fallback_location: stratified_sortitions_path) and return
+            redirect_back(fallback_location: stratified_sortitions_path) && return
           end
         end
 
@@ -86,12 +84,11 @@ module Decidim
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_1"),
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_2"),
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_3"),
-            I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_4")
+            I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_4"),
           ]
           strata = Decidim::StratifiedSortitions::Stratum.order(:id)
-          strata_headers = []
-          strata.each do |stratum|
-            strata_headers << "#{translated_attribute(stratum.name)}_#{stratum.id}"
+          strata_headers = strata.map do |stratum|
+            "#{translated_attribute(stratum.name)}_#{stratum.id}"
           end
 
           headers = personal_headers + strata_headers

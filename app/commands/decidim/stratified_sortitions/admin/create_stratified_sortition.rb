@@ -64,11 +64,10 @@ module Decidim
               name: stratum_form.name,
               kind: stratum_form.kind
             )
-            
-            
+
             stratum_form.substrata_to_persist.each do |substratum_form|
               Decidim::StratifiedSortitions::Substratum.create!(
-                stratum: stratum,
+                stratum:,
                 name: substratum_form.name,
                 value: substratum_form.value,
                 range: substratum_form.range,

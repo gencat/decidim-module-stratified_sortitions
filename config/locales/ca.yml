@@ -109,9 +109,15 @@ ca:
             uploaded_file: Dades del cens carregat
             uploaded_files: "S'han agregat els següents fitxers:"
         import_mailer:
+          subject: "Resultat de la importació de la mostra"
           import:
             ready: "La importació de la mostra ha finalitzat correctament."
+            total_rows: "Total de files"
+            imported_rows: "Importades correctament"
+            failed_rows: "Files amb errors"
             errors_summary: "Total de files: %{total}. Importades correctament: %{imported}. Files amb errors: %{failed}."
+            see_details: "Els identificadors dels participants que han tingut error són:"
+            participant_id: "Identificador del participant:"
         samples:
           template:
             personal_data_1: "Dada personal 1 (identificador únic)"
@@ -122,4 +128,7 @@ ca:
           import_failed: "Hi ha hagut un error en importar la mostra: %{error}"
           errors:
             no_file: "No s'ha seleccionat cap fitxer."
+        sample_imports:
+          create:
+            success: "La mostra s'està carregant en segon pla. Quan acabi rebràs un correu amb el resum de la importació."
 

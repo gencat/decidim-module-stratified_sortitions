@@ -17,10 +17,10 @@ module Decidim
           @sample_import = sample_import
 
           with_user(user) do
-            mail(to: "#{user.name} <#{user.email}>", subject: I18n.t("decidim.import_mailer.subject"))
+            mail(to: "#{user.name} <#{user.email}>", subject: I18n.t("decidim.stratified_sortitions.admin.import_mailer.subject"))
           end
         end
       end
     end
   end
-  end
+end
