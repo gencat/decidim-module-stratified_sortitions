@@ -21,9 +21,15 @@ module Decidim
         end
 
         def substrata=(value)
-          value = [value] if value.is_a?(Hash) && !value.empty? && value.values.first.is_a?(String)
-
           return @substrata = [] if value.blank?
+
+          if value.is_a?(Hash)
+            if value.values.first.is_a?(String)
+              value = [value]
+            else
+              value = value.values
+            end
+          end
 
           @substrata = value.map do |substratum_data|
             if substratum_data.is_a?(SubstratumForm)

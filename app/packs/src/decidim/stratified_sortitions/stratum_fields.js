@@ -56,7 +56,7 @@ $(() => {
     if ($template.length && $container.length) {
       const templateContent = $template.html();
       const uniqueId = new Date().getTime();
-      let newField = templateContent.replace(/stratified-sortition-stratum-id/g, uniqueId);
+      let newField = templateContent.replace(/STRATUM_ID/g, uniqueId);
       newField = newField.replace(/substrata-\d+/g, `substrata-${uniqueId}`);
       $container.append(newField);
       

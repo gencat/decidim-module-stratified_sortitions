@@ -63,7 +63,7 @@ module Decidim
         end
 
         def update_strata(stratified_sortition)
-          strata_ids_to_keep = form.strata_to_persist.map(&:id).compact
+          strata_ids_to_keep = form.strata_to_persist.pluck(:id).compact.map(&:to_i)
 
           stratified_sortition.strata.each do |existing_stratum|
             next if strata_ids_to_keep.include?(existing_stratum.id)
@@ -89,15 +89,14 @@ module Decidim
                   name: stratum_form.name,
                   kind: stratum_form.kind
                 )
-                update_substrata(stratum_object, stratum_form)
               else
                 stratum_object = Decidim::StratifiedSortitions::Stratum.create!(
                   stratified_sortition:,
                   name: stratum_form.name,
                   kind: stratum_form.kind
                 )
-                create_substrata(stratum_object, stratum_form)
               end
+              update_substrata(stratum_object, stratum_form)
             else
               stratum_object = Decidim::StratifiedSortitions::Stratum.create!(
                 stratified_sortition:,
@@ -110,17 +109,7 @@ module Decidim
         end
 
         def update_substrata(stratum, stratum_form)
-          substrata_ids_to_keep = stratum_form.substrata_to_persist.map(&:id).compact
-
-          stratum.substrata.each do |existing_substratum|
-            next if substrata_ids_to_keep.include?(existing_substratum.id)
-
-            Decidim::StratifiedSortitions::SampleParticipantStratum.where(
-              decidim_stratified_sortitions_substratum_id: existing_substratum.id
-            ).destroy_all
-
-            existing_substratum.destroy!
-          end
+          updated_or_created_ids = []
 
           stratum_form.substrata_to_persist.each do |substratum_form|
             next if substratum_form.deleted
@@ -138,24 +127,37 @@ module Decidim
                   range: substratum_form.range,
                   weighing: substratum_form.weighing
                 )
+                updated_or_created_ids << substratum.id
               else
-                Decidim::StratifiedSortitions::Substratum.create!(
+                new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
                   stratum:,
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
                   weighing: substratum_form.weighing
                 )
+                updated_or_created_ids << new_substratum.id
               end
             else
-              Decidim::StratifiedSortitions::Substratum.create!(
+              new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
                 stratum:,
                 name: substratum_form.name,
                 value: substratum_form.value,
                 range: substratum_form.range,
                 weighing: substratum_form.weighing
               )
+              updated_or_created_ids << new_substratum.id
             end
+          end
+
+          stratum.substrata.reload.each do |existing_substratum|
+            next if updated_or_created_ids.include?(existing_substratum.id)
+
+            Decidim::StratifiedSortitions::SampleParticipantStratum.where(
+              decidim_stratified_sortitions_substratum_id: existing_substratum.id
+            ).destroy_all
+
+            existing_substratum.destroy!
           end
         end
 
