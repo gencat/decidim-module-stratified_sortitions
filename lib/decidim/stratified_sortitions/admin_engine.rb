@@ -21,6 +21,7 @@ module Decidim
         resources :samples, only: [:show, :create] do
           collection do
             get :download_template
+            delete :remove_multiple
           end
         end
 

@@ -34,7 +34,23 @@ module Decidim
 
             on(:invalid) do
               flash.now[:alert] = I18n.t("sample_imports.create.invalid", scope: "decidim.stratified_sortitions.admin")
-              render action: "new"
+              redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
+            end
+          end
+        end
+
+        def remove_multiple
+          enforce_permission_to :upload_sample, :stratified_sortition
+
+          Decidim::StratifiedSortitions::Admin::RemoveUploadedSamples.call(stratified_sortition) do
+            on(:ok) do
+              flash[:notice] = I18n.t("sample_imports.remove_uploaded_samples.success", scope: "decidim.stratified_sortitions.admin")
+              redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
+            end
+
+            on(:invalid) do
+              flash.now[:alert] = I18n.t("sample_imports.remove_uploaded_samples.error", scope: "decidim.stratified_sortitions.admin")
+              redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
             end
           end
         end
