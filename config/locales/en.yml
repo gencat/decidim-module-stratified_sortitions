@@ -130,6 +130,8 @@ en:
           import_failed: "An error occurred while importing the sample: %{error}"
           errors:
             no_file: "No file has been selected."
+            no_strata: "You must configure strata and substrata before uploading a sample."
+            pending: "You can only upload samples when the stratified sortition is in pending status."
         sample_imports:
           create:
             success: "The sample is being loaded in the background. When it finishes you will receive an email with the import summary."

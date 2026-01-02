@@ -9,7 +9,7 @@ module Decidim
         include Decidim::TranslatableAttributes
 
         before_action :ensure_strata_configured, only: [:upload_sample, :process_sample]
-        before_action :ensure_not_drawn, only: [:upload_sample, :process_sample, :destroy]
+        before_action :ensure_not_drawn, only: [:create, :remove_multiple]
 
         include Decidim::ApplicationHelper
 
@@ -58,16 +58,16 @@ module Decidim
         private
 
         def ensure_strata_configured
-          unless stratified_sortition.strata.any? && stratified_sortition.strata.all? { |s| s.substrata.any? }
+          unless stratified_sortition.strata_and_substrata_configured?
             flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.no_strata")
-            redirect_back(fallback_location: stratified_sortitions_path) && return
+            redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
           end
         end
 
-        def ensure_not_drawn
-          if stratified_sortition.respond_to?(:drawn?) && stratified_sortition.drawn?
-            flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.drawn")
-            redirect_back(fallback_location: stratified_sortitions_path) && return
+        def ensure_stratified_sortition_is_pending
+          if stratified_sortition.status != "pending"
+            flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.pending")
+            redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
           end
         end
 

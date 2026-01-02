@@ -132,6 +132,8 @@ ca:
           import_failed: "Hi ha hagut un error en importar la mostra: %{error}"
           errors:
             no_file: "No s'ha seleccionat cap fitxer."
+            no_strata: "Has de configurar els estrats i subestrats abans de pujar una mostra."
+            pending: "Només pots pujar mostres quan el sortejo estratificat està en estat pendent."
         sample_imports:
           create:
             success: "La mostra s'està carregant en segon pla. Quan acabi rebràs un correu amb el resum de la importació."

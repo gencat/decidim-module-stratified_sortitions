@@ -132,6 +132,8 @@ es:
           import_failed: "Ha ocurrido un error al importar la muestra: %{error}"
           errors:
             no_file: "No se ha seleccionado ningún archivo."
+            no_strata: "Debes configurar los estratos y subestratos antes de subir una muestra."
+            pending: "Solo puedes subir muestras cuando el sorteo estratificado está en estado pendiente."
         sample_imports:
           create:
             success: "La muestra se está cargando en segundo plano. Cuando termine recibirás un correo con el resumen de la importación."
