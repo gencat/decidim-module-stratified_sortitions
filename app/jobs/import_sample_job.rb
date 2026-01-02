@@ -8,7 +8,7 @@ class ImportSampleJob < ApplicationJob
   def perform(file, stratified_sortition, user)
     sample_import = Decidim::StratifiedSortitions::SampleImport.create!(
       stratified_sortition:,
-      filename: File.basename(file),
+      filename: file.original_filename,
       status: :processing
     )
     processing_errors = []
@@ -24,8 +24,9 @@ class ImportSampleJob < ApplicationJob
       processing_errors << errors if errors.present?
     end
 
+    status = processing_errors.flatten.empty? ? :completed : :failed
     sample_import.update(
-      status: :completed,
+      status:,
       total_rows:,
       imported_rows: total_rows - processing_errors.flatten.size,
       failed_rows: processing_errors.flatten.size,

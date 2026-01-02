@@ -103,7 +103,7 @@ module Decidim
           @stratified_sortition = stratified_sortition
           @sample_participants_count = @stratified_sortition.sample_participants.count
           @last_sample = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :desc).first
-          @filenames = [["01/04/2025", 567], ["15/05/2024", 123]]
+          @samples = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :asc)
         end
 
         private

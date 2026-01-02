@@ -95,19 +95,23 @@ ca:
             age: Grup d'edat
             census_file: Triar un fitxer
             census_file_label: Arxiu excel.csv amb les dades del cens
+            configure_strata_first: Primer has de configurar els estrats i subestrats
             count_uploaded_files: "<b>%{count}</b> registres carregats."
             description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
             download_template: "Descarregar plantilla CSV"
             example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
-            filename_data: Nom fitxer, el dia %{date}, número de registres %{count}
+            filename_data: "%{filename}, el dia %{date}, número de registres %{count}"
             gender: Gènere
             last_upload_date: La última càrrega va ser el dia %{date}
             help: Les quatre primeres columnes són dades del candidat, per exemple correu electrònic, DNI, telèfon o adreça i les següents columnes són els estrats definits en el sorteig estratificat. Cada fila representa un candidat.
             place: Lloc de naixement
+            remove_uploaded_samples: Eliminar mostres carregades
+            confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
             target: Target
             title: Pujar un nou cens
             uploaded_file: Dades del cens carregat
             uploaded_files: "S'han agregat els següents fitxers:"
+            no_uploaded_files: "No hi ha fitxers carregats."
         import_mailer:
           subject: "Resultat de la importació de la mostra"
           import:
@@ -131,4 +135,7 @@ ca:
         sample_imports:
           create:
             success: "La mostra s'està carregant en segon pla. Quan acabi rebràs un correu amb el resum de la importació."
+          remove_uploaded_samples:
+            success: "Les mostres carregades s'han eliminat correctament."
+            error: "Hi ha hagut un error en eliminar les mostres carregades."
 

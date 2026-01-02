@@ -34,6 +34,10 @@ module Decidim
                           B: :description,
                           datetime: :published_at,
                         })
+
+      def strata_and_substrata_configured?
+        strata.any? && strata.all? { |stratum| stratum.substrata.any? }
+      end
     end
   end
 end

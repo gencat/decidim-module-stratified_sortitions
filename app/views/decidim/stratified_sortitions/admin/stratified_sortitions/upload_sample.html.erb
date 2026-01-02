@@ -21,9 +21,17 @@
   </div>
   <div class="row mt-4">
     <%= form_tag samples_path(id: @stratified_sortition.id), multipart: true, class: 'form' do %>
-      <%= label_tag :name, t('.census_file_label') %>
-      <%= file_field_tag :file %>
-      <%= submit_tag t('.title'), class: 'button button__sm button__secondary hollow tiny button--title' %>
+      <div class="flex">
+        
+        <%= file_field_tag :file %>
+
+        <% if @stratified_sortition.strata_and_substrata_configured? %>
+          <%= submit_tag t('.title'), class: 'button button__sm button__secondary hollow tiny button--title' %>
+        <% else %>
+          <p class="mr-2"><%= t('.configure_strata_first') %></p>
+          <%= submit_tag t('.title'), class: 'button button__sm button__secondary hollow tiny button--title', disabled: true, title: t('.configure_strata_first') %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -35,14 +43,21 @@
       </div>
     </h1>
   </div>
+  <div class="mt-2">
+    <% if @stratified_sortition.status == "pending" %>
+      <%= link_to t('.remove_uploaded_samples'), remove_multiple_samples_path(id: @stratified_sortition.id), class: 'button button__sm button__secondary', data: { method: :delete, confirm: t('.confirm_remove_uploaded_samples') } %>
+    <% end %>
+  </div>
   <div class="mt-4 mb-4">
     <div class="flex justify-between gap-x-4">
       <span>
         <%= t(".count_uploaded_files", count: @sample_participants_count).html_safe %>
       </span>
-      <span class="last-census-upload">
-        <%= t(".last_upload_date", date: @last_sample.created_at.strftime("%d/%m/%Y %H:%M")) %>
-      </span>
+      <% if @last_sample.present? %>
+        <span class="last-census-upload">
+          <%= t(".last_upload_date", date: @last_sample.created_at.strftime("%d/%m/%Y %H:%M")) %>
+        </span>
+      <% end %>
     </div>
   </div>
   <div class="mt-4 mb-4">
@@ -69,11 +84,16 @@
       <span>
         <%= t(".uploaded_files") %>
       </span>
-      <div>
-        <% @filenames.each do |filename| %>
-          <p><%= t('.filename_data', date: filename[0], count: filename[1]) %></p>
-        <% end %>
-      </div>
+      
+      <% if @samples.empty? %>
+        <p><%= t('.no_uploaded_files') %></p>
+      <% else %>
+        <div>
+          <% @samples.each do |sample| %>
+            <p><%= t('.filename_data', filename: sample.filename, date: sample.created_at.strftime("%d/%m/%Y %H:%M"), count: sample.imported_rows) %></p>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

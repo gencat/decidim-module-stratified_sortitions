@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable  Lint/ReturnInVoidContext
 module Decidim
@@ -24,11 +23,11 @@ module Decidim
           return @substrata = [] if value.blank?
 
           if value.is_a?(Hash)
-            if value.values.first.is_a?(String)
-              value = [value]
-            else
-              value = value.values
-            end
+            value = if value.values.first.is_a?(String)
+                      [value]
+                    else
+                      value.values
+                    end
           end
 
           @substrata = value.map do |substratum_data|
@@ -64,6 +63,5 @@ module Decidim
     end
   end
 end
-# rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable  Lint/ReturnInVoidContext
