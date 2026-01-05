@@ -66,19 +66,20 @@
         <%= t(".target") %>
       </h1>
     </span>
-    <div class="row chart-images-row">
-      <div class="column chart-image-col">
-        <b><%= t('.gender').upcase %></b>
-        <%= image_tag asset_pack_path("media/images/gender-chart.png"), alt: "gender-chart", class: "chart-image" %>
-      </div>
-      <div class="column chart-image-col">
-        <b><%= t('.age').upcase %></b>
-        <%= image_tag asset_pack_path("media/images/age-chart.png"), alt: "age-chart", class: "chart-image" %>
-      </div>
-      <div class="column chart-image-col chart-place">
-        <b><%= t('.place').upcase %></b>
-        <%= image_tag asset_pack_path("media/images/place-chart.png"), alt: "place-chart", class: "chart-image" %>
-      </div>
+    <div class="row chart-row">
+      <% @strata_data.each do |stratum_data| %>
+        <div class="column chart-col">
+          <b><%= translated_attribute(stratum_data[:stratum].name).upcase %></b>
+          <% if stratum_data[:chart_data].present? %>
+            <%= pie_chart stratum_data[:chart_data], 
+                legend: "bottom",
+                donut: false
+            %>
+          <% else %>
+            <p class="text-muted"><%= t('.no_data') %></p>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     <div class="mt-16 census_file_type">
       <span>
@@ -98,56 +99,5 @@
   </div>
 </div>
 
-<style>
-  .example-file-census-container {
-    padding:1em;
-    background:#e2e5ee;
-  }
-
-  .form-upload-census-container {
-    display:flex;
-    gap:1em;
-  }
-
-  .last-census-upload {
-    color: #6b7280;
-  }
-
-  .chart-images-row {
-    display: flex;
-    gap: 4em;
-    margin-top: 1em;
-    flex-wrap: wrap;
-    justify-content: start;
-  }
-  .chart-image-col {
-    flex: 1 1 250px;
-    min-width: 220px;
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-  }
-  .chart-image {
-    width: 100%;
-    height: auto;
-    max-width: 420px;
-    border-radius: 8px;
-    object-fit: contain;
-  }
-
-  .chart-place {
-    max-width: 380px;
-  }
-
-  @media (max-width: 900px) {
-    .chart-images-row {
-      gap: 2em;
-    }
-    .chart-image-col {
-      max-width: 100%;
-    }
-    .chart-image {
-      max-width: 100%;
-    }
-  }
-</style>
+<%= append_javascript_pack_tag "decidim_stratified_sortitions_admin" %>
+<%= append_stylesheet_pack_tag "decidim_stratified_sortitions_admin" %>
