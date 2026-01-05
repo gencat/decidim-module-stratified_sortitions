@@ -104,16 +104,17 @@ module Decidim
           @sample_participants_count = @stratified_sortition.sample_participants.count
           @last_sample = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :desc).first
           @samples = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :asc)
-          
+
           @strata_data = @stratified_sortition.strata.map do |stratum|
             chart_data = stratum.substrata.map do |substratum|
               weighing_value = substratum.weighing.present? ? substratum.weighing.to_f : 0.0
               label_with_percentage = "#{translated_attribute(substratum.name)} (#{weighing_value}%)"
               [label_with_percentage, weighing_value]
-            end.reject { |name, value| value.zero? }
+            end
+            chart_data = chart_data.reject { |_name, value| value.zero? }
             {
-              stratum: stratum,
-              chart_data: chart_data
+              stratum:,
+              chart_data:,
             }
           end
         end
