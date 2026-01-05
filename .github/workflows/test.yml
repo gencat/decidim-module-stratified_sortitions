@@ -75,7 +75,10 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           retry_on: error
-          command: bundle install --jobs 4 --retry 3 
+          command: bundle install --jobs 4 --retry 3
+        
+      - name: Install javascript dependencies
+        run: npm install
 
       - name: Generate test_app
         run: |
