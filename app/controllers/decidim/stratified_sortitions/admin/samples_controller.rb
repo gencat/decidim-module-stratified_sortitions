@@ -8,8 +8,8 @@ module Decidim
       class SamplesController < Decidim::StratifiedSortitions::Admin::ApplicationController
         include Decidim::TranslatableAttributes
 
-        before_action :ensure_strata_configured, only: [:upload_sample, :process_sample]
-        before_action :ensure_not_drawn, only: [:create, :remove_multiple]
+        before_action :ensure_strata_configured, only: [:create, :remove_multiple]
+        before_action :ensure_stratified_sortition_is_pending, only: [:create, :remove_multiple]
 
         include Decidim::ApplicationHelper
 

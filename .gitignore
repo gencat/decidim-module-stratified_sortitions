@@ -7,8 +7,6 @@
 /spec/reports/
 /tmp/
 
-#Gemfile.lock
-
 # rspec failure tracking
 .rspec-failures
 .byebug_history
@@ -22,3 +20,4 @@ development_app
 .byebug_history
 
 /node_modules/
+package-lock.json

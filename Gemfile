@@ -12,6 +12,8 @@ gem "decidim-stratified_sortitions", path: "."
 gem "bootsnap"
 gem "puma", ">= 4.3"
 
+gem "chartkick"
+
 group :development, :test do
   gem "byebug", ">= 11.1.3"
   gem "decidim-dev", DECIDIM_VERSION
