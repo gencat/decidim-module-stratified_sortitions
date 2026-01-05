@@ -34,4 +34,29 @@ FactoryBot.define do
     weighing { 10.0 }
     stratum { association(:stratum) }
   end
+
+  factory :sample_import, class: "Decidim::StratifiedSortitions::SampleImport" do
+    stratified_sortition { association(:stratified_sortition) }
+    filename { "sample.csv" }
+    status { :processing }
+    total_rows { 0 }
+    imported_rows { 0 }
+    failed_rows { 0 }
+    import_errors { [] }
+  end
+
+  factory :sample_participant, class: "Decidim::StratifiedSortitions::SampleParticipant" do
+    sequence(:personal_data_1) { |n| "ID#{n}" }
+    personal_data_2 { "Data 2" }
+    personal_data_3 { "Data 3" }
+    personal_data_4 { "Data 4" }
+    decidim_stratified_sortition { association(:stratified_sortition) }
+    decidim_stratified_sortitions_sample_import { association(:sample_import) }
+  end
+
+  factory :sample_participant_stratum, class: "Decidim::StratifiedSortitions::SampleParticipantStratum" do
+    decidim_stratified_sortitions_sample_participant { association(:sample_participant) }
+    decidim_stratified_sortitions_stratum { association(:stratum) }
+    decidim_stratified_sortitions_substratum { association(:substratum) }
+  end
 end

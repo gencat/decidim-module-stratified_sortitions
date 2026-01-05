@@ -39,25 +39,34 @@ class ImportSampleJob < ApplicationJob
   private
 
   def process_row(row, strata_headers, stratified_sortition, sample_import)
-    participant = Decidim::StratifiedSortitions::SampleParticipant.find_or_create_by(
-      personal_data_1: row[0]
-    )
-
-    participant.update!(
-      decidim_stratified_sortition: stratified_sortition,
-      decidim_stratified_sortitions_sample_import: sample_import,
-      personal_data_2: row[1],
-      personal_data_3: row[2],
-      personal_data_4: row[3],
-    )
-
-    strata_headers.each_with_index do |strata, _index|
-      strata_id = strata.split("_").last
-      Decidim::StratifiedSortitions::SampleParticipantStratum.create!(
-        decidim_stratified_sortitions_sample_participant: participant,
-        decidim_stratified_sortitions_stratum: Decidim::StratifiedSortitions::Stratum.find(strata_id),
-        decidim_stratified_sortitions_substratum: Decidim::StratifiedSortitions::Substratum.find_by(value: row[strata])
+    ActiveRecord::Base.transaction do
+      participant = Decidim::StratifiedSortitions::SampleParticipant.find_or_create_by(
+        personal_data_1: row[0]
       )
+
+      participant.update!(
+        decidim_stratified_sortition: stratified_sortition,
+        decidim_stratified_sortitions_sample_import: sample_import,
+        personal_data_2: row[1],
+        personal_data_3: row[2],
+        personal_data_4: row[3],
+      )
+
+      strata_headers.each_with_index do |strata, _index|
+        strata_id = strata.split("_").last
+        stratum = Decidim::StratifiedSortitions::Stratum.find(strata_id)
+        row_value = row[strata]
+
+        substratum = find_substratum(stratum, row_value)
+
+        raise "No valid substratum found for value '#{row_value}' in stratum '#{stratum.name}'" if substratum.nil?
+
+        Decidim::StratifiedSortitions::SampleParticipantStratum.create!(
+          decidim_stratified_sortitions_sample_participant: participant,
+          decidim_stratified_sortitions_stratum: stratum,
+          decidim_stratified_sortitions_substratum: substratum
+        )
+      end
     end
 
     nil
@@ -67,5 +76,25 @@ class ImportSampleJob < ApplicationJob
       error: e.message,
       backtrace: e.backtrace.first(3),
     }
+  end
+
+  def find_substratum(stratum, value)
+    if stratum.kind == "value"
+      Decidim::StratifiedSortitions::Substratum.find_by(
+        decidim_stratified_sortitions_stratum_id: stratum.id,
+        value:
+      )
+    elsif stratum.kind == "numeric_range"
+      numeric_value = value.to_f
+      stratum.substrata.find do |substratum|
+        next if substratum.range.blank?
+
+        range_parts = substratum.range.split("-")
+        min_value = range_parts[0].to_f
+        max_value = range_parts[1].to_f
+
+        numeric_value >= min_value && numeric_value <= max_value
+      end
+    end
   end
 end
