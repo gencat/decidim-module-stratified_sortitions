@@ -106,6 +106,18 @@ $(() => {
       const uniqueId = new Date().getTime();
       const newField = templateContent.replace(/SUBSTRATUM_ID/g, uniqueId);
       $container.append(newField);
+
+      const $stratum = $wrapper.closest(".stratified-sortition-stratum");
+      const kind = $stratum.find("select[id$='_kind']").val();
+      const $newSubstratum = $container.find(fieldSelector).last();
+      
+      if (kind === "value") {
+        $newSubstratum.find(".substratum-value-field").show();
+        $newSubstratum.find(".substratum-range-field").hide();
+      } else {
+        $newSubstratum.find(".substratum-value-field").hide();
+        $newSubstratum.find(".substratum-range-field").show();
+      }
       
       runComponentsForWrapper(wrapper);
     }

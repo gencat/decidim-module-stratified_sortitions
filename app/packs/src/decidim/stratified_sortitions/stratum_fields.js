@@ -56,7 +56,7 @@ $(() => {
     if ($template.length && $container.length) {
       const templateContent = $template.html();
       const uniqueId = new Date().getTime();
-      let newField = templateContent.replace(/STRATUM_ID/g, uniqueId);
+      let newField = templateContent.replace(/(?<!SUB)STRATUM_ID/g, uniqueId);
       newField = newField.replace(/substrata-\d+/g, `substrata-${uniqueId}`);
       $container.append(newField);
       
@@ -67,6 +67,8 @@ $(() => {
         }
         initializeSubstrataWrapper(wrapperEl);
       });
+
+      updateSubstratumFieldsVisibility($newField);
 
       createSortableList();
       runComponents();
@@ -112,11 +114,28 @@ $(() => {
     }
   });
 
+  const updateSubstratumFieldsVisibility = ($stratum) => {
+    const kind = $stratum.find("select[id$='_kind']").val();
+    if (kind === "value") {
+      $stratum.find(".substratum-value-field").show();
+      $stratum.find(".substratum-range-field").hide();
+    } else {
+      $stratum.find(".substratum-value-field").hide();
+      $stratum.find(".substratum-range-field").show();
+    }
+  };
+
+  $(document).on("change", "select[id$='_kind']", function() {
+    const $stratum = $(this).closest(fieldSelector);
+    updateSubstratumFieldsVisibility($stratum);
+  });
+
   createSortableList();
 
   $(fieldSelector).each((idx, el) => {
     const $target = $(el);
     hideDeletedStratum($target);
+    updateSubstratumFieldsVisibility($target);
   });
 
   runComponents();
