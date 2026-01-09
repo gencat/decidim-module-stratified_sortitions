@@ -32,13 +32,13 @@
             maxlength: 100) %>
       </div>
       <div class="substratum-value-field">
-        <%= form.text_field :value, placeholder: t("decidim.stratified_sortitions.admin.substrata.value", default: "Value") %>
+        <%= form.text_field :value, label: t(".value"), placeholder: t(".value_placeholder", default: "Value") %>
       </div>
       <div class="substratum-range-field">
-        <%= form.text_field :range, placeholder: t("decidim.stratified_sortitions.admin.substrata.range", default: "Range (e.g. 0-18)") %>
+        <%= form.text_field :range, label: t(".range"), placeholder: t(".range_placeholder", default: "Range (e.g. 0-18)") %>
       </div>
       <div>
-        <%= form.number_field :weighing, step: 0.1, placeholder: t("decidim.stratified_sortitions.admin.substrata.weighing", default: "Weighing") %>
+        <%= form.number_field :weighing, step: 0.1, label: t(".weighing"), placeholder: t(".weighing_placeholder", default: "Weighing") %>
       </div>
     </div>
   </div>

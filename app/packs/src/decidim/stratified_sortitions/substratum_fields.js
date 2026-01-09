@@ -118,7 +118,11 @@ $(() => {
         $newSubstratum.find(".substratum-value-field").hide();
         $newSubstratum.find(".substratum-range-field").show();
       }
-      
+
+      $newSubstratum.find('[data-tabs]').each(function() {
+        new Foundation.Tabs($(this));
+      });
+
       runComponentsForWrapper(wrapper);
     }
   });
