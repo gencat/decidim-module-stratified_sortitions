@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe ImportSampleJob do
+describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
   subject { described_class.new }
 
   let(:organization) { create(:organization) }
