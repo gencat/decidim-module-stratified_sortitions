@@ -83,9 +83,12 @@ en:
             remove: Remove
             name: Name
             value: Value
+            value_placeholder: Value
             range: Range
+            range_placeholder: Range (e.g. 0-18)
             title: Substratum
             weighing: Weighing
+            weighing_placeholder: Weighing
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated
@@ -102,6 +105,7 @@ en:
             gender: Gender
             last_upload_date: The last upload was on February 24, 2025 10:41
             help: The first four columns are candidate data, such as email, ID, phone, or address, and the following columns are the strata defined in the stratified sortition. Each row represents a candidate.
+            no_data: No data
             place: Place of birth
             remove_uploaded_samples: Remove uploaded samples
             confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?

@@ -85,9 +85,12 @@ es:
             remove: Eliminar
             name: Nombre
             value: Valor
+            value_placeholder: Valor
             range: Rango
+            range_placeholder: Rango (p. ej. 0-18)
             title: Subestrato
             weighing: Ponderación
+            weighing_placeholder: Ponderación
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito
@@ -104,6 +107,7 @@ es:
             gender: Género
             last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
             help: Las cuatro primeras columnas son datos del candidato, por ejemplo correo electrónico, DNI, teléfono o dirección y las siguientes columnas son los estratos definidos en el sorteo estratificado. Cada fila representa un candidato.
+            no_data: No hay datos
             place: Lugar de nacimiento
             remove_uploaded_samples: Eliminar muestras cargadas
             confirm_remove_uploaded_samples: ¿Estás seguro de que quieres eliminar todas las muestras cargadas?

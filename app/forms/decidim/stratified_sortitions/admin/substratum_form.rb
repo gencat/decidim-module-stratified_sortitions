@@ -7,7 +7,7 @@ module Decidim
         include TranslatableAttributes
 
         translatable_attribute :name, String
-        translatable_attribute :value, String
+        attribute :value, String
         attribute :range, String
         attribute :weighing, String
         attribute :deleted, Boolean, default: false
