@@ -52,7 +52,7 @@ module Decidim
           Decidim::StratifiedSortitions::Admin::UpdateStratifiedSortition.call(@form, stratified_sortition) do
             on(:ok) do |_stratified_sortition|
               flash[:notice] = t("stratified_sortitions.update.success", scope: "decidim.stratified_sortitions.admin")
-              redirect_to stratified_sortitions_path(assembly_slug: -1, component_id: -1)
+              redirect_to edit_stratified_sortition_path(stratified_sortition)
             end
 
             on(:invalid) do

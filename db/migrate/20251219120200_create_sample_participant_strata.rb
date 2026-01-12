@@ -12,17 +12,5 @@ class CreateSampleParticipantStrata < ActiveRecord::Migration[7.0]
       t.string :raw_value
       t.timestamps
     end
-    # add_index :decidim_sample_participant_strata,
-    #           [:decidim_stratified_sortitions_strata_id, :decidim_stratified_sortitions_substrata_id],
-    #           name: "idx_sample_part_strata_on_strata_substrata"
-
-    # add_index :decidim_sample_participant_strata,
-    #           [:decidim_sample_participant_id, :decidim_stratified_sortitions_strata_id],
-    #           unique: true,
-    #           name: "idx_sample_part_strata_on_participant_strata"
-
-    # add_index :decidim_sample_participant_strata,
-    #           [:decidim_stratified_sortitions_strata_id, :raw_value],
-    #           name: "idx_sample_part_strata_on_strata_rawval"
   end
 end

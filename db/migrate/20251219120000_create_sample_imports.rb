@@ -13,6 +13,5 @@ class CreateSampleImports < ActiveRecord::Migration[7.0]
       t.string :status, default: "pending"
       t.timestamps
     end
-    # add_index :decidim_sample_imports, [:stratified_sortition_id, :status], name: "idx_sample_imports_on_sortition_id_and_status"
   end
 end

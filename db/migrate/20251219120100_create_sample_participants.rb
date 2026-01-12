@@ -15,7 +15,5 @@ class CreateSampleParticipants < ActiveRecord::Migration[7.0]
       t.string :reference_code
       t.timestamps
     end
-    # add_index :decidim_sample_participants, [:decidim_strat_sortitions_id, :created_at], name: "idx_sample_part_on_sortitionid_createdat"
-    # add_index :decidim_sample_participants, :column_values, using: :gin
   end
 end
