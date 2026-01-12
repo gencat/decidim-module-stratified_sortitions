@@ -10,7 +10,9 @@
 
     <script type="text/template" class="decidim-template">
       <% new_substratum = Decidim::StratifiedSortitions::Admin::SubstratumForm.new(stratum: form.object) %>
-      <%= form.fields_for :substrata, new_substratum, child_index: "SUBSTRATUM_ID" do |substratum_form| %>
+      <% stratum_id = form.object.id || "STRATUM_ID" %>
+      <% field_name_base = "stratified_sortition[strata][#{stratum_id}][substrata][SUBSTRATUM_ID]" %>
+      <%= fields_for field_name_base, new_substratum do |substratum_form| %>
         <%= render "substratum",
             form: substratum_form,
             id: tabs_id_for_substratum("SUBSTRATUM_ID"),
@@ -20,7 +22,7 @@
 
     <div class="stratified-sortition-substrata-list">
       <% form.object.substrata.each_with_index do |substratum, index| %>
-        <%= form.fields_for :substrata, substratum, child_index: index do |substratum_form| %>
+        <%= form.fields_for "[substrata][#{index}]", substratum do |substratum_form| %>
           <%= render "substratum",
               form: substratum_form,
               id: tabs_id_for_substratum(substratum),

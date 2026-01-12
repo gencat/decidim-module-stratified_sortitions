@@ -56,7 +56,7 @@ $(() => {
     if ($template.length && $container.length) {
       const templateContent = $template.html();
       const uniqueId = new Date().getTime();
-      let newField = templateContent.replace(/STRATUM_ID/g, uniqueId);
+      let newField = templateContent.replace(/(?<!SUB)STRATUM_ID/g, uniqueId);
       newField = newField.replace(/substrata-\d+/g, `substrata-${uniqueId}`);
       $container.append(newField);
       
@@ -67,6 +67,12 @@ $(() => {
         }
         initializeSubstrataWrapper(wrapperEl);
       });
+
+      $newField.find('[data-tabs]').each(function() {
+        new Foundation.Tabs($(this));
+      });
+
+      updateSubstratumFieldsVisibility($newField);
 
       createSortableList();
       runComponents();
@@ -112,12 +118,68 @@ $(() => {
     }
   });
 
+  const updateSubstratumFieldsVisibility = ($stratum) => {
+    const kind = $stratum.find("select[id$='_kind']").val();
+    if (kind === "value") {
+      $stratum.find(".substratum-value-field").show();
+      $stratum.find(".substratum-range-field").hide();
+    } else {
+      $stratum.find(".substratum-value-field").hide();
+      $stratum.find(".substratum-range-field").show();
+    }
+  };
+
+  $(document).on("change", "select[id$='_kind']", function() {
+    const $stratum = $(this).closest(fieldSelector);
+    updateSubstratumFieldsVisibility($stratum);
+  });
+
+  const makeRequiredCatalanFields = () => {
+    $(fieldSelector).find(".stratum-fields input[id$='_name_ca']").attr("required", true);
+  };
+
+  $("form").on("submit", function(e) {
+    let hasEmptyName = false;
+    let $firstInvalidStratum = null;
+    
+    $(fieldSelector).each((idx, el) => {
+      const $stratum = $(el);
+      const isDeleted = $stratum.find("input[name$='[deleted]']").val() === "true";
+      const $nameField = $stratum.find(".stratum-fields input[id$='_name_ca']");
+
+      $nameField.removeClass("is-invalid-input");
+      
+      if (!isDeleted) {
+        const nameValue = $nameField.val();
+        if (!nameValue || nameValue.trim() === "") {
+          hasEmptyName = true;
+          $nameField.addClass("is-invalid-input");
+
+          if (!$firstInvalidStratum) {
+            $firstInvalidStratum = $stratum;
+          }
+        }
+      }
+    });
+    
+    if (hasEmptyName) {
+      e.preventDefault();
+      if ($firstInvalidStratum) {
+        $firstInvalidStratum[0].scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return false;
+    }
+  });
+
   createSortableList();
 
   $(fieldSelector).each((idx, el) => {
     const $target = $(el);
     hideDeletedStratum($target);
+    updateSubstratumFieldsVisibility($target);
   });
+
+  makeRequiredCatalanFields();
 
   runComponents();
 })

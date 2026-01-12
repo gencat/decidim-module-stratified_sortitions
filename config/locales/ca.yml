@@ -85,9 +85,12 @@ ca:
             remove: Eliminar
             name: Nom
             value: Valor
+            value_placeholder: Valor
             range: Rang
+            range_placeholder: Rang (p. ex. 0-18)
             title: Subestrat
             weighing: Ponderació
+            weighing_placeholder: Ponderació
           update:
             error: S'ha produït un problema en actualitzar aquest sortejo estratificat
             success: Sortejo estratificat actualitzat amb èxit
@@ -104,6 +107,7 @@ ca:
             gender: Gènere
             last_upload_date: La última càrrega va ser el dia %{date}
             help: Les quatre primeres columnes són dades del candidat, per exemple correu electrònic, DNI, telèfon o adreça i les següents columnes són els estrats definits en el sorteig estratificat. Cada fila representa un candidat.
+            no_data: Sense dades
             place: Lloc de naixement
             remove_uploaded_samples: Eliminar mostres carregades
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
