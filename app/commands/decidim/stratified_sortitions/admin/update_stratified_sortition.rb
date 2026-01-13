@@ -141,7 +141,7 @@ module Decidim
                   weighing: substratum_form.weighing,
                   position: stratum_form.position
                 )
-                                 updated_or_created_ids << new_substratum.id
+                updated_or_created_ids << new_substratum.id
               end
             else
               new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
