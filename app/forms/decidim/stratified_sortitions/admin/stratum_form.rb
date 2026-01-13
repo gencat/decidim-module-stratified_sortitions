@@ -12,8 +12,10 @@ module Decidim
         attribute :kind, String
         attribute :deleted, Boolean, default: false
         attribute :substrata, [SubstratumForm]
+        attribute :position, Integer
 
         validates :name, translatable_presence: true, unless: :deleted
+        validates :position, numericality: { greater_than_or_equal_to: 0 }
 
         def substrata
           @substrata ||= []

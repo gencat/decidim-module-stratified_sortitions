@@ -87,13 +87,15 @@ module Decidim
               if stratum_object
                 stratum_object.update!(
                   name: stratum_form.name,
-                  kind: stratum_form.kind
+                  kind: stratum_form.kind,
+                  position: stratum_form.position
                 )
               else
                 stratum_object = Decidim::StratifiedSortitions::Stratum.create!(
                   stratified_sortition:,
                   name: stratum_form.name,
-                  kind: stratum_form.kind
+                  kind: stratum_form.kind,
+                  position: stratum_form.position
                 )
               end
               update_substrata(stratum_object, stratum_form)
@@ -101,7 +103,8 @@ module Decidim
               stratum_object = Decidim::StratifiedSortitions::Stratum.create!(
                 stratified_sortition:,
                 name: stratum_form.name,
-                kind: stratum_form.kind
+                kind: stratum_form.kind,
+                position: stratum_form.position
               )
               create_substrata(stratum_object, stratum_form)
             end
@@ -125,7 +128,8 @@ module Decidim
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
-                  weighing: substratum_form.weighing
+                  weighing: substratum_form.weighing,
+                  position: stratum_form.position
                 )
                 updated_or_created_ids << substratum.id
               else
@@ -134,8 +138,9 @@ module Decidim
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
-                  weighing: substratum_form.weighing
-                )
+                  weighing: substratum_form.weighing,
+                  position: stratum_form.position
+                ),
                 updated_or_created_ids << new_substratum.id
               end
             else
@@ -144,7 +149,8 @@ module Decidim
                 name: substratum_form.name,
                 value: substratum_form.value,
                 range: substratum_form.range,
-                weighing: substratum_form.weighing
+                weighing: substratum_form.weighing,
+                position: stratum_form.position
               )
               updated_or_created_ids << new_substratum.id
             end

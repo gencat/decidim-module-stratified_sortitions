@@ -45,4 +45,5 @@
 
   <%= form.hidden_field :id %>
   <%= form.hidden_field :deleted, value: false %>
+  <%= form.hidden_field :position, value: form.object.position || 0 %>
 </div>

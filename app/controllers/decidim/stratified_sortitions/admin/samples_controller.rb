@@ -104,7 +104,7 @@ module Decidim
           ]
           strata = Decidim::StratifiedSortitions::Stratum.order(:id)
           strata_headers = strata.map do |stratum|
-            "#{translated_attribute(stratum.name)}_#{stratum.id}"
+            translated_attribute(stratum.name)
           end
 
           headers = personal_headers + strata_headers

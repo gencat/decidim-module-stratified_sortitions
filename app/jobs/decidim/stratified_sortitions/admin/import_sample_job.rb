@@ -55,10 +55,12 @@ module Decidim
               personal_data_4: row[3],
             )
 
-            strata_headers.each_with_index do |strata, _index|
-              strata_id = strata.split("_").last
-              stratum = Decidim::StratifiedSortitions::Stratum.find(strata_id)
-              row_value = row[strata]
+            # Strata is saved in the order of the strata creation
+            strata = Decidim::StratifiedSortitions::Stratum.where(stratified_sortition: stratified_sortition).order(position: :asc)
+
+            strata_index = 4
+            strata.each do |stratum|
+              row_value = row[strata_index]
 
               substratum = find_substratum(stratum, row_value)
 
@@ -69,6 +71,8 @@ module Decidim
                 decidim_stratified_sortitions_stratum: stratum,
                 decidim_stratified_sortitions_substratum: substratum
               )
+
+              strata_index += 1
             end
           end
 
