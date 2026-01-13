@@ -201,7 +201,7 @@ module Decidim
           context "with valid params" do
             it "redirects to stratified sortitions list newly created stratified sortition" do
               patch(:update, params:)
-              expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
+              expect(response).to redirect_to(edit_stratified_sortition_path(stratified_sortition))
             end
           end
         end
