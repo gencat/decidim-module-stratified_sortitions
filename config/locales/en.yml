@@ -26,7 +26,7 @@ en:
           duplicate: Duplicate
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
-          upload_census: "Import Census"
+          upload_sample: "Import Census"
         models:
           stratified_sortition:
             fields:
@@ -83,24 +83,62 @@ en:
             remove: Remove
             name: Name
             value: Value
+            value_placeholder: Value
             range: Range
+            range_placeholder: Range (e.g. 0-18)
             title: Substratum
             weighing: Weighing
+            weighing_placeholder: Weighing
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated
-          upload_census:
+          upload_sample:
             age: Age group
             census_file: Choose a file
             census_file_label: Excel.csv file with census data
+            configure_strata_first: You must configure strata and substrata first
             count_uploaded_files: "<b>%{count}</b> records uploaded."
             description: "It must be a file generated in Excel and exported as CSV with the following columns:"
+            download_template: "Download CSV template"
             example: "Candidate data 1,Candidate data 2,Candidate data 3,Candidate data 4,Stratum 1,Stratum 2,Stratum 3,Stratum N<br>example@example.com,D,Higher,34<br>example@example.com,E,Higher,24<br><br>. . ."
             filename_data: File name, on %{date}, number of records %{count}
             gender: Gender
             last_upload_date: The last upload was on February 24, 2025 10:41
             help: The first four columns are candidate data, such as email, ID, phone, or address, and the following columns are the strata defined in the stratified sortition. Each row represents a candidate.
+            no_data: No data
             place: Place of birth
+            remove_uploaded_samples: Remove uploaded samples
+            confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?
             target: Target
             title: Upload a new census
             uploaded_file: Census data
+            uploaded_files: "The following files have been added:"
+            no_uploaded_files: "No files uploaded."
+        import_mailer:
+          subject: "Sample import result"
+          import:
+            ready: "The sample import has been completed successfully."
+            total_rows: "Total rows"
+            imported_rows: "Successfully imported"
+            failed_rows: "Rows with errors"
+            errors_summary: "Total rows: %{total}. Successfully imported: %{imported}. Rows with errors: %{failed}."
+            see_details: "The identifiers of the participants who have had errors are:"
+            participant_id: "Participant ID:"
+        samples:
+          template:
+            personal_data_1: "Personal data 1 (unique identifier)"
+            personal_data_2: "Personal data 2"
+            personal_data_3: "Personal data 3"
+            personal_data_4: "Personal data 4"
+          import_success: "The sample has been imported successfully."
+          import_failed: "An error occurred while importing the sample: %{error}"
+          errors:
+            no_file: "No file has been selected."
+            no_strata: "You must configure strata and substrata before uploading a sample."
+            pending: "You can only upload samples when the stratified sortition is in pending status."
+        sample_imports:
+          create:
+            success: "The sample is being loaded in the background. When it finishes you will receive an email with the import summary."
+          remove_uploaded_samples:
+            success: "Uploaded samples have been successfully removed."
+            error: "There was an error removing the uploaded samples."

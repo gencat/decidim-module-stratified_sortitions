@@ -58,12 +58,22 @@ module Decidim
         end
 
         def create_strata(stratified_sortition)
-          form.strata_to_persist.each do |stratum|
-            Decidim::StratifiedSortitions::Stratum.create!(
+          form.strata_to_persist.each do |stratum_form|
+            stratum = Decidim::StratifiedSortitions::Stratum.create!(
               stratified_sortition:,
-              name: stratum.name,
-              kind: stratum.kind
+              name: stratum_form.name,
+              kind: stratum_form.kind
             )
+
+            stratum_form.substrata_to_persist.each do |substratum_form|
+              Decidim::StratifiedSortitions::Substratum.create!(
+                stratum:,
+                name: substratum_form.name,
+                value: substratum_form.value,
+                range: substratum_form.range,
+                weighing: substratum_form.weighing
+              )
+            end
           end
         end
       end

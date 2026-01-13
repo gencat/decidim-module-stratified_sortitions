@@ -1,0 +1,23 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
+# rspec failure tracking
+.rspec-failures
+.byebug_history
+
+# default test application
+spec/decidim_dummy_app
+
+# default development application
+development_app
+
+.byebug_history
+
+/node_modules/
+package-lock.json

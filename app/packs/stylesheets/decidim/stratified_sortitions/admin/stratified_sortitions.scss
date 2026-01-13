@@ -9,3 +9,46 @@
     width: 100%;
   }
 }
+
+.example-file-census-container {
+  padding:1em;
+  background:#e2e5ee;
+}
+
+.form-upload-census-container {
+  display:flex;
+  gap:1em;
+}
+
+.last-census-upload {
+  color: #6b7280;
+}
+
+.chart-row {
+  display: flex;
+  gap: 4em;
+  margin-top: 1em;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
+.chart-col {
+  flex: 1 1 250px;
+  min-width: 220px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-place {
+  max-width: 380px;
+}
+
+@media (max-width: 900px) {
+  .chart-row {
+    gap: 2em;
+  }
+  .chart-col {
+    max-width: 100%;
+  }
+}

@@ -11,7 +11,7 @@ module Decidim
         helper StratifiedSortitions::ApplicationHelper
         helper Decidim::PaginateHelper
 
-        helper_method :stratified_sortitions, :stratified_sortition, :form_presenter, :blank_stratum, :blank_substratum
+        helper_method :stratified_sortitions, :stratified_sortition, :form_presenter, :blank_stratum
 
         def index
           enforce_permission_to :read, :stratified_sortitions
@@ -52,7 +52,7 @@ module Decidim
           Decidim::StratifiedSortitions::Admin::UpdateStratifiedSortition.call(@form, stratified_sortition) do
             on(:ok) do |_stratified_sortition|
               flash[:notice] = t("stratified_sortitions.update.success", scope: "decidim.stratified_sortitions.admin")
-              redirect_to stratified_sortitions_path(assembly_slug: -1, component_id: -1)
+              redirect_to edit_stratified_sortition_path(stratified_sortition)
             end
 
             on(:invalid) do
@@ -97,13 +97,26 @@ module Decidim
           end
         end
 
-        def upload_census
-          @stratified_sortition = stratified_sortition
-          @filenames = [["01/04/2025", 567], ["15/05/2024", 123]]
-        end
+        def upload_sample
+          enforce_permission_to :upload_sample, :stratified_sortition
 
-        def process_census
-          redirect_to upload_census_stratified_sortition_path(stratified_sortition)
+          @stratified_sortition = stratified_sortition
+          @sample_participants_count = @stratified_sortition.sample_participants.count
+          @last_sample = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :desc).first
+          @samples = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :asc)
+
+          @strata_data = @stratified_sortition.strata.map do |stratum|
+            chart_data = stratum.substrata.map do |substratum|
+              weighing_value = substratum.weighing.present? ? substratum.weighing.to_f : 0.0
+              label_with_percentage = "#{translated_attribute(substratum.name)} (#{weighing_value}%)"
+              [label_with_percentage, weighing_value]
+            end
+            chart_data = chart_data.reject { |_name, value| value.zero? }
+            {
+              stratum:,
+              chart_data:,
+            }
+          end
         end
 
         private
@@ -128,8 +141,8 @@ module Decidim
           @blank_stratum ||= Decidim::StratifiedSortitions::Admin::StratumForm.new
         end
 
-        def blank_substratum
-          @blank_substratum ||= Decidim::StratifiedSortitions::Admin::SubstratumForm.new
+        def blank_substratum(stratum_form)
+          Decidim::StratifiedSortitions::Admin::SubstratumForm.new(stratum: stratum_form.model)
         end
       end
     end

@@ -7,10 +7,13 @@ module Decidim
         include TranslatableAttributes
 
         translatable_attribute :name, String
-        translatable_attribute :value, String
+        attribute :value, String
         attribute :range, String
         attribute :weighing, String
         attribute :deleted, Boolean, default: false
+        attribute :position, Integer
+
+        validates :position, numericality: { greater_than_or_equal_to: 0 }
 
         def to_param
           return id if id.present?

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "chartkick"
+
 module Decidim
   module StratifiedSortitions
     # This is the engine that runs on the administration interface of `decidim_stratified_sortitions`.
@@ -14,8 +16,15 @@ module Decidim
       routes do
         resources :stratified_sortitions do
           post :duplicate, on: :member
-          get :upload_census, on: :member
-          post :process_census, on: :member
+          get :upload_sample, on: :member
+          post :process_sample, on: :member
+        end
+
+        resources :samples, only: [:show, :create] do
+          collection do
+            get :download_template
+            delete :remove_multiple
+          end
         end
 
         root to: "stratified_sortitions#index"

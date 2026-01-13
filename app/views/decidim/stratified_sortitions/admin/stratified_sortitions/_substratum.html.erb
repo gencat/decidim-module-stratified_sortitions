@@ -6,17 +6,15 @@
       <span><%= t(".title") %></span>
 
       <div class="ml-auto flex gap-x-4">
-        <button class="button button__sm button__transparent-secondary small alert move-up-substratum button--title">
-          <%= icon "arrow-up-line" %>
-          <%= t(".up") %>
+        <button type="button" class="button button__sm button__transparent-secondary small alert move-up-substratum button--title">
+          <%= icon "arrow-up-line" %> <%= t(".up") %>
         </button>
 
-        <button class="button button__sm button__transparent-secondary small alert move-down-substratum button--title">
-          <%= icon "arrow-down-line" %>
-          <%= t(".down") %>
+        <button type="button" class="button button__sm button__transparent-secondary small alert move-down-substratum button--title">
+          <%= icon "arrow-down-line" %> <%= t(".down") %>
         </button>
 
-        <button class="button button__sm button__transparent-secondary small alert remove-substratum button--title">
+        <button type="button" class="button button__sm button__transparent-secondary small alert remove-substratum button--title">
           <%= t(".remove") %>
         </button>
       </div>
@@ -33,22 +31,19 @@
             label: t(".name"),
             maxlength: 100) %>
       </div>
-      <div>
-        <% if stratum.kind == 'value'%>
-          <%= form.translated(
-            :text_field,
-            :value,
-            tabs_id: id,
-            label: t(".value"),
-            maxlength: 100) %>
-        <% else %>
-          <%= form.text_field :range, placeholder: t("decidim.stratified_sortitions.admin.substrata.range", default: "Range (e.g. 0-18)") %>
-        <% end %>
+      <div class="substratum-value-field">
+        <%= form.text_field :value, label: t(".value"), placeholder: t(".value_placeholder", default: "Value") %>
+      </div>
+      <div class="substratum-range-field">
+        <%= form.text_field :range, label: t(".range"), placeholder: t(".range_placeholder", default: "Range (e.g. 0-18)") %>
       </div>
       <div>
-        <%= form.number_field :weighing, step: 0.1, placeholder: t("decidim.stratified_sortitions.admin.substrata.weighing", default: "Weighing") %>
+        <%= form.number_field :weighing, step: 0.1, label: t(".weighing"), placeholder: t(".weighing_placeholder", default: "Weighing") %>
       </div>
     </div>
   </div>
+
+  <%= form.hidden_field :id %>
+  <%= form.hidden_field :deleted, value: false %>
+  <%= form.hidden_field :position, value: form.object.position || 0 %>
 </div>
-<%= form.hidden_field :deleted, value: false %>

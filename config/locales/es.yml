@@ -28,7 +28,7 @@ es:
           duplicate: Duplicar
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
-          upload_census: Importar censo
+          upload_sample: Importar muestra
         models:
           stratified_sortition:
             fields:
@@ -85,24 +85,62 @@ es:
             remove: Eliminar
             name: Nombre
             value: Valor
+            value_placeholder: Valor
             range: Rango
+            range_placeholder: Rango (p. ej. 0-18)
             title: Subestrato
             weighing: Ponderación
+            weighing_placeholder: Ponderación
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito
-          upload_census:
+          upload_sample:
             age: Grupo de edad
             census_file: Elegir un archivo
             census_file_label: Archivo excel.csv con los datos del censo
+            configure_strata_first: Primero debes configurar los estratos y subestratos
             count_uploaded_files: "<b>%{count}</b> registros cargados."
             description: "Debe ser un archivo generado en Excel y exportado en CSV con las siguientes columnas:"
+            download_template: "Descargar plantilla CSV"
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
             filename_data: Nombre de archivo, el día %{date}, número de registros %{count}
             gender: Género
             last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
             help: Las cuatro primeras columnas son datos del candidato, por ejemplo correo electrónico, DNI, teléfono o dirección y las siguientes columnas son los estratos definidos en el sorteo estratificado. Cada fila representa un candidato.
+            no_data: No hay datos
             place: Lugar de nacimiento
+            remove_uploaded_samples: Eliminar muestras cargadas
+            confirm_remove_uploaded_samples: ¿Estás seguro de que quieres eliminar todas las muestras cargadas?
             target: Objetivo
             title: Subir un nuevo censo
             uploaded_file: Datos del censo
+            uploaded_files: "Se han agregado los siguientes archivos:"
+            no_uploaded_files: "No hay archivos cargados."
+        import_mailer:
+          subject: "Resultado de la importación de la muestra"
+          import:
+            ready: "La importación de la muestra ha finalizado correctamente."
+            total_rows: "Total de filas"
+            imported_rows: "Importadas correctamente"
+            failed_rows: "Filas con errores"
+            errors_summary: "Total de filas: %{total}. Importadas correctamente: %{imported}. Filas con errores: %{failed}."
+            see_details: "Los identificadores de los participantes los cuales han tenido error son:"
+            participant_id: "Identificador del participante:"
+        samples:
+          template:
+            personal_data_1: "Dato personal 1 (identificador único)"
+            personal_data_2: "Dato personal 2"
+            personal_data_3: "Dato personal 3"
+            personal_data_4: "Dato personal 4"
+          import_success: "La muestra se ha importado correctamente."
+          import_failed: "Ha ocurrido un error al importar la muestra: %{error}"
+          errors:
+            no_file: "No se ha seleccionado ningún archivo."
+            no_strata: "Debes configurar los estratos y subestratos antes de subir una muestra."
+            pending: "Solo puedes subir muestras cuando el sorteo estratificado está en estado pendiente."
+        sample_imports:
+          create:
+            success: "La muestra se está cargando en segundo plano. Cuando termine recibirás un correo con el resumen de la importación."
+          remove_uploaded_samples:
+            success: "Las muestras cargadas se han eliminado correctamente."
+            error: "Ha ocurrido un error al eliminar las muestras cargadas."
