@@ -179,6 +179,7 @@ PATH
   specs:
     decidim-stratified_sortitions (1.0.0)
       chartkick (~> 5.2.1)
+      decidim-admin (~> 0.29)
       decidim-core (~> 0.29)
 
 GEM
