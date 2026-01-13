@@ -41,7 +41,7 @@ module Decidim
 
         private
 
-        def process_row(row, strata_headers, stratified_sortition, sample_import)
+        def process_row(row, _strata_headers, stratified_sortition, sample_import)
           ActiveRecord::Base.transaction do
             participant = Decidim::StratifiedSortitions::SampleParticipant.find_or_create_by(
               personal_data_1: row[0]
@@ -56,7 +56,7 @@ module Decidim
             )
 
             # Strata is saved in the order of the strata creation
-            strata = Decidim::StratifiedSortitions::Stratum.where(stratified_sortition: stratified_sortition).order(position: :asc)
+            strata = Decidim::StratifiedSortitions::Stratum.where(stratified_sortition:).order(position: :asc)
 
             strata_index = 4
             strata.each do |stratum|

@@ -133,15 +133,15 @@ module Decidim
                 )
                 updated_or_created_ids << substratum.id
               else
-                new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
+                Decidim::StratifiedSortitions::Substratum.create!(
                   stratum:,
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
                   weighing: substratum_form.weighing,
                   position: stratum_form.position
-                ),
-                updated_or_created_ids << new_substratum.id
+                )
+                                 updated_or_created_ids << new_substratum.id
               end
             else
               new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
