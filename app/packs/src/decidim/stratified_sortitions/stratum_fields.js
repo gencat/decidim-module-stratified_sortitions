@@ -45,6 +45,27 @@ $(() => {
     autoButtonsByPosition.run();
   };
 
+  const expandStratum = ($stratum) => {
+    const $toggle = $stratum.find('.stratum--collapse');
+    if ($toggle.length === 0) return;
+    const ctrl = $toggle.attr('data-controls');
+    const panel = ctrl ? document.getElementById(ctrl) : null;
+    const isExpanded = $toggle.attr('aria-expanded') === 'true';
+
+    if (!isExpanded) {
+      $toggle.trigger('click');
+
+      setTimeout(() => {
+        const nowExpanded = $toggle.attr('aria-expanded') === 'true';
+        if (!nowExpanded && panel) {
+          $toggle.attr('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          $(panel).show();
+        }
+      }, 0);
+    }
+  };
+
   const createCollapsibleStratum = ($target) => {
     const $collapsible = $target.find(".collapsible");
     if ($collapsible.length > 0) {
@@ -197,6 +218,8 @@ $(() => {
         if (!nameValue || nameValue.trim() === "") {
           hasEmptyName = true;
           $nameField.addClass("is-invalid-input");
+
+          expandStratum($stratum);
 
           if (!$firstInvalidStratum) {
             $firstInvalidStratum = $stratum;
