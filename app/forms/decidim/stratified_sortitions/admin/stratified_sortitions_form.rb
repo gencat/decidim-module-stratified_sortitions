@@ -24,7 +24,7 @@ module Decidim
         attribute :num_candidates, Integer
         attribute :strata, [StratumForm]
 
-        validates :title, :description, :selection_criteria, :selected_profiles_description, translatable_presence: true
+        validates :title, :description, translatable_presence: true
         validates :num_candidates,
                   presence: true,
                   numericality: {
