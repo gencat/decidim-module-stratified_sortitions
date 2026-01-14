@@ -99,13 +99,13 @@ module Decidim
         context "when selection_criteria is blank" do
           let(:selection_criteria) { { en: "", es: "", ca: "" } }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.to be_valid }
         end
 
         context "when selected_profiles_description is blank" do
           let(:selected_profiles_description) { { en: "", es: "", ca: "" } }
 
-          it { is_expected.to be_invalid }
+          it { is_expected.to be_valid }
         end
       end
     end
