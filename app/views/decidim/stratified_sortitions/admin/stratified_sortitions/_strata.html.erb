@@ -3,11 +3,11 @@
 
   <div class="stratified-sortition-strata row column">
     <button class="button button__sm button__secondary add-stratum" type="button"><%= t(".add_stratum") %></button>
-    <script type="text/template" class="decidim-template">
+    <template class="decidim-template">
       <%= fields_for "stratified_sortition[strata][STRATUM_ID]", blank_stratum do |stratum_form| %>
         <%= render "stratum", form: stratum_form, id: tabs_id_for_stratum(blank_stratum) %>
       <% end %>
-    </script>
+    </template>
 
     <div class="stratified-sortition-strata-list">
       <% form.object.strata.each do |stratum| %>
