@@ -102,7 +102,7 @@ module Decidim
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_3"),
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_4"),
           ]
-          strata = Decidim::StratifiedSortitions::Stratum.order(:id)
+          strata = stratified_sortition.strata.order(:id)
           strata_headers = strata.map do |stratum|
             translated_attribute(stratum.name)
           end
