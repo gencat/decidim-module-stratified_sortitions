@@ -2,11 +2,6 @@
   <%= field_errors_block(form, :substrata) %>
 
   <div class="stratified-sortition-substrata row column" id="substrata-<%= form.object.object_id %>">
-    <button
-      class="button button__sm button__secondary add-substratum"
-      type="button">
-      <%= t(".add_substratum") %>
-    </button>
 
     <script type="text/template" class="decidim-template">
       <% new_substratum = Decidim::StratifiedSortitions::Admin::SubstratumForm.new(stratum: form.object) %>
@@ -30,5 +25,10 @@
         <% end %>
       <% end %>
     </div>
+    <button
+      class="button button__sm button__secondary add-substratum mt-2"
+      type="button">
+      <%= t(".add_substratum") %>
+    </button>
   </div>
 </div>

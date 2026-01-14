@@ -2,7 +2,6 @@
   <%= field_errors_block(form, :strata) %>
 
   <div class="stratified-sortition-strata row column">
-    <button class="button button__sm button__secondary add-stratum" type="button"><%= t(".add_stratum") %></button>
     <template class="decidim-template">
       <%= fields_for "stratified_sortition[strata][STRATUM_ID]", blank_stratum do |stratum_form| %>
         <%= render "stratum", form: stratum_form, id: tabs_id_for_stratum(blank_stratum) %>
@@ -16,5 +15,6 @@
         <% end %>
       <% end %>
     </div>
+    <button class="button button__sm button__secondary add-stratum mt-2" type="button"><%= t(".add_stratum") %></button>
   </div>
 </div>
