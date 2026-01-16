@@ -2,6 +2,7 @@ import AutoButtonsByPositionComponent from "src/decidim/admin/auto_buttons_by_po
 import AutoLabelByPositionComponent from "src/decidim/admin/auto_label_by_position.component"
 import createSortList from "src/decidim/admin/sort_list.component"
 import { initializeSubstrataWrapper } from "src/decidim/stratified_sortitions/substratum_fields"
+import { createAccordion } from "src/decidim/a11y"
 
 $(() => {
   const wrapperSelector = ".stratified-sortition-strata";
@@ -44,19 +45,62 @@ $(() => {
     autoButtonsByPosition.run();
   };
 
+  const expandStratum = ($stratum) => {
+    const $toggle = $stratum.find('.stratum--collapse');
+    if ($toggle.length === 0) return;
+    const ctrl = $toggle.attr('data-controls');
+    const panel = ctrl ? document.getElementById(ctrl) : null;
+    const isExpanded = $toggle.attr('aria-expanded') === 'true';
+
+    if (!isExpanded) {
+      $toggle.trigger('click');
+
+      setTimeout(() => {
+        const nowExpanded = $toggle.attr('aria-expanded') === 'true';
+        if (!nowExpanded && panel) {
+          $toggle.attr('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          $(panel).show();
+        }
+      }, 0);
+    }
+  };
+
+  const createCollapsibleStratum = ($target) => {
+    const $collapsible = $target.find(".collapsible");
+    if ($collapsible.length > 0) {
+      const collapsibleId = $collapsible.attr("id").replace("-stratum-card", "");
+      const toggleAttr = `${collapsibleId}-stratum-card`;
+
+      $target.find(".stratum--collapse")
+        .attr("data-controls", toggleAttr)
+        .attr("aria-controls", toggleAttr)
+        .each((_i, btn) => {
+          if (!btn.id) {
+            btn.id = `${toggleAttr}-toggle`;
+          }
+          if (!btn.hasAttribute("aria-expanded")) {
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+    }
+  };
+
   $(document).on("click", ".add-stratum", function(e) {
     e.preventDefault();
     e.stopPropagation();
     
     const $button = $(this);
     const $wrapper = $button.closest(wrapperSelector);
-    const $container = $(".stratified-sortition-strata-list");
-    const $template = $wrapper.find("script.decidim-template");
+    const $container = $wrapper.find(".stratified-sortition-strata-list");
+    const $template = $wrapper.find("template.decidim-template, script.decidim-template");
     
     if ($template.length && $container.length) {
+
       const templateContent = $template.html();
       const uniqueId = new Date().getTime();
       let newField = templateContent.replace(/(?<!SUB)STRATUM_ID/g, uniqueId);
+      newField = newField.replace(/stratified-sortition-stratum-id/g, `stratified-sortition-stratum-${uniqueId}`);
       newField = newField.replace(/substrata-\d+/g, `substrata-${uniqueId}`);
       $container.append(newField);
       
@@ -73,9 +117,29 @@ $(() => {
       });
 
       updateSubstratumFieldsVisibility($newField);
+      createCollapsibleStratum($newField);
+
+      const $newPanel = $newField.find('.collapsible');
+      const $newToggle = $newField.find('.stratum--collapse');
+      if ($newPanel.length && $newToggle.length) {
+        $newToggle.attr('aria-expanded', 'false');
+        $newPanel.attr('aria-hidden', 'true').hide();
+      }
 
       createSortableList();
       runComponents();
+
+      const newAccordion = $newField[0].querySelector('[data-component="accordion"]');
+      if (newAccordion) {
+        try { createAccordion(newAccordion); } catch (_e) {}
+      }
+
+      if (document && typeof document.dispatchEvent === "function") {
+        try {
+          document.dispatchEvent(new CustomEvent("ajax:loaded", { detail: $newField[0] }));
+        } catch (_e) {}
+      }
+
     }
   });
 
@@ -155,6 +219,8 @@ $(() => {
           hasEmptyName = true;
           $nameField.addClass("is-invalid-input");
 
+          expandStratum($stratum);
+
           if (!$firstInvalidStratum) {
             $firstInvalidStratum = $stratum;
           }
@@ -177,9 +243,41 @@ $(() => {
     const $target = $(el);
     hideDeletedStratum($target);
     updateSubstratumFieldsVisibility($target);
+    createCollapsibleStratum($target);
   });
 
   makeRequiredCatalanFields();
 
   runComponents();
+
+  if (document && typeof document.dispatchEvent === "function") {
+    try {
+      const $root = $(wrapperSelector).first();
+      if ($root.length) {
+        document.dispatchEvent(new CustomEvent("ajax:loaded", { detail: $root[0] }));
+      }
+    } catch (_e) {}
+  }
 })
+
+$(document).on("click", ".stratified-sortition-stratum .stratum--collapse", function(e) {
+  const btn = this;
+
+  if (btn.hasAttribute("role")) return;
+
+  const ctrl = btn.getAttribute("data-controls");
+  if (!ctrl) return;
+  const panel = document.getElementById(ctrl);
+  if (!panel) return;
+
+  const expanded = btn.getAttribute("aria-expanded") === "true";
+  const next = !expanded;
+  btn.setAttribute("aria-expanded", next ? "true" : "false");
+  panel.setAttribute("aria-hidden", next ? "false" : "true");
+
+  if (next) {
+    $(panel).show();
+  } else {
+    $(panel).hide();
+  }
+});

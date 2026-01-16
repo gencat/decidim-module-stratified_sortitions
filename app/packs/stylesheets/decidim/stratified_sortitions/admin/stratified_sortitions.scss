@@ -52,3 +52,25 @@
     max-width: 100%;
   }
 }
+
+.stratified-sortition-stratum {
+  button[aria-expanded="true"] {
+    .icon-collapse {
+      @apply block;
+    }
+
+    .icon-expand {
+      @apply hidden;
+    }
+  }
+
+  button[aria-expanded="false"] {
+    .icon-collapse {
+      @apply hidden;
+    }
+
+    .icon-expand {
+      @apply block;
+    }
+  }
+}
