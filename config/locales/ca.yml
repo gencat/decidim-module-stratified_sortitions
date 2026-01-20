@@ -12,11 +12,11 @@ ca:
   decidim:
     components:
       stratified_sortitions:
-        name: Sortejos estratificats
+        name: Sorteigs estratificats
         settings:
           global:
             announcement: Avís
-            publish_sortitions: Publicar sortejos estratificats
+            publish_sortitions: Publicar sorteigs estratificats
           step:
             announcement: Avís
     stratified_sortitions:
@@ -26,7 +26,7 @@ ca:
           confirm_destroy: Segur que vols eliminar aquest %{name}?
           destroy: Esborra
           duplicate: Duplica
-          new_stratified_sortition: "Nou sortejo estratificat"
+          new_stratified_sortition: "Nou sorteig estratificat"
           title: "Accions"
           upload_sample: "Importar mostra"
         models:
@@ -40,23 +40,23 @@ ca:
               selected_profiles_description: Descripció dels perfils seleccionats
         stratified_sortitions:
           create:
-            error: S'ha produït un problema en crear aquest sortejo estratificat
-            success: Sortejo estratificat creat amb èxit
+            error: S'ha produït un problema en crear aquest sorteig estratificat
+            success: Sorteig estratificat creat amb èxit
           destroy:
-            error: S'ha produït un problema en eliminar aquest sortejo estratificat
-            has_problems: Aquest sortejo estratificat no s'ha pogut eliminar degut a problemes relacionats
-            success: Sortejo estratificat eliminat amb èxit
+            error: S'ha produït un problema en eliminar aquest sorteig estratificat
+            has_problems: Aquest sorteig estratificat no s'ha pogut eliminar degut a problemes relacionats
+            success: Sorteig estratificat eliminat amb èxit
           duplicate:
-            error: S'ha produït un problema en duplicar aquest sortejo estratificat
-            success: Sortejo estratificat duplicat amb èxit
+            error: S'ha produït un problema en duplicar aquest sorteig estratificat
+            success: Sorteig estratificat duplicat amb èxit
           index:
-            selected: Sortejos estratificats seleccionats
-            title: Sortejos estratificats
+            selected: Sorteigs estratificats seleccionats
+            title: Sorteigs estratificats
           new:
             create: Crear
-            title: Nou sortejo estratificat
+            title: Nou sorteig estratificat
           edit:
-            title: Editar sortejo estratificat
+            title: Editar sorteig estratificat
             update: Actualitzar
           form:
             data: Informació general
@@ -92,8 +92,8 @@ ca:
             weighing: Ponderació
             weighing_placeholder: Ponderació
           update:
-            error: S'ha produït un problema en actualitzar aquest sortejo estratificat
-            success: Sortejo estratificat actualitzat amb èxit
+            error: S'ha produït un problema en actualitzar aquest sorteig estratificat
+            success: Sorteig estratificat actualitzat amb èxit
           upload_sample:
             age: Grup d'edat
             census_file: Triar un fitxer
@@ -137,7 +137,7 @@ ca:
           errors:
             no_file: "No s'ha seleccionat cap fitxer."
             no_strata: "Has de configurar els estrats i subestrats abans de pujar una mostra."
-            pending: "Només pots pujar mostres quan el sortejo estratificat està en estat pendent."
+            pending: "Només pots pujar mostres quan el sorteig estratificat està en estat pendent."
         sample_imports:
           create:
             success: "La mostra s'està carregant en segon pla. Quan acabi rebràs un correu amb el resum de la importació."
