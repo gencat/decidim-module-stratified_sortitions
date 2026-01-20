@@ -8,7 +8,7 @@
         upload_sample_stratified_sortition_path(stratified_sortition),
         method: :get,
         class: "button button__sm button__secondary import-sample-btn",
-        disabled: stratified_sortition.strata.empty? %>
+        disabled: !stratified_sortition.strata_and_substrata_configured? %>
   </div>
 </div>
 <div class="item__edit item__edit-1col">
