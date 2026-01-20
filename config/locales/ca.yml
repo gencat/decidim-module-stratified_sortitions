@@ -106,14 +106,14 @@ ca:
             filename_data: "%{filename}, el dia %{date}, número de registres %{count}"
             gender: Gènere
             last_upload_date: La última càrrega va ser el dia %{date}
-            help: Les quatre primeres columnes són dades del candidat, per exemple correu electrònic, DNI, telèfon o adreça i les següents columnes són els estrats definits en el sorteig estratificat. Cada fila representa un candidat.
+            help: "La mostra ha de ser un fitxer CSV o Excel.<br> Cada fila respresenta un candidat/candidata."
             no_data: Sense dades
             place: Lloc de naixement
-            remove_uploaded_samples: Eliminar mostres carregades
+            remove_uploaded_samples: Eliminar tots els registres
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
             target: Target
-            title: Pujar un nou cens
-            uploaded_file: Dades del cens carregat
+            title: Importar nova mostra
+            uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
             no_uploaded_files: "No hi ha fitxers carregats."
         import_mailer:
