@@ -12,11 +12,11 @@ ca:
   decidim:
     components:
       stratified_sortitions:
-        name: Sorteigs estratificats
+        name: Sortejos estratificats
         settings:
           global:
             announcement: Avís
-            publish_sortitions: Publicar sorteigs estratificats
+            publish_sortitions: Publicar sortejos estratificats
           step:
             announcement: Avís
     stratified_sortitions:
@@ -50,8 +50,8 @@ ca:
             error: S'ha produït un problema en duplicar aquest sorteig estratificat
             success: Sorteig estratificat duplicat amb èxit
           index:
-            selected: Sorteigs estratificats seleccionats
-            title: Sorteigs estratificats
+            selected: Sortejos estratificats seleccionats
+            title: Sortejos estratificats
           new:
             create: Crear
             title: Nou sorteig estratificat
