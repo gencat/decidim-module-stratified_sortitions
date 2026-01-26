@@ -104,14 +104,14 @@ en:
             filename_data: File name, on %{date}, number of records %{count}
             gender: Gender
             last_upload_date: The last upload was on February 24, 2025 10:41
-            help: The first four columns are candidate data, such as email, ID, phone, or address, and the following columns are the strata defined in the stratified sortition. Each row represents a candidate.
+            help: "The sample must be a CSV or Excel file.<br> Each row represents a candidate."
             no_data: No data
             place: Place of birth
-            remove_uploaded_samples: Remove uploaded samples
+            remove_uploaded_samples: Remove all records
             confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?
             target: Target
-            title: Upload a new census
-            uploaded_file: Census data
+            title: Import new sample
+            uploaded_file: Uploaded sample data
             uploaded_files: "The following files have been added:"
             no_uploaded_files: "No files uploaded."
         import_mailer:
