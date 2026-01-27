@@ -140,8 +140,8 @@ $(() => {
       const $newPanel = $newField.find('.collapsible');
       const $newToggle = $newField.find('.stratum--collapse');
       if ($newPanel.length && $newToggle.length) {
-        $newToggle.attr('aria-expanded', 'false');
-        $newPanel.attr('aria-hidden', 'true').hide();
+        $newToggle.attr('aria-expanded', 'true');
+        $newPanel.attr('aria-hidden', 'false').show();
       }
 
       createSortableList();
