@@ -93,7 +93,7 @@ $(() => {
     const maxLength = $(targetSelector).data("max-length");
     const omission = $(targetSelector).data("omission");
     const placeholder = $(targetSelector).data("placeholder");
-    console.log("Creating dynamic title for", fieldId, locale);
+
     return createLiveTextUpdateComponent({
       inputSelector: `#${fieldId} input[name$=\\[name_${locale}\\]]`,
       targetSelector: targetSelector,
