@@ -96,6 +96,7 @@ es:
             success: Sorteo estratificado actualizado con éxito
           upload_sample:
             age: Grupo de edad
+            candidates: Candidatos
             census_file: Elegir un archivo
             census_file_label: Archivo excel.csv con los datos del censo
             configure_strata_first: Primero debes configurar los estratos y subestratos

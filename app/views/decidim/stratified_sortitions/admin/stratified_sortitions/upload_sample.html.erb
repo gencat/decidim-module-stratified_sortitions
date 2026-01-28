@@ -22,7 +22,6 @@
   <div class="row mt-4">
     <%= form_tag samples_path(id: @stratified_sortition.id), multipart: true, class: 'form' do %>
       <div class="flex">
-        
         <%= file_field_tag :file, id: 'sample-file-input' %>
 
         <% if @stratified_sortition.strata_and_substrata_configured? %>
@@ -61,25 +60,13 @@
     </div>
   </div>
   <div class="mt-4 mb-4">
-    <span>
-      <h1 class="item_show__header-title">
-        <%= t(".target") %>
-      </h1>
-    </span>
     <div class="row chart-row">
-      <% @strata_data.each do |stratum_data| %>
-        <div class="column chart-col">
-          <b><%= translated_attribute(stratum_data[:stratum].name).upcase %></b>
-          <% if stratum_data[:chart_data].present? %>
-            <%= pie_chart stratum_data[:chart_data], 
-                legend: "bottom",
-                donut: false
-            %>
-          <% else %>
-            <p class="text-muted"><%= t('.no_data') %></p>
-          <% end %>
-        </div>
-      <% end %>
+      <div class="col-md-6 charts-column target">
+        <%= render partial: "strata_charts", locals: { strata_data: @strata_data, title: t(".target") } %>
+      </div>
+      <div class="col-md-6 charts-column">
+        <%= render partial: "strata_charts", locals: { strata_data: @candidates_data, title: t(".candidates") } %>
+      </div>
     </div>
     <div class="mt-16 census_file_type">
       <span>
