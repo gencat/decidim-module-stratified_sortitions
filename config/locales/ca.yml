@@ -96,6 +96,7 @@ ca:
             success: Sorteig estratificat actualitzat amb èxit
           upload_sample:
             age: Grup d'edat
+            candidates: Candidats
             census_file: Triar un fitxer
             census_file_label: Arxiu excel.csv amb les dades del cens
             configure_strata_first: Primer has de configurar els estrats i subestrats

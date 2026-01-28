@@ -30,10 +30,8 @@
 
 .chart-row {
   display: flex;
-  gap: 4em;
   margin-top: 1em;
-  flex-wrap: wrap;
-  justify-content: start;
+  justify-content: space-around;
 }
 
 .chart-col {
@@ -42,10 +40,22 @@
   max-width: 450px;
   display: flex;
   flex-direction: column;
+  margin-top: 1em;
 }
 
 .chart-place {
   max-width: 380px;
+}
+
+.charts-column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.target {
+  border-right: 1px solid #6B7280CC;
 }
 
 @media (max-width: 900px) {

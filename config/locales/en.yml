@@ -94,6 +94,7 @@ en:
             success: Stratified sortition successfully updated
           upload_sample:
             age: Age group
+            candidates: Candidates
             census_file: Choose a file
             census_file_label: Excel.csv file with census data
             configure_strata_first: You must configure strata and substrata first
