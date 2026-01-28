@@ -216,16 +216,16 @@ module Decidim
           end
 
           before do
-            stratum1 = create(:stratum, stratified_sortition:, kind: "value", name: { ca: "Gènere", es: "Género", en: "Gender" })
-            substratum1 = create(:substratum, stratum: stratum1, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", weighing: "50")
-            substratum2 = create(:substratum, stratum: stratum1, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", weighing: "50")
+            stratum_1 = create(:stratum, stratified_sortition:, kind: "value", name: { ca: "Gènere", es: "Género", en: "Gender" })
+            substratum_1 = create(:substratum, stratum: stratum_1, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", weighing: "50")
+            substratum_2 = create(:substratum, stratum: stratum_1, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", weighing: "50")
 
             sample_import = create(:sample_import, stratified_sortition:)
-            participant1 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
-            participant2 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
+            participant_1 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
+            participant_2 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
 
-            create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant1, decidim_stratified_sortitions_stratum: stratum1, decidim_stratified_sortitions_substratum: substratum1)
-            create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant2, decidim_stratified_sortitions_stratum: stratum1, decidim_stratified_sortitions_substratum: substratum2)
+            create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant_1, decidim_stratified_sortitions_stratum: stratum_1, decidim_stratified_sortitions_substratum: substratum_1)
+            create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant_2, decidim_stratified_sortitions_stratum: stratum_1, decidim_stratified_sortitions_substratum: substratum_2)
           end
 
           it "renders the upload_sample template" do
