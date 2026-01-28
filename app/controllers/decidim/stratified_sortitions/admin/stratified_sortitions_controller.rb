@@ -160,8 +160,6 @@ module Decidim
           end
         end
 
-        private
-
         def fetch_sample_candidates_stratum(sample_candidates_ids)
           Decidim::StratifiedSortitions::SampleParticipantStratum
             .where(decidim_stratified_sortitions_sample_participant_id: sample_candidates_ids)
@@ -189,7 +187,7 @@ module Decidim
             build_substratum_chart_row(stratum, substratum, by_stratum_and_substratum, total)
           end
           chart_data = chart_data.reject { |_name, value| value.zero? }
-          { stratum:, chart_data:, }
+          { stratum:, chart_data: }
         end
 
         def build_substratum_chart_row(stratum, substratum, by_stratum_and_substratum, total)
