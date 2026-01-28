@@ -211,7 +211,7 @@ module Decidim
           let(:params) do
             {
               participatory_process_slug: component.participatory_space.slug,
-              id: stratified_sortition.id
+              id: stratified_sortition.id,
             }
           end
 
@@ -220,7 +220,7 @@ module Decidim
             substratum1 = create(:substratum, stratum: stratum1, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", weighing: "50")
             substratum2 = create(:substratum, stratum: stratum1, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", weighing: "50")
 
-            sample_import = create(:sample_import, stratified_sortition: stratified_sortition)
+            sample_import = create(:sample_import, stratified_sortition:)
             participant1 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
             participant2 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
 
@@ -229,22 +229,22 @@ module Decidim
           end
 
           it "renders the upload_sample template" do
-            get(:upload_sample, params: params)
+            get(:upload_sample, params:)
             expect(response).to render_template(:upload_sample)
           end
 
           it "assigns @stratified_sortition" do
-            get(:upload_sample, params: params)
+            get(:upload_sample, params:)
             expect(assigns(:stratified_sortition)).to eq(stratified_sortition)
           end
 
           it "assigns @sample_participants_count" do
-            get(:upload_sample, params: params)
+            get(:upload_sample, params:)
             expect(assigns(:sample_participants_count)).to eq(stratified_sortition.sample_participants.count)
           end
 
           it "assigns @strata_data and @candidates_data" do
-            get(:upload_sample, params: params)
+            get(:upload_sample, params:)
             expect(assigns(:strata_data)).to be_an(Array)
             expect(assigns(:candidates_data)).to be_an(Array)
             expect(assigns(:strata_data).first[:stratum]).to be_present
@@ -252,7 +252,7 @@ module Decidim
           end
 
           it "@candidates_data refleja los datos importados" do
-            get(:upload_sample, params: params)
+            get(:upload_sample, params:)
             imported = assigns(:candidates_data).first[:chart_data].map(&:last)
             expect(imported.sum).to eq(stratified_sortition.sample_participants.count)
           end

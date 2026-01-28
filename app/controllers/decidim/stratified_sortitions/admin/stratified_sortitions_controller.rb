@@ -152,10 +152,10 @@ module Decidim
         def candidates_data(stratified_sortition)
           sample_candidates_ids = stratified_sortition.sample_participants.pluck(:id)
           sample_candidates_stratum = Decidim::StratifiedSortitions::SampleParticipantStratum
-            .where(decidim_stratified_sortitions_sample_participant_id: sample_candidates_ids)
-            .select(:decidim_stratified_sortitions_sample_participant_id, :decidim_stratified_sortitions_stratum_id, :decidim_stratified_sortitions_substratum_id)
-            .distinct
-            .to_a
+                                      .where(decidim_stratified_sortitions_sample_participant_id: sample_candidates_ids)
+                                      .select(:decidim_stratified_sortitions_sample_participant_id, :decidim_stratified_sortitions_stratum_id, :decidim_stratified_sortitions_substratum_id)
+                                      .distinct
+                                      .to_a
 
           by_stratum = sample_candidates_stratum.group_by(&:decidim_stratified_sortitions_stratum_id)
           by_stratum_and_substratum = sample_candidates_stratum.group_by { |s| [s.decidim_stratified_sortitions_stratum_id, s.decidim_stratified_sortitions_substratum_id] }
@@ -167,14 +167,14 @@ module Decidim
             chart_data = substrata.map do |substratum|
               ids = (by_stratum_and_substratum[[stratum.id, substratum.id]] || []).map(&:decidim_stratified_sortitions_sample_participant_id).uniq
               count = ids.count
-              percentage = total > 0 ? ((count.to_f / total) * 100).round(1) : 0.0
+              percentage = total.positive? ? ((count.to_f / total) * 100).round(1) : 0.0
               label = "#{translated_attribute(substratum.name)} (#{percentage}%)"
               [label, count]
             end
             chart_data = chart_data.reject { |_name, value| value.zero? }
             {
-              stratum: stratum,
-              chart_data: chart_data,
+              stratum:,
+              chart_data:,
             }
           end
         end
