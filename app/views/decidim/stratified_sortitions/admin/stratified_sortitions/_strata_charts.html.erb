@@ -11,7 +11,9 @@
           legend: "bottom",
           donut: false %>
     <% else %>
-      <p class="text-muted"><%= t('.no_data') %></p>
+      <p class="text-muted">
+        <%= t('decidim.stratified_sortitions.admin.stratified_sortitions.upload_sample.no_data') %>
+      </p>
     <% end %>
   </div>
 <% end %>
