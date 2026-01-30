@@ -1,0 +1,19 @@
+<span>
+  <h1 class="item_show__header-title">
+    <%= local_assigns[:title] || "" %>
+  </h1>
+</span>
+<% (strata_data || []).each do |stratum_data| %>
+  <div class="column chart-col">
+    <b><%= translated_attribute(stratum_data[:stratum].name).upcase %></b>
+    <% if stratum_data[:chart_data].present? %>
+      <%= pie_chart stratum_data[:chart_data],
+          legend: "bottom",
+          donut: false %>
+    <% else %>
+      <p class="text-muted">
+        <%= t('decidim.stratified_sortitions.admin.stratified_sortitions.upload_sample.no_data') %>
+      </p>
+    <% end %>
+  </div>
+<% end %>
