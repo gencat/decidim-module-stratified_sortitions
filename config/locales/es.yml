@@ -89,8 +89,8 @@ es:
             range: Rango
             range_placeholder: Rango (p. ej. 0-18)
             title: Subestrato
-            weighing: Ponderación
-            weighing_placeholder: Ponderación
+            max_quota_percentage: Cuota máxima (%)
+            max_quota_percentage_placeholder: Cuota máxima %
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito

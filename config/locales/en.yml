@@ -73,7 +73,7 @@ en:
               title: Kind
               value: Value
               numeric_range: Numeric range
-            title: Substrata
+            substrata_title: Substrata
             title: Strata
           substrata:
             add_substratum: Add substratum
@@ -87,8 +87,8 @@ en:
             range: Range
             range_placeholder: Range (e.g. 0-18)
             title: Substratum
-            weighing: Weighing
-            weighing_placeholder: Weighing
+            max_quota_percentage: Max quota (%)
+            max_quota_percentage_placeholder: Max quota %
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated
