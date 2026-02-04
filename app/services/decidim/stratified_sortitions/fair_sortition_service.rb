@@ -28,7 +28,7 @@ module Decidim
     #   # Publish portfolio_result.portfolio.panels for transparency
     #
     #   # Phase 2: Sample from portfolio (can be done publicly)
-    #   final_result = service.sample_from_portfolio(verification_seed: "hash_of_the_day")
+    #   final_result = service.sample_from_portfolio(verification_seed: SecureRandom.hex(64))
     #
     # @example With verification seed (for auditable draws)
     #   result = FairSortitionService.new(stratified_sortition, verification_seed: "public_seed_123").call
@@ -107,7 +107,7 @@ module Decidim
           )
         end
 
-        portfolio = PanelPortfolio.create!(
+        @existing_portfolio = portfolio = PanelPortfolio.create!(
           stratified_sortition: @stratified_sortition,
           panels: leximin_result.panels,
           probabilities: leximin_result.probabilities,
@@ -138,7 +138,7 @@ module Decidim
       def sample_from_portfolio(verification_seed: nil)
         portfolio = existing_portfolio
 
-        return error_result(error: "No existeix cap cartera de panels. Cal executar generate_portfolio primer") unless portfolio
+        return error_result(error: "There is no panel portfolio. Execute `generate_portfolio` first") unless portfolio
 
         if portfolio.sampled?
           # Return existing result
@@ -151,7 +151,8 @@ module Decidim
 
         build_success_result(portfolio.reload)
       rescue StandardError => e
-        error_result(error: "Error en el mostreig: #{e.message}")
+        Rails.logger.error("Error while sampling portfolio: #{e.message}\n#{e.backtrace.join("\n")}")
+        error_result(error: "Error while sampling: #{e.message}")
       end
 
       # Verify a previous sortition result
@@ -166,7 +167,7 @@ module Decidim
         return false unless portfolio&.sampled?
 
         # Re-sample with the same seed (doesn't persist)
-        random_seed = derive_random_seed(verification_seed)
+        random_seed = Decidim::StratifiedSortitions.derive_random_seed(verification_seed)
         sampler = Leximin::PanelSampler.new(
           portfolio.panels,
           portfolio.probabilities,
@@ -199,12 +200,6 @@ module Decidim
 
         result = generate_portfolio
         result.success? ? result.portfolio : result
-      end
-
-      def derive_random_seed(seed)
-        return nil unless seed
-
-        Digest::SHA256.hexdigest(seed).to_i(16) % (2**31)
       end
 
       def load_participants(participant_ids)

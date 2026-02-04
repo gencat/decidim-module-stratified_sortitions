@@ -48,31 +48,12 @@ bundle exec rails db:migrate
 
 ## Usage
 
-To generate all the panels and extract the samples at once:
+Decidim::StratifiedSortitions allows fair sortitions in two ways.
 
-```ruby
-result = Decidim::StratifiedSortitions::FairSortitionService.new(sortition).call
-result.selected_participants  # Selected participants
-result.portfolio              # The persisted PanelPortfolio
-```
+1. Generate all the panels and extract the samples at once.
+2. Execute the sortition in two phases
 
-Execute the sortition in two phases:
-
-```ruby
-service = Decidim::StratifiedSortitions::FairSortitionService.new(sortition)
-
-# Phase 1: Generate portfolio (may be slow, run in background)
-portfolio_result = service.generate_portfolio
-portfolio = portfolio_result.portfolio
-
-# Publish portfolio.panels for transparency
-
-# Phase 2: Public sampling (at the moment)
-final_result = service.sample_from_portfolio(
-  verification_seed: "hash"
-)
-final_result.selected_participants
-```
+See `Decidim::StratifiedSortitions::FairSortitionService` for more details on how to each workflow works.
 
 ## Running tests
 

@@ -71,7 +71,7 @@ module Decidim
       def sample!(verification_seed: nil)
         raise "Portfolio already sampled" if sampled?
 
-        random_seed = derive_random_seed(verification_seed)
+        random_seed = Decidim::StratifiedSortitions.derive_random_seed(verification_seed)
         sampler = Leximin::PanelSampler.new(panels, probabilities, random_seed:)
         result = sampler.sample
 
@@ -125,7 +125,7 @@ module Decidim
         {
           algorithm: "LEXIMIN",
           version: "1.0",
-          stratified_sortition_id:,
+          stratified_sortition_id: stratified_sortition.id,
           generated_at: generated_at&.iso8601,
           generation_time_seconds:,
           num_panels:,
@@ -142,12 +142,6 @@ module Decidim
       end
 
       private
-
-      def derive_random_seed(seed)
-        return nil unless seed
-
-        Digest::SHA256.hexdigest(seed).to_i(16) % (2**31)
-      end
 
       def panels_and_probabilities_match
         return if panels.blank? || probabilities.blank?
