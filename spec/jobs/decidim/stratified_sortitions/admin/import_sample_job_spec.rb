@@ -21,7 +21,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
   let!(:age_26_40) { create(:substratum, name: { ca: "26-40", es: "26-40", en: "26-40" }, stratum: age_stratum, range: "26-40", weighing: "40") }
   let!(:age_41_65) { create(:substratum, name: { ca: "41-65", es: "41-65", en: "41-65" }, stratum: age_stratum, range: "41-65", weighing: "30") }
 
-  let(:csv_content) do
+  let(:csv_content) do  
     <<~CSV
       Dada personal 1 (identificador únic),Dada personal 2,Dada personal 3,Dada personal 4,Género_#{gender_stratum.id},Edad_#{age_stratum.id}
       12345671Z,a,b,c,H,18
@@ -42,6 +42,8 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
     file
   end
 
+  let(:filename) { "sample.csv" }
+
   before do
     allow(Decidim::StratifiedSortitions::Admin::ImportMailer).to receive(:import).and_return(double(deliver_now: true))
   end
@@ -50,7 +52,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
     context "when all rows are valid" do
       it "creates sample import with completed status" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.to change(Decidim::StratifiedSortitions::SampleImport, :count).by(1)
 
         sample_import = Decidim::StratifiedSortitions::SampleImport.last
@@ -63,18 +65,18 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
 
       it "creates sample participants" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.to change(Decidim::StratifiedSortitions::SampleParticipant, :count).by(3)
       end
 
       it "creates sample participant strata associations" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.to change(Decidim::StratifiedSortitions::SampleParticipantStratum, :count).by(6)
       end
 
       it "associates participants with correct substrata for value type" do
-        subject.perform(file, stratified_sortition, user)
+        subject.perform(csv_content, filename, stratified_sortition, user)
 
         participant = Decidim::StratifiedSortitions::SampleParticipant.find_by(personal_data_1: "12345671Z")
         gender_association = participant.sample_participant_strata.find_by(decidim_stratified_sortitions_stratum: gender_stratum)
@@ -83,7 +85,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
       end
 
       it "associates participants with correct substrata for numeric_range type" do
-        subject.perform(file, stratified_sortition, user)
+        subject.perform(csv_content, filename, stratified_sortition, user)
 
         # Participant with age 18 should be in 18-25 range
         participant_1 = Decidim::StratifiedSortitions::SampleParticipant.find_by(personal_data_1: "12345671Z")
@@ -103,7 +105,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
 
       it "sends import notification email" do
         expect(Decidim::StratifiedSortitions::Admin::ImportMailer).to receive(:import).with(user, kind_of(Decidim::StratifiedSortitions::SampleImport))
-        subject.perform(file, stratified_sortition, user)
+        subject.perform(csv_content, filename, stratified_sortition, user)
       end
     end
 
@@ -119,7 +121,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
       end
 
       it "creates sample import with failed status" do
-        subject.perform(file, stratified_sortition, user)
+        subject.perform(csv_content, filename, stratified_sortition, user)
 
         sample_import = Decidim::StratifiedSortitions::SampleImport.last
         expect(sample_import.status).to eq("failed")
@@ -131,7 +133,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
 
       it "creates only valid participants" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.to change(Decidim::StratifiedSortitions::SampleParticipant, :count).by(2)
 
         expect(Decidim::StratifiedSortitions::SampleParticipant.find_by(personal_data_1: "12345671Z")).to be_present
@@ -141,7 +143,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
       end
 
       it "records error details for failed rows" do
-        subject.perform(file, stratified_sortition, user)
+        subject.perform(csv_content, filename, stratified_sortition, user)
 
         sample_import = Decidim::StratifiedSortitions::SampleImport.last
         expect(sample_import.import_errors.size).to eq(2)
@@ -162,13 +164,13 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
 
       it "does not create participant due to transaction rollback" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.not_to change(Decidim::StratifiedSortitions::SampleParticipant, :count)
       end
 
       it "does not create any strata associations" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.not_to change(Decidim::StratifiedSortitions::SampleParticipantStratum, :count)
       end
     end
@@ -182,7 +184,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
 
       it "updates existing participant instead of creating new one" do
         expect do
-          subject.perform(file, stratified_sortition, user)
+          subject.perform(csv_content, filename, stratified_sortition, user)
         end.to change(Decidim::StratifiedSortitions::SampleParticipant, :count).by(2)
 
         participant = Decidim::StratifiedSortitions::SampleParticipant.find_by(personal_data_1: "12345671Z")
