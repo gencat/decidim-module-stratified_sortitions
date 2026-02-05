@@ -21,7 +21,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
   let!(:age_26_40) { create(:substratum, name: { ca: "26-40", es: "26-40", en: "26-40" }, stratum: age_stratum, range: "26-40", weighing: "40") }
   let!(:age_41_65) { create(:substratum, name: { ca: "41-65", es: "41-65", en: "41-65" }, stratum: age_stratum, range: "41-65", weighing: "30") }
 
-  let(:csv_content) do  
+  let(:csv_content) do
     <<~CSV
       Dada personal 1 (identificador únic),Dada personal 2,Dada personal 3,Dada personal 4,Género_#{gender_stratum.id},Edad_#{age_stratum.id}
       12345671Z,a,b,c,H,18
