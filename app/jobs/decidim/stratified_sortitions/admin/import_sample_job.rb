@@ -8,16 +8,16 @@ module Decidim
       class ImportSampleJob < ApplicationJob
         queue_as :default
 
-        def perform(file, stratified_sortition, user)
+        def perform(file_content, filename, stratified_sortition, user)
           sample_import = Decidim::StratifiedSortitions::SampleImport.create!(
             stratified_sortition:,
-            filename: file.original_filename,
+            filename:,
             status: :processing
           )
           processing_errors = []
           total_rows = 0
 
-          CSV.foreach(file, headers: true, col_sep: ",") do |row|
+          CSV.parse(file_content, headers: true, col_sep: ",") do |row|
             total_rows += 1
             @headers = row.headers
             strata_headers = @headers[4..]
