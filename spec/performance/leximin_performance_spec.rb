@@ -20,6 +20,7 @@ module Decidim
         require_cbc!
       end
 
+      # rubocop: disable Lint/ConstantDefinitionInBlock
       # Performance thresholds (in seconds)
       THRESHOLDS = {
         small: 5, # 50 participants, panel of 10
@@ -27,6 +28,7 @@ module Decidim
         large: 60, # 500 participants, panel of 50
         xlarge: 180, # 1000 participants, panel of 100
       }.freeze
+      # rubocop: enable Lint/ConstantDefinitionInBlock
 
       describe "small scale (50 participants, panel of 10)" do
         let(:sortition) do
@@ -203,7 +205,7 @@ module Decidim
 
         it "does not consume excessive memory" do
           # Get memory before
-          memory_before = get_memory_usage
+          memory_before = read_sys_memory_usage
 
           result = FairSortitionService.new(sortition).call
           expect(result.success?).to be true
@@ -211,7 +213,7 @@ module Decidim
           # Force garbage collection
           GC.start
 
-          memory_after = get_memory_usage
+          memory_after = read_sys_memory_usage
           memory_increase = memory_after - memory_before
 
           puts "\n  Memory Usage:"
@@ -347,7 +349,7 @@ module Decidim
         ]
       end
 
-      def get_memory_usage
+      def read_sys_memory_usage
         # Get RSS memory in KB (Linux)
         if File.exist?("/proc/self/status")
           File.read("/proc/self/status").match(/VmRSS:\s+(\d+)/)[1].to_i

@@ -38,12 +38,12 @@ module Decidim
             let(:random_seed) { 12_345 }
 
             it "produces reproducible results" do
-              result1 = described_class.new(panels, probabilities, random_seed: 12_345).sample
-              result2 = described_class.new(panels, probabilities, random_seed: 12_345).sample
+              result_1 = described_class.new(panels, probabilities, random_seed: 12_345).sample
+              result_2 = described_class.new(panels, probabilities, random_seed: 12_345).sample
 
-              expect(result1.selected_panel).to eq(result2.selected_panel)
-              expect(result1.selected_index).to eq(result2.selected_index)
-              expect(result1.random_value).to eq(result2.random_value)
+              expect(result_1.selected_panel).to eq(result_2.selected_panel)
+              expect(result_1.selected_index).to eq(result_2.selected_index)
+              expect(result_1.random_value).to eq(result_2.random_value)
             end
 
             it "produces different results with different seeds" do
@@ -60,10 +60,10 @@ module Decidim
             let(:random_seed) { @rspec_seed || RSpec.configuration.seed }
 
             it "produces consistent results within same test run" do
-              sampler1 = described_class.new(panels, probabilities, random_seed:)
-              sampler2 = described_class.new(panels, probabilities, random_seed:)
+              sampler_1 = described_class.new(panels, probabilities, random_seed:)
+              sampler_2 = described_class.new(panels, probabilities, random_seed:)
 
-              expect(sampler1.sample.selected_panel).to eq(sampler2.sample.selected_panel)
+              expect(sampler_1.sample.selected_panel).to eq(sampler_2.sample.selected_panel)
             end
           end
 

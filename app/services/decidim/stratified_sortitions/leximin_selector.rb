@@ -92,7 +92,7 @@ module Decidim
           error: nil
         )
       rescue StandardError => e
-        Rails.logger.debug("LEXIMIN Selector error: #{e.message}\n#{e.backtrace.join("\n")}")
+        Rails.logger.debug { "LEXIMIN Selector error: #{e.message}\n#{e.backtrace.join("\n")}" }
         Result.new(
           panels: [],
           probabilities: [],

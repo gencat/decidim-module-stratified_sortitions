@@ -20,7 +20,7 @@ module Decidim
             result = []
             5.times do
               panel = panel_generator.find_feasible_panel
-              result << panel if panel && !result.include?(panel)
+              result << panel if panel && result.exclude?(panel)
             end
             result.presence || [panel_generator.find_feasible_panel].compact
           end

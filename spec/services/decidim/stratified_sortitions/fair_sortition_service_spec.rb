@@ -65,19 +65,19 @@ module Decidim
           end
 
           it "produces reproducible results" do
-            result1 = service.call
-            selected_ids1 = result1.selected_participant_ids
+            result_1 = service.call
+            selected_ids_1 = result_1.selected_participant_ids
 
             # Create new sortition with same setup
-            sortition2 = create_simple_sortition(num_participants: 50, panel_size: 10, rspec_seed: @rspec_seed)
-            service2 = described_class.new(sortition2, verification_seed: "test_seed_12345")
-            result2 = service2.call
-            selected_ids2 = result2.selected_participant_ids
+            sortition_2 = create_simple_sortition(num_participants: 50, panel_size: 10, rspec_seed: @rspec_seed)
+            service_2 = described_class.new(sortition_2, verification_seed: "test_seed_12345")
+            result_2 = service_2.call
+            selected_ids_2 = result_2.selected_participant_ids
 
             # Both should succeed and produce same-sized results
-            expect(result1.success?).to be true
-            expect(result2.success?).to be true
-            expect(selected_ids1.size).to eq(selected_ids2.size)
+            expect(result_1.success?).to be true
+            expect(result_2.success?).to be true
+            expect(selected_ids_1.size).to eq(selected_ids_2.size)
           end
         end
 
@@ -136,10 +136,10 @@ module Decidim
         end
 
         it "returns existing portfolio if already generated" do
-          result1 = service.generate_portfolio
-          result2 = service.generate_portfolio
+          result_1 = service.generate_portfolio
+          result_2 = service.generate_portfolio
 
-          expect(result2.portfolio.id).to eq(result1.portfolio.id)
+          expect(result_2.portfolio.id).to eq(result_1.portfolio.id)
         end
       end
 
@@ -172,10 +172,10 @@ module Decidim
         end
 
         it "returns same result if already sampled" do
-          result1 = service.sample_from_portfolio(verification_seed: "seed1")
-          result2 = service.sample_from_portfolio(verification_seed: "seed2")
+          result_1 = service.sample_from_portfolio(verification_seed: "seed1")
+          result_2 = service.sample_from_portfolio(verification_seed: "seed2")
 
-          expect(result1.selected_participant_ids).to eq(result2.selected_participant_ids)
+          expect(result_1.selected_participant_ids).to eq(result_2.selected_participant_ids)
         end
 
         context "without prior portfolio" do
@@ -185,7 +185,7 @@ module Decidim
             result = service.sample_from_portfolio
 
             expect(result.success?).to be false
-            expect(result.error).to include("cartera")
+            expect(result.error).to include("portfolio")
           end
         end
       end
@@ -197,7 +197,7 @@ module Decidim
         before { service.call }
 
         it "verifies correct result" do
-          expected_ids = sortition.panel_portfolio.selected_panel
+          expected_ids = sortition.reload.panel_portfolio.selected_panel
           is_valid = service.verify(expected_ids, verification_seed:)
 
           expect(is_valid).to be true
@@ -211,7 +211,7 @@ module Decidim
         end
 
         it "rejects with different seed" do
-          expected_ids = sortition.panel_portfolio.selected_panel
+          expected_ids = sortition.reload.panel_portfolio.selected_panel
           is_valid = service.verify(expected_ids, verification_seed: "wrong_seed")
 
           # May or may not match depending on probability distribution

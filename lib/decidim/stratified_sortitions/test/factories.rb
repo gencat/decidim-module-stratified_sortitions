@@ -22,16 +22,16 @@ FactoryBot.define do
   end
 
   factory :stratum, class: "Decidim::StratifiedSortitions::Stratum" do
-    sequence(:name) { |n| "Stratum #{n}" }
+    sequence(:name) { |n| { en: "Stratum #{n}" } }
     kind { "value" }
     stratified_sortition { association(:stratified_sortition) }
   end
 
   factory :substratum, class: "Decidim::StratifiedSortitions::Substratum" do
-    sequence(:name) { |n| "Substratum #{n}" }
+    sequence(:name) { |n| { en: "Substratum #{n}" } }
     value { "A" }
     range { "0-10" }
-    max_quota_percentage { 10.0 }
+    max_quota_percentage { "10" }
     stratum { association(:stratum) }
   end
 
@@ -42,7 +42,7 @@ FactoryBot.define do
     total_rows { 0 }
     imported_rows { 0 }
     failed_rows { 0 }
-    import_errors { [] }
+    import_errors { {} }
   end
 
   factory :sample_participant, class: "Decidim::StratifiedSortitions::SampleParticipant" do

@@ -48,7 +48,7 @@ module Decidim
         # @param dual_prices [Hash{Integer => Float}] dual prices for each volunteer
         # @return [Array<Integer>, nil] Array of volunteer IDs or nil if no improving panel
         def find_improving_panel(dual_prices)
-          return find_feasible_panel if dual_prices.nil? || dual_prices.empty?
+          return find_feasible_panel if dual_prices.blank?
 
           solve_panel_ilp(dual_prices)
         end
@@ -69,7 +69,7 @@ module Decidim
         #
         # @param dual_prices [Hash, nil]
         # @return [Array<Integer>, nil]
-        def solve_panel_ilp(dual_prices)
+        def solve_panel_ilp(dual_prices) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
           return nil if @cb.num_volunteers.zero?
 
           model = Cbc::Model.new
@@ -100,12 +100,12 @@ module Decidim
             cat_sum = sum_vars(cat_vars)
 
             # min <= sum <= max
-            model.enforce(cat_sum >= quota[:min]) if quota[:min] > 0
+            model.enforce(cat_sum >= quota[:min]) if (quota[:min]).positive?
             model.enforce(cat_sum <= quota[:max]) if quota[:max] < @cb.panel_size
           end
 
           # Objective function
-          if dual_prices.nil? || dual_prices.empty?
+          if dual_prices.blank?
             # Just find any feasible solution - maximize sum (constant effect)
             model.maximize(sum_vars(x))
           else

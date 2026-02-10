@@ -138,7 +138,7 @@ module Decidim
               # Calculate max quota from percentage
               # max_quota_percentage is stored as a string like "25.5" meaning 25.5%
               percentage = substratum.max_quota_percentage.to_f
-              max_quota = if percentage > 0
+              max_quota = if percentage.positive?
                             (percentage / 100.0 * panel_size).ceil
                           else
                             panel_size # No restriction if percentage is 0 or not set

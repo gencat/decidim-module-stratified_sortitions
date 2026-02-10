@@ -26,7 +26,7 @@ class CreatePanelPortfolios < ActiveRecord::Migration[7.0]
       t.datetime :generated_at, null: false
       t.float :generation_time_seconds
       t.integer :num_iterations
-      t.boolean :convergence_achieved, default: false
+      t.boolean :convergence_achieved, null: false, default: false
 
       # Sampling result (null until sampled)
       t.integer :selected_panel_index

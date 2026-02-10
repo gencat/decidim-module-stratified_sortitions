@@ -73,13 +73,13 @@ module Decidim
         private
 
         def normalize_probabilities(probs)
-          return [] if probs.nil? || probs.empty?
+          return [] if probs.blank?
 
           total = probs.sum.to_f
           return probs if (total - 1.0).abs < 1e-9
 
           # Normalize to sum to 1
-          if total > 0
+          if total.positive?
             probs.map { |p| p / total }
           else
             # Uniform distribution if all zeros

@@ -87,7 +87,7 @@ module Decidim
         #
         # For efficiency, we use a single LP with a max-min formulation.
         #
-        def solve_leximin_lp(panels, incidence)
+        def solve_leximin_lp(panels, incidence) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
           num_panels = panels.size
           return [Array.new(num_panels, 1.0 / num_panels), uniform_selection_probs(panels)] if num_panels == 1
 

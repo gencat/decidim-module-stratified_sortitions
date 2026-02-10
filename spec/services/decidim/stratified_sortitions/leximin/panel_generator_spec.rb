@@ -55,8 +55,8 @@ module Decidim
               stratum = create(:stratum, stratified_sortition: s, name: { en: "Category" })
               # Quota of 10% means max 1, but we only have 1 person
               # and need 10 people total - infeasible
-              sub1 = create(:substratum, stratum:, name: { en: "A" }, value: "A", max_quota_percentage: "10")
-              sub2 = create(:substratum, stratum:, name: { en: "B" }, value: "B", max_quota_percentage: "10")
+              sub_1 = create(:substratum, stratum:, name: { en: "A" }, value: "A", max_quota_percentage: "10")
+              sub_2 = create(:substratum, stratum:, name: { en: "B" }, value: "B", max_quota_percentage: "10")
 
               # Create only 2 participants
               2.times do |i|
@@ -64,7 +64,7 @@ module Decidim
                 create(:sample_participant_stratum,
                        decidim_stratified_sortitions_sample_participant: p,
                        decidim_stratified_sortitions_stratum: stratum,
-                       decidim_stratified_sortitions_substratum: i.zero? ? sub1 : sub2)
+                       decidim_stratified_sortitions_substratum: i.zero? ? sub_1 : sub_2)
               end
 
               s.reload
@@ -120,16 +120,16 @@ module Decidim
 
         describe "determinism with same seed" do
           it "generates consistent panels with same RSpec seed" do
-            panel1 = generator.find_feasible_panel
+            panel_1 = generator.find_feasible_panel
 
             # Recreate with same configuration
-            sortition2 = create_simple_sortition(num_participants: 50, panel_size: 10, rspec_seed: @rspec_seed)
-            builder2 = ConstraintBuilder.new(sortition2)
-            generator2 = described_class.new(builder2)
-            panel2 = generator2.find_feasible_panel
+            sortition_2 = create_simple_sortition(num_participants: 50, panel_size: 10, rspec_seed: @rspec_seed)
+            builder_2 = ConstraintBuilder.new(sortition_2)
+            generator_2 = described_class.new(builder_2)
+            panel_2 = generator_2.find_feasible_panel
 
             # Panels should have same size (determinism of ILP solver)
-            expect(panel1.size).to eq(panel2.size)
+            expect(panel_1.size).to eq(panel_2.size)
           end
         end
       end

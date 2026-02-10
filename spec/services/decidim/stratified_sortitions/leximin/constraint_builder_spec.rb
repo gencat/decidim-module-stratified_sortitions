@@ -48,7 +48,7 @@ module Decidim
           end
 
           it "has min quota of 0 for all categories" do
-            builder.quotas.each do |_cat_id, quota|
+            builder.quotas.each_value do |quota|
               expect(quota[:min]).to eq(0)
             end
           end

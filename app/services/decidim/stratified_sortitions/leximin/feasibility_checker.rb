@@ -137,7 +137,7 @@ module Decidim
             # Each volunteer should have exactly one substratum per stratum
             # We can't easily verify this without more complex logic, so we just
             # check they have at least some categories
-            incomplete << vid if categories.nil? || categories.empty?
+            incomplete << vid if categories.blank?
           end
 
           incomplete

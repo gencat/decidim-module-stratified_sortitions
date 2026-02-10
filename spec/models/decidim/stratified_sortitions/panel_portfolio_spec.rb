@@ -122,17 +122,17 @@ module Decidim
         end
 
         it "produces reproducible results with same seed" do
-          portfolio1 = create(:panel_portfolio, stratified_sortition: create(:stratified_sortition))
-          portfolio2 = create(:panel_portfolio,
-                              stratified_sortition: create(:stratified_sortition),
-                              panels: portfolio1.panels,
-                              probabilities: portfolio1.probabilities)
+          portfolio_1 = create(:panel_portfolio, stratified_sortition: create(:stratified_sortition))
+          portfolio_2 = create(:panel_portfolio,
+                               stratified_sortition: create(:stratified_sortition),
+                               panels: portfolio_1.panels,
+                               probabilities: portfolio_1.probabilities)
 
-          portfolio1.sample!(verification_seed: "same_seed")
-          portfolio2.sample!(verification_seed: "same_seed")
+          portfolio_1.sample!(verification_seed: "same_seed")
+          portfolio_2.sample!(verification_seed: "same_seed")
 
-          expect(portfolio1.selected_panel_index).to eq(portfolio2.selected_panel_index)
-          expect(portfolio1.random_value_used).to eq(portfolio2.random_value_used)
+          expect(portfolio_1.selected_panel_index).to eq(portfolio_2.selected_panel_index)
+          expect(portfolio_1.random_value_used).to eq(portfolio_2.random_value_used)
         end
       end
 
@@ -193,7 +193,7 @@ module Decidim
           expect(metrics[:min_probability]).to eq(0.2)
           expect(metrics[:max_probability]).to eq(0.6)
           expect(metrics[:mean_probability]).to be_within(0.001).of(0.4)
-          expect(metrics[:probability_range]).to eq(0.4)
+          expect(metrics[:probability_range]).to be_within(0.001).of(0.4)
         end
 
         it "returns empty hash for empty probabilities" do

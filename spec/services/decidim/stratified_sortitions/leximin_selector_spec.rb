@@ -158,15 +158,15 @@ module Decidim
           let(:sortition) { create_simple_sortition(num_participants: 30, panel_size: 8, rspec_seed: @rspec_seed) }
 
           it "produces consistent panel count with same seed" do
-            result1 = selector.call
+            result_1 = selector.call
 
-            sortition2 = create_simple_sortition(num_participants: 30, panel_size: 8, rspec_seed: @rspec_seed)
-            selector2 = described_class.new(sortition2)
-            result2 = selector2.call
+            sortition_2 = create_simple_sortition(num_participants: 30, panel_size: 8, rspec_seed: @rspec_seed)
+            selector_2 = described_class.new(sortition_2)
+            result_2 = selector_2.call
 
             # Both should succeed
-            expect(result1.success?).to eq(result2.success?)
-            expect(result1.panels.size).to eq(result2.panels.size)
+            expect(result_1.success?).to eq(result_2.success?)
+            expect(result_1.panels.size).to eq(result_2.panels.size)
           end
         end
       end

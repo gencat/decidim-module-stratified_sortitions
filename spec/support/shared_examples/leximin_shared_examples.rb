@@ -56,7 +56,6 @@ RSpec.shared_examples "a successful leximin result" do
   end
 
   it "has selection probabilities for all participants" do
-    participant_ids = sortition.sample_participants.pluck(:id)
     # At minimum, participants in panels should have selection probabilities
     panels_participants = result.panels.flatten.uniq
     panels_participants.each do |pid|
