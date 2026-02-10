@@ -46,7 +46,7 @@ jobs:
 
       - name: Install cbc
         shell: "bash"
-        run: apt update && apt install -y coinor-cbc coinor-libcbc-dev
+        run: sudo apt update && sudo apt install -y coinor-cbc coinor-libcbc-dev
 
       - name: List Chrome
         shell: "bash"
