@@ -38,9 +38,9 @@ module Decidim
         def check_basic_requirements
           errors = []
 
-          errors << "La mida del panel (num_candidates) ha de ser un número positiu" if @cb.panel_size.nil? || @cb.panel_size <= 0
+          errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.panel_size_positive") if @cb.panel_size.nil? || @cb.panel_size <= 0
 
-          errors << "No hi ha categories (substrats) definides. Cal configurar els estrats i substrats abans d'executar l'algorisme" if @cb.category_ids.empty?
+          errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.no_categories") if @cb.category_ids.empty?
 
           errors
         end
@@ -51,10 +51,11 @@ module Decidim
           k = @cb.panel_size
 
           if n.zero?
-            errors << "No hi ha voluntaris al pool. Cal importar participants abans d'executar el sorteig"
+            errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.no_volunteers")
           elsif n < k
-            errors << "El pool de voluntaris (#{n}) és més petit que la mida del panel (#{k}). " \
-                      "Afegiu més participants o reduïu el nombre de candidats a seleccionar"
+            errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.pool_too_small",
+                             volunteers_count: n,
+                             panel_size: k)
           end
 
           errors
@@ -79,15 +80,19 @@ module Decidim
             total_max = substrata.sum { |s| s[:max_quota] }
 
             if total_max < k
-              errors << "L'estrat '#{stratum_name}' té quotes màximes insuficients. " \
-                        "La suma de quotes màximes (#{total_max}) és menor que la mida del panel (#{k})"
+              errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.stratum_insufficient_quotas",
+                               stratum_name:,
+                               total_max:,
+                               panel_size: k)
             end
 
             # Check that percentages within a stratum don't exceed 100%
             total_percentage = substrata.sum { |s| s[:percentage] }
-            if total_percentage > 100 + 0.01 # Small tolerance for floating point
-              errors << "L'estrat '#{stratum_name}' té percentatges que sumen més del 100% (#{total_percentage.round(1)}%)"
-            end
+            next unless total_percentage > 100 + 0.01 # Small tolerance for floating point
+
+            errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.stratum_percentages_exceed",
+                             stratum_name:,
+                             total_percentage: total_percentage.round(1))
           end
 
           errors
@@ -108,10 +113,13 @@ module Decidim
 
               volunteers_count = @cb.category_volunteers[cat_id]&.size || 0
 
-              if volunteers_count < min_quota
-                errors << "El substrat '#{substratum_name}' de l'estrat '#{stratum_name}' " \
-                          "requereix mínim #{min_quota} voluntaris però només n'hi ha #{volunteers_count}"
-              end
+              next unless volunteers_count < min_quota
+
+              errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.substratum_insufficient_volunteers",
+                               substratum_name:,
+                               stratum_name:,
+                               min_quota:,
+                               volunteers_count:)
             end
           end
 
@@ -119,8 +127,8 @@ module Decidim
           volunteers_without_strata = find_volunteers_without_complete_strata
           if volunteers_without_strata.any?
             count = volunteers_without_strata.size
-            errors << "Hi ha #{count} voluntari(s) que no tenen assignat un substrat per a cada estrat. " \
-                      "Això pot causar problemes en l'algorisme de selecció"
+            errors << I18n.t("decidim.stratified_sortitions.errors.feasibility.volunteers_missing_strata",
+                             count:)
           end
 
           errors
@@ -146,11 +154,11 @@ module Decidim
         def extract_name(name_field)
           case name_field
           when Hash
-            name_field[I18n.locale.to_s] || name_field["en"] || name_field.values.first || "Sense nom"
+            name_field[I18n.locale.to_s] || name_field["en"] || name_field.values.first || I18n.t("decidim.stratified_sortitions.errors.feasibility.no_name")
           when String
             name_field
           else
-            "Sense nom"
+            I18n.t("decidim.stratified_sortitions.errors.feasibility.no_name")
           end
         end
       end

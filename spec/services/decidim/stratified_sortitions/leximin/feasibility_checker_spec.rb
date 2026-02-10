@@ -34,7 +34,7 @@ module Decidim
             it "returns infeasible with pool error" do
               result = checker.check
               expect(result[:feasible]).to be false
-              expect(result[:errors].join).to include("voluntaris")
+              expect(result[:errors].join).to include("volunteers")
             end
           end
 
@@ -81,7 +81,7 @@ module Decidim
             it "returns infeasible" do
               result = checker.check
               expect(result[:feasible]).to be false
-              expect(result[:errors].join).to include("positiu")
+              expect(result[:errors].join).to include("positive")
             end
           end
         end

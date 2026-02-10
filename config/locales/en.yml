@@ -143,3 +143,23 @@ en:
           remove_uploaded_samples:
             success: "Uploaded samples have been successfully removed."
             error: "There was an error removing the uploaded samples."
+      errors:
+        panel_portfolio:
+          already_sampled: "Portfolio already sampled"
+          probabilities_size_mismatch: "must have the same size as panels (%{panels_count} panels, %{probabilities_count} probabilities)"
+          probabilities_sum_invalid: "must sum to 1.0 (currently %{total})"
+        feasibility:
+          panel_size_positive: "Panel size (num_candidates) must be a positive number"
+          no_categories: "No categories (substrata) defined. You must configure strata and substrata before running the algorithm"
+          no_volunteers: "No volunteers in the pool. You must import participants before running the sortition"
+          pool_too_small: "The volunteer pool (%{volunteers_count}) is smaller than the panel size (%{panel_size}). Add more participants or reduce the number of candidates to select"
+          stratum_insufficient_quotas: "Stratum '%{stratum_name}' has insufficient maximum quotas. The sum of maximum quotas (%{total_max}) is less than the panel size (%{panel_size})"
+          stratum_percentages_exceed: "Stratum '%{stratum_name}' has percentages that sum to more than 100%% (%{total_percentage}%%)"
+          substratum_insufficient_volunteers: "Substratum '%{substratum_name}' of stratum '%{stratum_name}' requires a minimum of %{min_quota} volunteers but only has %{volunteers_count}"
+          volunteers_missing_strata: "There are %{count} volunteer(s) that do not have a substratum assigned for each stratum. This may cause problems in the selection algorithm"
+          no_name: "No name"
+        fair_sortition:
+          already_performed: "The sortition has already been performed for this process"
+          portfolio_generation_failed: "Error generating panel portfolio: %{error}"
+          no_portfolio: "There is no panel portfolio. Execute `generate_portfolio` first"
+          sampling_failed: "Error while sampling: %{error}"

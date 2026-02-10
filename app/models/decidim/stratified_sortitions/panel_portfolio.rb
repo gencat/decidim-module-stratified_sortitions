@@ -69,7 +69,7 @@ module Decidim
       # @return [Leximin::PanelSampler::Result]
       # @raise [RuntimeError] if already sampled
       def sample!(verification_seed: nil)
-        raise "Portfolio already sampled" if sampled?
+        raise I18n.t("decidim.stratified_sortitions.errors.panel_portfolio.already_sampled") if sampled?
 
         random_seed = Decidim::StratifiedSortitions.derive_random_seed(verification_seed)
         sampler = Leximin::PanelSampler.new(panels, probabilities, random_seed:)
@@ -147,7 +147,9 @@ module Decidim
         return if panels.blank? || probabilities.blank?
         return if panels.size == probabilities.size
 
-        errors.add(:probabilities, "must have the same size as panels (#{panels.size} panels, #{probabilities.size} probabilities)")
+        errors.add(:probabilities, I18n.t("decidim.stratified_sortitions.errors.panel_portfolio.probabilities_size_mismatch",
+                                          panels_count: panels.size,
+                                          probabilities_count: probabilities.size))
       end
 
       def probabilities_sum_to_one
@@ -156,7 +158,7 @@ module Decidim
         total = probabilities.sum
         return if (total - 1.0).abs < 0.001
 
-        errors.add(:probabilities, "must sum to 1.0 (currently #{total})")
+        errors.add(:probabilities, I18n.t("decidim.stratified_sortitions.errors.panel_portfolio.probabilities_sum_invalid", total:))
       end
     end
   end

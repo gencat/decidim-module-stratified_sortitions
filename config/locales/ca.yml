@@ -145,4 +145,24 @@ ca:
           remove_uploaded_samples:
             success: "Les mostres carregades s'han eliminat correctament."
             error: "Hi ha hagut un error en eliminar les mostres carregades."
+      errors:
+        panel_portfolio:
+          already_sampled: "La cartera ja ha estat mostrejada"
+          probabilities_size_mismatch: "han de tenir la mateixa mida que els panells (%{panels_count} panells, %{probabilities_count} probabilitats)"
+          probabilities_sum_invalid: "han de sumar 1.0 (actualment %{total})"
+        feasibility:
+          panel_size_positive: "La mida del panell (num_candidates) ha de ser un número positiu"
+          no_categories: "No hi ha categories (substrats) definides. Cal configurar els estrats i substrats abans d'executar l'algorisme"
+          no_volunteers: "No hi ha voluntaris al pool. Cal importar participants abans d'executar el sorteig"
+          pool_too_small: "El pool de voluntaris (%{volunteers_count}) és més petit que la mida del panell (%{panel_size}). Afegiu més participants o reduïu el nombre de candidats a seleccionar"
+          stratum_insufficient_quotas: "L'estrat '%{stratum_name}' té quotes màximes insuficients. La suma de quotes màximes (%{total_max}) és menor que la mida del panell (%{panel_size})"
+          stratum_percentages_exceed: "L'estrat '%{stratum_name}' té percentatges que sumen més del 100%% (%{total_percentage}%%)"
+          substratum_insufficient_volunteers: "El substrat '%{substratum_name}' de l'estrat '%{stratum_name}' requereix mínim %{min_quota} voluntaris però només n'hi ha %{volunteers_count}"
+          volunteers_missing_strata: "Hi ha %{count} voluntari(s) que no tenen assignat un substrat per a cada estrat. Això pot causar problemes en l'algorisme de selecció"
+          no_name: "Sense nom"
+        fair_sortition:
+          already_performed: "El sorteig ja s'ha realitzat per aquest procés"
+          portfolio_generation_failed: "Error generant la cartera de panells: %{error}"
+          no_portfolio: "No hi ha cartera de panels. Executeu `generate_portfolio` primer"
+          sampling_failed: "Error en el mostreig: %{error}"
 

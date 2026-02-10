@@ -71,7 +71,7 @@ module Decidim
       # @return [Result] containing selected participants and audit log
       def call
         # Check if already sampled
-        return error_result(error: "El sorteig ja s'ha realitzat per aquest procés") if existing_portfolio&.sampled?
+        return error_result(error: I18n.t("decidim.stratified_sortitions.errors.fair_sortition.already_performed")) if existing_portfolio&.sampled?
 
         # Generate or retrieve portfolio
         portfolio = find_or_generate_portfolio
@@ -127,7 +127,7 @@ module Decidim
         PortfolioResult.new(
           portfolio: nil,
           success: false,
-          error: "Error generant la cartera de panels: #{e.message}"
+          error: I18n.t("decidim.stratified_sortitions.errors.fair_sortition.portfolio_generation_failed", error: e.message)
         )
       end
 
@@ -138,7 +138,7 @@ module Decidim
       def sample_from_portfolio(verification_seed: nil)
         portfolio = existing_portfolio
 
-        return error_result(error: "There is no panel portfolio. Execute `generate_portfolio` first") unless portfolio
+        return error_result(error: I18n.t("decidim.stratified_sortitions.errors.fair_sortition.no_portfolio")) unless portfolio
 
         if portfolio.sampled?
           # Return existing result
@@ -152,7 +152,7 @@ module Decidim
         build_success_result(portfolio.reload)
       rescue StandardError => e
         Rails.logger.error("Error while sampling portfolio: #{e.message}\n#{e.backtrace.join("\n")}")
-        error_result(error: "Error while sampling: #{e.message}")
+        error_result(error: I18n.t("decidim.stratified_sortitions.errors.fair_sortition.sampling_failed", error: e.message))
       end
 
       # Verify a previous sortition result
