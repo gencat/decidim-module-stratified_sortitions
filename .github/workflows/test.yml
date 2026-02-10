@@ -44,6 +44,10 @@ jobs:
         with:
           chromedriver-version: 119.0.6045.105
 
+      - name: Install cbc
+        shell: "bash"
+        run: apt update && apt install -y coinor-cbc coinor-libcbc-dev
+
       - name: List Chrome
         shell: "bash"
         run: apt list --installed | grep chrome
