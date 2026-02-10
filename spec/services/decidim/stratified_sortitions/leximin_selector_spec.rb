@@ -122,7 +122,7 @@ module Decidim
           it_behaves_like "a failed leximin result"
 
           it "includes relevant error message" do
-            expect(result.error).to include("voluntaris")
+            expect(result.error).to include("No volunteers in the pool.")
           end
         end
 

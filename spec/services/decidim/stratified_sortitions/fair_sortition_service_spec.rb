@@ -87,7 +87,7 @@ module Decidim
           it "returns error on second call" do
             result = service.call
             expect(result.success?).to be false
-            expect(result.error).to include("ja s'ha realitzat")
+            expect(result.error).to eq("The sortition has already been performed for this process")
           end
         end
 

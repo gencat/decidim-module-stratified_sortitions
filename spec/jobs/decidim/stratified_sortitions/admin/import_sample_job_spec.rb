@@ -14,12 +14,12 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
   let(:gender_stratum) { create(:stratum, stratified_sortition:, kind: "value", name: { ca: "Gènere", es: "Género", en: "Gender" }) }
   let(:age_stratum) { create(:stratum, stratified_sortition:, kind: "numeric_range", name: { ca: "Edat", es: "Edad", en: "Age" }) }
 
-  let!(:male_substratum) { create(:substratum, stratum: gender_stratum, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", weighing: "50") }
-  let!(:female_substratum) { create(:substratum, stratum: gender_stratum, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", weighing: "50") }
+  let!(:male_substratum) { create(:substratum, stratum: gender_stratum, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", max_quota_percentage: "50") }
+  let!(:female_substratum) { create(:substratum, stratum: gender_stratum, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", max_quota_percentage: "50") }
 
-  let!(:age_18_25) { create(:substratum, name: { ca: "18-25", es: "18-25", en: "18-25" }, stratum: age_stratum, range: "18-25", weighing: "30") }
-  let!(:age_26_40) { create(:substratum, name: { ca: "26-40", es: "26-40", en: "26-40" }, stratum: age_stratum, range: "26-40", weighing: "40") }
-  let!(:age_41_65) { create(:substratum, name: { ca: "41-65", es: "41-65", en: "41-65" }, stratum: age_stratum, range: "41-65", weighing: "30") }
+  let!(:age_18_25) { create(:substratum, name: { ca: "18-25", es: "18-25", en: "18-25" }, stratum: age_stratum, range: "18-25", max_quota_percentage: "30") }
+  let!(:age_26_40) { create(:substratum, name: { ca: "26-40", es: "26-40", en: "26-40" }, stratum: age_stratum, range: "26-40", max_quota_percentage: "40") }
+  let!(:age_41_65) { create(:substratum, name: { ca: "41-65", es: "41-65", en: "41-65" }, stratum: age_stratum, range: "41-65", max_quota_percentage: "30") }
 
   let(:csv_content) do
     <<~CSV
