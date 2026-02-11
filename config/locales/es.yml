@@ -28,7 +28,7 @@ es:
           duplicate: Duplicar
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
-          upload_sample: Importar muestra
+          census_management: Gestión censo
         models:
           stratified_sortition:
             fields:
@@ -46,6 +46,8 @@ es:
             error: Ha habido un problema al eliminar este sorteo estratificado
             has_problems: Este sorteo estratificado no se pudo eliminar debido a problemas relacionados
             success: Sorteo estratificado eliminado con éxito
+          execute:
+            success: Sorteo estratificado ejecutado con éxito
           duplicate:
             error: Ha habido un problema al duplicar este sorteo estratificado
             success: Sorteo estratificado duplicado con éxito
@@ -104,6 +106,8 @@ es:
             description: "Debe ser un archivo generado en Excel y exportado en CSV con las siguientes columnas:"
             download_template: "Descargar plantilla CSV"
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
+            execute_stratified_sortition: Ejecutar sorteo
+            execute_stratified_sortition_help: El sorteo no se puede ejecutar hasta que no se carguen registros.
             filename_data: Nombre de archivo, el día %{date}, número de registros %{count}
             gender: Género
             last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
