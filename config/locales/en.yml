@@ -26,7 +26,7 @@ en:
           duplicate: Duplicate
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
-          upload_sample: "Import Census"
+          census_management: Census management
         models:
           stratified_sortition:
             fields:
@@ -44,6 +44,8 @@ en:
             error: There's been a problem deleting this stratified sortition
             has_problems: This stratified sortition couldn't be deleted due to related problems
             success: Stratified sortition successfully deleted
+          execute:
+            success: Stratified sortition successfully executed
           duplicate:
             error: There's been a problem duplicating this stratified sortition
             success: Stratified sortition successfully duplicated
@@ -102,6 +104,8 @@ en:
             description: "It must be a file generated in Excel and exported as CSV with the following columns:"
             download_template: "Download CSV template"
             example: "Candidate data 1,Candidate data 2,Candidate data 3,Candidate data 4,Stratum 1,Stratum 2,Stratum 3,Stratum N<br>example@example.com,D,Higher,34<br>example@example.com,E,Higher,24<br><br>. . ."
+            execute_stratified_sortition: Execute sortition
+            execute_stratified_sortition_help: The sortition cannot be executed until records are uploaded.
             filename_data: File name, on %{date}, number of records %{count}
             gender: Gender
             last_upload_date: The last upload was on February 24, 2025 10:41

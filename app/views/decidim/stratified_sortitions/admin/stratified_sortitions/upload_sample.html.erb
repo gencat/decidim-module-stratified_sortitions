@@ -1,6 +1,19 @@
 <% add_decidim_page_title(t(".title")) %>
 <div class="card">
   <div class="item_show__header">
+    <%= button_to t('.execute_stratified_sortition'),
+                  execute_stratified_sortition_stratified_sortition_path(@stratified_sortition),
+                  method: :post,
+                  class: 'button button__sm button__secondary',
+                  disabled: @stratified_sortition.sample_participants.empty? %>
+
+    <% if @stratified_sortition.sample_participants.empty? %>
+      <p><%= t('.execute_stratified_sortition_help') %></p>
+    <% end %>
+  </div>
+</div>
+<div class="card mt-12">
+  <div class="item_show__header">
     <h1 class="item_show__header-title">
       <div>
         <%= t(".title") %>

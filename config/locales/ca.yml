@@ -28,7 +28,7 @@ ca:
           duplicate: Duplica
           new_stratified_sortition: "Nou sorteig estratificat"
           title: "Accions"
-          upload_sample: "Importar mostra"
+          census_management: Gestió cens
         models:
           stratified_sortition:
             fields:
@@ -49,6 +49,8 @@ ca:
           duplicate:
             error: S'ha produït un problema en duplicar aquest sorteig estratificat
             success: Sorteig estratificat duplicat amb èxit
+          execute:
+            success: Sorteig estratificat executat amb èxit
           index:
             selected: Sortejos estratificats seleccionats
             title: Sortejos estratificats
@@ -104,6 +106,8 @@ ca:
             description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
             download_template: "Descarregar plantilla CSV"
             example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
+            execute_stratified_sortition: Executar sorteig
+            execute_stratified_sortition_help: El sorteig no es pot executar fins que no es carreguin registres.
             filename_data: "%{filename}, el dia %{date}, número de registres %{count}"
             gender: Gènere
             last_upload_date: La última càrrega va ser el dia %{date}

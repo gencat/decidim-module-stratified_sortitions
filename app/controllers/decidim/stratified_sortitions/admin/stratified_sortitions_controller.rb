@@ -108,6 +108,20 @@ module Decidim
           @candidates_data = candidates_data(@stratified_sortition)
         end
 
+        def execute_stratified_sortition
+          @result = FairSortitionService.new(stratified_sortition).call
+          if @result.success?
+            csv_data = generate_sortition_csv(@result)
+            send_data csv_data,
+                      filename: "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}.csv",
+                      type: "text/csv",
+                      disposition: "attachment"
+          else
+            flash[:error] = @result.error
+            redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
+          end
+        end
+
         private
 
         def collection
@@ -197,6 +211,50 @@ module Decidim
           percentage = total.positive? ? ((count.to_f / total) * 100).round(1) : 0.0
           label = "#{translated_attribute(substratum.name)} (#{percentage}%)"
           [label, count]
+        end
+
+        # NOTE: This is a temporary export for see sortition results
+        def generate_sortition_csv(result)
+          require "csv"
+
+          CSV.generate(headers: true, col_sep: ";") do |csv|
+            csv << ["# INFORMACIÓ DEL SORTEIG"]
+            csv << ["Algorisme", result.selection_log[:algorithm]]
+            csv << ["Versió", result.selection_log[:version]]
+            csv << ["ID Sorteig", result.selection_log[:stratified_sortition_id]]
+            csv << ["Generat el", result.selection_log[:generated_at]]
+            csv << ["Temps de generació (s)", result.selection_log[:generation_time_seconds]]
+            csv << ["Nombre de panels", result.selection_log[:num_panels]]
+            csv << ["Iteracions", result.selection_log[:num_iterations]]
+            csv << ["Convergència", result.selection_log[:convergence_achieved]]
+            csv << ["Seleccionat el", result.selection_log[:selected_at]]
+            csv << ["Índex panel seleccionat", result.selection_log[:selected_panel_index]]
+            csv << ["Seed de verificació", result.selection_log[:verification_seed]]
+            csv << ["Valor aleatori", result.selection_log[:random_value_used]]
+            csv << ["Probabilitat panel seleccionat", result.selection_log[:selected_panel_probability]]
+
+            if result.selection_log[:fairness_metrics].present?
+              csv << [""]
+              csv << ["# MÈTRIQUES D'EQUITAT"]
+              result.selection_log[:fairness_metrics].each do |key, value|
+                csv << [key.to_s.humanize, value]
+              end
+            end
+
+            csv << [""]
+            csv << ["# PARTICIPANTS SELECCIONATS"]
+            csv << %w[ID Dada_Personal_1(Identificador únic) Dada_Personal_2 Dada_Personal_3 Dada_Personal_4]
+
+            result.selected_participants.each do |participant|
+              csv << [
+                participant.id,
+                participant.personal_data_1,
+                participant.personal_data_2,
+                participant.personal_data_3,
+                participant.personal_data_4,
+              ]
+            end
+          end
         end
       end
     end
