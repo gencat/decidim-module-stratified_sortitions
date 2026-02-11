@@ -217,8 +217,8 @@ module Decidim
 
           before do
             stratum_1 = create(:stratum, stratified_sortition:, kind: "value", name: { ca: "Gènere", es: "Género", en: "Gender" })
-            substratum_1 = create(:substratum, stratum: stratum_1, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", weighing: "50")
-            substratum_2 = create(:substratum, stratum: stratum_1, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", weighing: "50")
+            substratum_1 = create(:substratum, stratum: stratum_1, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", max_quota_percentage: "50")
+            substratum_2 = create(:substratum, stratum: stratum_1, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", max_quota_percentage: "50")
 
             sample_import = create(:sample_import, stratified_sortition:)
             participant_1 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)

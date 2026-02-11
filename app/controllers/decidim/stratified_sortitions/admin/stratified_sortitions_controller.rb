@@ -137,9 +137,9 @@ module Decidim
         def strata_data(stratified_sortition)
           stratified_sortition.strata.map do |stratum|
             chart_data = stratum.substrata.map do |substratum|
-              weighing_value = substratum.weighing.present? ? substratum.weighing.to_f : 0.0
-              label_with_percentage = "#{translated_attribute(substratum.name)} (#{weighing_value}%)"
-              [label_with_percentage, weighing_value]
+              quota_value = substratum.max_quota_percentage.present? ? substratum.max_quota_percentage.to_f : 0.0
+              label_with_percentage = "#{translated_attribute(substratum.name)} (#{quota_value}%)"
+              [label_with_percentage, quota_value]
             end
             chart_data = chart_data.reject { |_name, value| value.zero? }
             {

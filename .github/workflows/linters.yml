@@ -24,6 +24,10 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
 
+      - name: Install cbc
+        shell: "bash"
+        run: sudo apt update && sudo apt install -y coinor-cbc coinor-libcbc-dev
+
       - name: Recover Ruby dependency cache
         uses: actions/cache@v3
         with:

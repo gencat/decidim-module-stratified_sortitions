@@ -22,16 +22,16 @@ FactoryBot.define do
   end
 
   factory :stratum, class: "Decidim::StratifiedSortitions::Stratum" do
-    sequence(:name) { |n| "Stratum #{n}" }
+    sequence(:name) { |n| { en: "Stratum #{n}" } }
     kind { "value" }
     stratified_sortition { association(:stratified_sortition) }
   end
 
   factory :substratum, class: "Decidim::StratifiedSortitions::Substratum" do
-    sequence(:name) { |n| "Substratum #{n}" }
+    sequence(:name) { |n| { en: "Substratum #{n}" } }
     value { "A" }
     range { "0-10" }
-    weighing { 10.0 }
+    max_quota_percentage { "10" }
     stratum { association(:stratum) }
   end
 
@@ -42,7 +42,7 @@ FactoryBot.define do
     total_rows { 0 }
     imported_rows { 0 }
     failed_rows { 0 }
-    import_errors { [] }
+    import_errors { {} }
   end
 
   factory :sample_participant, class: "Decidim::StratifiedSortitions::SampleParticipant" do
@@ -58,5 +58,23 @@ FactoryBot.define do
     decidim_stratified_sortitions_sample_participant { association(:sample_participant) }
     decidim_stratified_sortitions_stratum { association(:stratum) }
     decidim_stratified_sortitions_substratum { association(:substratum) }
+  end
+
+  factory :panel_portfolio, class: "Decidim::StratifiedSortitions::PanelPortfolio" do
+    stratified_sortition { association(:stratified_sortition) }
+    panels { [[1, 2, 3], [4, 5, 6]] }
+    probabilities { [0.6, 0.4] }
+    selection_probabilities { { 1 => 0.6, 2 => 0.6, 3 => 0.6, 4 => 0.4, 5 => 0.4, 6 => 0.4 } }
+    generated_at { Time.current }
+    generation_time_seconds { 1.5 }
+    num_iterations { 10 }
+    convergence_achieved { true }
+
+    trait :sampled do
+      selected_panel_index { 0 }
+      selected_at { Time.current }
+      verification_seed { "test_seed" }
+      random_value_used { 0.3 }
+    end
   end
 end

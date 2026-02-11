@@ -19,6 +19,8 @@ module Decidim
 
       has_many :strata, class_name: "Decidim::StratifiedSortitions::Stratum", foreign_key: "decidim_stratified_sortition_id", dependent: :destroy
       has_many :sample_participants, class_name: "Decidim::StratifiedSortitions::SampleParticipant", foreign_key: "decidim_stratified_sortition_id", dependent: :destroy
+      has_one :panel_portfolio, class_name: "Decidim::StratifiedSortitions::PanelPortfolio", foreign_key: "decidim_stratified_sortitions_stratified_sortition_id",
+                                dependent: :destroy
 
       scope :search_text_cont, lambda { |search_text|
         where("title ->> '#{I18n.locale}' ILIKE ?", "%#{search_text}%")

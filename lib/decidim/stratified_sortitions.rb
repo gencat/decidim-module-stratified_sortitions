@@ -16,9 +16,10 @@ module Decidim
       15
     end
 
-    # Link to algorithm used for the sortition
-    # config_accessor :stratified_sortition_algorithm do
-    #   "https://ruby-doc.org/core-2.4.0/Random.html"
-    # end
+    def self.derive_random_seed(seed)
+      return nil unless seed
+
+      Digest::SHA256.hexdigest(seed).to_i(16) % (2**31)
+    end
   end
 end

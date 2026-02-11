@@ -89,8 +89,8 @@ es:
             range: Rango
             range_placeholder: Rango (p. ej. 0-18)
             title: Subestrato
-            weighing: Ponderación
-            weighing_placeholder: Ponderación
+            max_quota_percentage: Cuota máxima (%)
+            max_quota_percentage_placeholder: Cuota máxima %
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito
@@ -145,3 +145,23 @@ es:
           remove_uploaded_samples:
             success: "Las muestras cargadas se han eliminado correctamente."
             error: "Ha ocurrido un error al eliminar las muestras cargadas."
+      errors:
+        panel_portfolio:
+          already_sampled: "La cartera ya ha sido muestreada"
+          probabilities_size_mismatch: "deben tener el mismo tamaño que los paneles (%{panels_count} paneles, %{probabilities_count} probabilidades)"
+          probabilities_sum_invalid: "deben sumar 1.0 (actualmente %{total})"
+        feasibility:
+          panel_size_positive: "El tamaño del panel (num_candidates) debe ser un número positivo"
+          no_categories: "No hay categorías (subestratos) definidas. Debe configurar los estratos y subestratos antes de ejecutar el algoritmo"
+          no_volunteers: "No hay voluntarios en el pool. Debe importar participantes antes de ejecutar el sorteo"
+          pool_too_small: "El pool de voluntarios (%{volunteers_count}) es más pequeño que el tamaño del panel (%{panel_size}). Agregue más participantes o reduzca el número de candidatos a seleccionar"
+          stratum_insufficient_quotas: "El estrato '%{stratum_name}' tiene cuotas máximas insuficientes. La suma de cuotas máximas (%{total_max}) es menor que el tamaño del panel (%{panel_size})"
+          stratum_percentages_exceed: "El estrato '%{stratum_name}' tiene porcentajes que suman más del 100%% (%{total_percentage}%%)"
+          substratum_insufficient_volunteers: "El subestrato '%{substratum_name}' del estrato '%{stratum_name}' requiere un mínimo de %{min_quota} voluntarios pero solo tiene %{volunteers_count}"
+          volunteers_missing_strata: "Hay %{count} voluntario(s) que no tienen asignado un subestrato para cada estrato. Esto puede causar problemas en el algoritmo de selección"
+          no_name: "Sin nombre"
+        fair_sortition:
+          already_performed: "El sorteo ya se ha realizado para este proceso"
+          portfolio_generation_failed: "Error generando la cartera de paneles: %{error}"
+          no_portfolio: "No hay cartera de paneles. Ejecute `generate_portfolio` primero"
+          sampling_failed: "Error en el muestreo: %{error}"
