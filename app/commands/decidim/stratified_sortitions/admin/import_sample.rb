@@ -24,7 +24,8 @@ module Decidim
         #
         # Returns nothing.
         def call
-          Decidim::StratifiedSortitions::Admin::ImportSampleJob.perform_now(@file, @stratified_sortition, @user)
+          Decidim::StratifiedSortitions::Admin::ImportSampleJob
+            .perform_later(@file.read, @file.original_filename, @stratified_sortition, @user)
           broadcast(:ok)
         end
       end
