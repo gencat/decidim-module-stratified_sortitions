@@ -113,7 +113,7 @@ module Decidim
           if @result.success?
             csv_data = generate_sortition_csv(@result)
             send_data csv_data,
-                      filename: "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime('%Y%m%d_%H%M%S')}.csv",
+                      filename: "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}.csv",
                       type: "text/csv",
                       disposition: "attachment"
           else
@@ -251,7 +251,7 @@ module Decidim
                 participant.personal_data_1,
                 participant.personal_data_2,
                 participant.personal_data_3,
-                participant.personal_data_4
+                participant.personal_data_4,
               ]
             end
           end
