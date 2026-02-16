@@ -31,7 +31,7 @@ FactoryBot.define do
     sequence(:name) { |n| { en: "Substratum #{n}" } }
     value { "A" }
     range { "0-10" }
-    weighing { "10" }
+    max_quota_percentage { "10" }
     stratum { association(:stratum) }
   end
 
