@@ -6,7 +6,10 @@
       <span><%= t(".title") %></span>
 
       <div class="ml-auto flex gap-x-4">
-        <button type="button" class="button button__sm button__transparent-secondary small alert remove-substratum button--title">
+        <button
+          type="button"
+          class="button button__sm button__transparent-secondary small alert remove-substratum button--title"
+          <%= 'disabled' if @stratified_sortition.sample_participants.any? %>>
           <%= t(".remove") %>
         </button>
       </div>
@@ -21,16 +24,25 @@
             :name,
             tabs_id: id,
             label: t(".name"),
-            maxlength: 100) %>
+            maxlength: 100,
+            readonly: @stratified_sortition.sample_participants.any?) %>
       </div>
       <div class="substratum-value-field">
-        <%= form.text_field :value, label: t(".value"), placeholder: t(".value_placeholder", default: "Value") %>
+        <%= form.text_field :value,
+            label: t(".value"),
+            placeholder: t(".value_placeholder",default: "Value"),
+            readonly: @stratified_sortition.sample_participants.any? %>
       </div>
       <div class="substratum-range-field">
-        <%= form.text_field :range, label: t(".range"), placeholder: t(".range_placeholder", default: "Range (e.g. 0-18)") %>
+        <%= form.text_field :range,
+            label: t(".range"),
+            placeholder: t(".range_placeholder", default: "Range (e.g. 0-18)"),
+            readonly: @stratified_sortition.sample_participants.any? %>
       </div>
       <div>
-        <%= form.number_field :max_quota_percentage, step: 0.1, label: t(".max_quota_percentage"), placeholder: t(".max_quota_percentage_placeholder", default: "Max quota %") %>
+        <%= form.number_field :max_quota_percentage,
+            step: 0.1, label: t(".max_quota_percentage"),
+            placeholder: t(".max_quota_percentage_placeholder", default: "Max quota %") %>
       </div>
     </div>
   </div>

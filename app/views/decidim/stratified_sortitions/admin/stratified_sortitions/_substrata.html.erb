@@ -27,7 +27,7 @@
     </div>
     <button
       class="button button__sm button__secondary add-substratum mt-2"
-      type="button">
+      type="button" <%= 'disabled' if @stratified_sortition.sample_participants.any? %>>
       <%= t(".add_substratum") %>
     </button>
   </div>

@@ -88,3 +88,8 @@
     }
   }
 }
+
+input[readonly] {
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+}
