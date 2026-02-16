@@ -9,6 +9,19 @@ en:
         num_candidates: Number of Candidates
         selection_criteria: Selection Criteria
         selected_profiles_description: Selected Profiles Description
+    errors:
+      messages:
+        cannot_add_strata_with_sample_participants: "Cannot add strata when there are already imported participants"
+        cannot_delete_strata_with_sample_participants: "Cannot delete strata when there are already imported participants"
+        cannot_change_stratum_name_with_sample_participants: "Cannot change stratum name when there are already imported participants"
+        cannot_change_stratum_kind_with_sample_participants: "Cannot change stratum kind when there are already imported participants"
+        cannot_add_substrata_with_sample_participants: "Cannot add substrata when there are already imported participants"
+        cannot_delete_substrata_with_sample_participants: "Cannot delete substrata when there are already imported participants"
+        cannot_change_substratum_name_with_sample_participants: "Cannot change substratum name when there are already imported participants"
+        cannot_change_substratum_value_with_sample_participants: "Cannot change substratum value when there are already imported participants"
+        cannot_change_substratum_range_with_sample_participants: "Cannot change substratum range when there are already imported participants"
+        cannot_change_stratum_position_with_sample_participants: "Cannot change stratum position when there are already imported participants"
+        cannot_change_substratum_position_with_sample_participants: "Cannot change substratum position when there are already imported participants"
   decidim:
     components:
       stratified_sortitions:

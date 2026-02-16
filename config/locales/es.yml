@@ -9,6 +9,19 @@ es:
         num_candidates: Número de candidatos
         selection_criteria: Criterios de selección
         selected_profiles_description: Descripción de los perfiles seleccionados
+    errors:
+      messages:
+        cannot_add_strata_with_sample_participants: "No se pueden añadir estratos cuando ya hay participantes importados"
+        cannot_delete_strata_with_sample_participants: "No se pueden eliminar estratos cuando ya hay participantes importados"
+        cannot_change_stratum_name_with_sample_participants: "No se puede cambiar el nombre del estrato cuando ya hay participantes importados"
+        cannot_change_stratum_kind_with_sample_participants: "No se puede cambiar el tipo del estrato cuando ya hay participantes importados"
+        cannot_add_substrata_with_sample_participants: "No se pueden añadir subestratos cuando ya hay participantes importados"
+        cannot_delete_substrata_with_sample_participants: "No se pueden eliminar subestratos cuando ya hay participantes importados"
+        cannot_change_substratum_name_with_sample_participants: "No se puede cambiar el nombre del subestrato cuando ya hay participantes importados"
+        cannot_change_substratum_value_with_sample_participants: "No se puede cambiar el valor del subestrato cuando ya hay participantes importados"
+        cannot_change_substratum_range_with_sample_participants: "No se puede cambiar el rango del subestrato cuando ya hay participantes importados"
+        cannot_change_stratum_position_with_sample_participants: "No se puede cambiar la posición del estrato cuando ya hay participantes importados"
+        cannot_change_substratum_position_with_sample_participants: "No se puede cambiar la posición del subestrato cuando ya hay participantes importados"
   decidim:
     components:
       stratified_sortitions:

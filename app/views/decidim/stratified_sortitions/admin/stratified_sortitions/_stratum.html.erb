@@ -18,15 +18,24 @@
             <%== icon("arrow-down-s-line", role: "img") %>
           </span>
         </button>
-        <button type="button" class="button button__sm button__transparent-secondary small alert move-up-stratum button--title">
+        <button 
+          type="button" 
+          class="button button__sm button__transparent-secondary small alert move-up-stratum button--title"
+          <%= 'disabled' if @stratified_sortition.sample_participants.any? %>>
           <%= icon "arrow-up-line" %> <%= t(".up") %>
         </button>
 
-        <button type="button" class="button button__sm button__transparent-secondary small alert move-down-stratum button--title">
+        <button
+          type="button"
+          class="button button__sm button__transparent-secondary small alert move-down-stratum button--title"
+          <%= 'disabled' if @stratified_sortition.sample_participants.any? %>>
           <%= icon "arrow-down-line" %> <%= t(".down") %>
         </button>
 
-        <button type="button" class="button button__sm button__transparent-secondary small alert remove-stratum button--title">
+        <button
+          type="button"
+          class="button button__sm button__transparent-secondary small alert remove-stratum button--title"
+          <%= 'disabled' if @stratified_sortition.sample_participants.any? %>>
           <%= t(".remove") %>
         </button>
       </div>
@@ -41,15 +50,19 @@
             :name,
             tabs_id: id,
             label: t(".name"),
-            maxlength: 100) %>
+            maxlength: 100,
+            readonly: @stratified_sortition.sample_participants.any?) %>
       </div>
       <div>
         <%= form.select :kind,
                         [[t("decidim.stratified_sortitions.admin.stratified_sortitions.stratum.kind.value"), "value"],
                         [t("decidim.stratified_sortitions.admin.stratified_sortitions.stratum.kind.numeric_range"), "numeric_range"]],
-                        label: t("decidim.stratified_sortitions.admin.stratified_sortitions.stratum.kind.title") %>
+                        { label: t("decidim.stratified_sortitions.admin.stratified_sortitions.stratum.kind.title") },
+                        { disabled: @stratified_sortition.sample_participants.any? } %>
+        <%= form.hidden_field :kind if @stratified_sortition.sample_participants.any? %>
       </div>
     </div>
+    <%= form.hidden_field :id %>
     <%= form.hidden_field :position, value: form.object.position || 0 %>
     <%= form.hidden_field :deleted, value: false %>
 
