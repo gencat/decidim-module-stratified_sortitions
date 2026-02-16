@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="card-section mt-4">
-    <%= t(".help") %>
+    <%= t(".help").html_safe %>
   </div>
   <div class="row mt-4">
     <%= form_tag samples_path(id: @stratified_sortition.id), multipart: true, class: 'form' do %>
