@@ -63,13 +63,9 @@ module Decidim
           form_strata_ids = strata_to_persist.map { |s| s.id.to_i }.reject(&:zero?)
 
           new_strata = strata_to_persist.select { |s| s.id.blank? }
-          if new_strata.any?
-            errors.add(:strata, :cannot_add_strata_with_sample_participants)
-          end
+          errors.add(:strata, :cannot_add_strata_with_sample_participants) if new_strata.any?
 
-          if (existing_strata_ids - form_strata_ids).any?
-            errors.add(:strata, :cannot_delete_strata_with_sample_participants)
-          end
+          errors.add(:strata, :cannot_delete_strata_with_sample_participants) if (existing_strata_ids - form_strata_ids).any?
         end
 
         def validate_strata_attributes
@@ -79,17 +75,11 @@ module Decidim
             existing_stratum = stratified_sortition.strata.find_by(id: stratum_form.id)
             next unless existing_stratum
 
-            unless same_translated_attribute?(existing_stratum.name, stratum_form.name)
-              errors.add(:strata, :cannot_change_stratum_name_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_change_stratum_name_with_sample_participants) unless same_translated_attribute?(existing_stratum.name, stratum_form.name)
 
-            if existing_stratum.kind != stratum_form.kind
-              errors.add(:strata, :cannot_change_stratum_kind_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_change_stratum_kind_with_sample_participants) if existing_stratum.kind != stratum_form.kind
 
-            if existing_stratum.position != stratum_form.position.to_i
-              errors.add(:strata, :cannot_change_stratum_position_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_change_stratum_position_with_sample_participants) if existing_stratum.position != stratum_form.position.to_i
           end
         end
 
@@ -104,13 +94,9 @@ module Decidim
             form_substrata_ids = stratum_form.substrata_to_persist.map { |s| s.id.to_i }.reject(&:zero?)
 
             new_substrata = stratum_form.substrata_to_persist.select { |s| s.id.blank? }
-            if new_substrata.any?
-              errors.add(:strata, :cannot_add_substrata_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_add_substrata_with_sample_participants) if new_substrata.any?
 
-            if (existing_substrata_ids - form_substrata_ids).any?
-              errors.add(:strata, :cannot_delete_substrata_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_delete_substrata_with_sample_participants) if (existing_substrata_ids - form_substrata_ids).any?
 
             validate_substrata_attributes(existing_stratum, stratum_form)
           end
@@ -123,9 +109,7 @@ module Decidim
             existing_substratum = existing_stratum.substrata.find_by(id: substratum_form.id)
             next unless existing_substratum
 
-            unless same_translated_attribute?(existing_substratum.name, substratum_form.name)
-              errors.add(:strata, :cannot_change_substratum_name_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_change_substratum_name_with_sample_participants) unless same_translated_attribute?(existing_substratum.name, substratum_form.name)
 
             unless normalize_blank(existing_substratum.value) == normalize_blank(substratum_form.value)
               errors.add(:strata, :cannot_change_substratum_value_with_sample_participants)
@@ -135,9 +119,7 @@ module Decidim
               errors.add(:strata, :cannot_change_substratum_range_with_sample_participants)
             end
 
-            if existing_substratum.position != substratum_form.position.to_i
-              errors.add(:strata, :cannot_change_substratum_position_with_sample_participants)
-            end
+            errors.add(:strata, :cannot_change_substratum_position_with_sample_participants) if existing_substratum.position != substratum_form.position.to_i
           end
         end
 

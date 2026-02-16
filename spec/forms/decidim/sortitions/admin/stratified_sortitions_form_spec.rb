@@ -36,8 +36,8 @@ module Decidim
               selected_profiles_description_en: selected_profiles_description[:en],
               selected_profiles_description_es: selected_profiles_description[:es],
               selected_profiles_description_ca: selected_profiles_description[:ca],
-              strata: strata_params
-            }
+              strata: strata_params,
+            },
           }
         end
 
@@ -188,9 +188,9 @@ module Decidim
               context "when adding a substratum" do
                 let(:stratum_params) do
                   base_stratum_params.merge(substrata: {
-                    substratum.id.to_s => base_substratum_params,
-                    "new" => { name_en: "26-35", value: "adult", range: "", position: 1, max_quota_percentage: "15", deleted: false }
-                  })
+                                              substratum.id.to_s => base_substratum_params,
+                                              "new" => { name_en: "26-35", value: "adult", range: "", position: 1, max_quota_percentage: "15", deleted: false },
+                                            })
                 end
 
                 include_examples "blocks the change with error", "cannot_add_substrata_with_sample_participants"
