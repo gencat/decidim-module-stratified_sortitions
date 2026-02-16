@@ -88,7 +88,7 @@ module Decidim
         describe "strata immutability validations" do
           let!(:stratified_sortition) { create(:stratified_sortition) }
           let!(:stratum) { create(:stratum, stratified_sortition:, name: { en: "Age" }, kind: "value", position: 0) }
-          let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: 0, weighing: "10") }
+          let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: 0, max_quota_percentage: "10") }
           let(:stratified_sortition_id) { stratified_sortition.id }
 
           let(:base_substratum_params) do
@@ -215,7 +215,7 @@ module Decidim
               end
 
               context "when changing substratum range" do
-                let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: nil, range: "18-25", position: 0, weighing: "10") }
+                let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: nil, range: "18-25", position: 0, max_quota_percentage: "10") }
                 let(:base_substratum_params) { { id: substratum.id, name_en: "18-25", value: "", range: "18-25", position: 0, max_quota_percentage: "10", deleted: false } }
                 let(:stratum_params) { base_stratum_params.merge(substrata: { substratum.id.to_s => base_substratum_params.merge(range: "20-30") }) }
 
