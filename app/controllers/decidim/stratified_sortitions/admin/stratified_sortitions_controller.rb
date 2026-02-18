@@ -115,7 +115,7 @@ module Decidim
         def execute
           unless stratified_sortition.can_execute?
             redirect_to edit_stratified_sortition_path(stratified_sortition),
-                          flash: { warning: t("stratified_sortitions.execute.empty_sample_participants", scope: "decidim.stratified_sortitions.admin") }
+                        flash: { warning: t("stratified_sortitions.execute.empty_sample_participants", scope: "decidim.stratified_sortitions.admin") }
           end
         end
 
