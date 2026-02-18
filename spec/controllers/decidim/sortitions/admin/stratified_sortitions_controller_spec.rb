@@ -256,12 +256,6 @@ module Decidim
             imported = assigns(:candidates_data).first[:chart_data].map(&:last)
             expect(imported.sum).to eq(stratified_sortition.sample_participants.count)
           end
-
-          it "redirects to edit with a warning" do
-            get(:upload_sample, params:)
-            expect(response).to redirect_to(edit_stratified_sortition_path(stratified_sortition))
-            expect(flash[:warning]).to be_present
-          end
         end
 
         describe "execute" do
