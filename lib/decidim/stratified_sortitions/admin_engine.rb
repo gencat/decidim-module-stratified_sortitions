@@ -18,6 +18,7 @@ module Decidim
           post :duplicate, on: :member
           get :upload_sample, on: :member
           post :process_sample, on: :member
+          get :execute, on: :member
           post :execute_stratified_sortition, on: :member
         end
 

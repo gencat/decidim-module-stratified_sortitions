@@ -39,6 +39,7 @@ ca:
           confirm_destroy: Segur que vols eliminar aquest %{name}?
           destroy: Esborra
           duplicate: Duplica
+          execute: Executar sorteig
           new_stratified_sortition: "Nou sorteig estratificat"
           title: "Accions"
           census_management: Gestió cens
@@ -73,6 +74,10 @@ ca:
           edit:
             title: Editar sorteig estratificat
             update: Actualitzar
+          execute:
+            empty_sample_participants: No es pot executar el sorteig sense un cens carregat
+            execute_stratified_sortition: Executar sorteig estratificat
+            title: Executar sorteig estratificat
           form:
             data: Informació general
             description: Descripció
@@ -115,6 +120,7 @@ ca:
             census_file: Triar un fitxer
             census_file_label: Arxiu excel.csv amb les dades del cens
             configure_strata_first: Primer has de configurar els estrats i subestrats
+            confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
             count_uploaded_files: "<b>%{count}</b> registres carregats."
             description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
             download_template: "Descarregar plantilla CSV"
@@ -128,9 +134,10 @@ ca:
             no_data: Sense dades
             place: Lloc de naixement
             remove_uploaded_samples: Eliminar mostres carregades
-            confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
+            strata_not_configured: Primer has de configurar els estrats i subestrats
             target: Target
-            title: Pujar un nou cens
+            title: Gestionar cens
+            upload_file: Pujar un nou cens
             uploaded_file: Dades del cens carregat
             uploaded_files: "S'han agregat els següents fitxers:"
             no_uploaded_files: "No hi ha fitxers carregats."
