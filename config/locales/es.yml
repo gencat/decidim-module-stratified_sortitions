@@ -39,6 +39,7 @@ es:
           confirm_destroy: ¿Estás seguro de que quieres eliminar este %{name}?
           destroy: Eliminar
           duplicate: Duplicar
+          execute: Ejecutar sorteo
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
           census_management: Gestión censo
@@ -60,7 +61,10 @@ es:
             has_problems: Este sorteo estratificado no se pudo eliminar debido a problemas relacionados
             success: Sorteo estratificado eliminado con éxito
           execute:
+            empty_sample_participants: No se puede ejecutar el sorteo sin un censo cargado
+            execute_stratified_sortition: Ejecutar sorteo estratificado
             success: Sorteo estratificado ejecutado con éxito
+            title: Ejecutar sorteo estratificado
           duplicate:
             error: Ha habido un problema al duplicar este sorteo estratificado
             success: Sorteo estratificado duplicado con éxito
@@ -121,16 +125,18 @@ es:
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
             execute_stratified_sortition: Ejecutar sorteo
             execute_stratified_sortition_help: El sorteo no se puede ejecutar hasta que no se carguen registros.
-            filename_data: Nombre de archivo, el día %{date}, número de registros %{count}
+            filename_data: "%{filename}, el día %{date}, número de registros %{count}"
             gender: Género
-            last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
+            last_upload_date: La última carga fue el día %{date}
             help: Las cuatro primeras columnas son datos del candidato, por ejemplo correo electrónico, DNI, teléfono o dirección y las siguientes columnas son los estratos definidos en el sorteo estratificado. Cada fila representa un candidato.
             no_data: No hay datos
             place: Lugar de nacimiento
             remove_uploaded_samples: Eliminar muestras cargadas
             confirm_remove_uploaded_samples: ¿Estás seguro de que quieres eliminar todas las muestras cargadas?
+            strata_not_configured: Primero debes configurar los estratos y subestratos
             target: Objetivo
-            title: Subir un nuevo censo
+            title: Gestionar censo
+            upload_file: Subir un nuevo censo
             uploaded_file: Datos del censo
             uploaded_files: "Se han agregado los siguientes archivos:"
             no_uploaded_files: "No hay archivos cargados."

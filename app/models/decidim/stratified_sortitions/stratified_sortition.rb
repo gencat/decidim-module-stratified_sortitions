@@ -40,6 +40,10 @@ module Decidim
       def strata_and_substrata_configured?
         strata.any? && strata.all? { |stratum| stratum.substrata.any? }
       end
+
+      def can_execute?
+        strata_and_substrata_configured? && !sample_participants.empty?
+      end
     end
   end
 end

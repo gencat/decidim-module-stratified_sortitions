@@ -99,13 +99,24 @@ module Decidim
 
         def upload_sample
           enforce_permission_to :upload_sample, :stratified_sortition
+          if stratified_sortition.strata_and_substrata_configured?
+            @stratified_sortition = stratified_sortition
+            @sample_participants_count = @stratified_sortition.sample_participants.count
+            @last_sample = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :desc).first
+            @samples = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :asc)
+            @strata_data = strata_data(@stratified_sortition)
+            @candidates_data = candidates_data(@stratified_sortition)
+          else
+            redirect_to edit_stratified_sortition_path(stratified_sortition),
+                        flash: { warning: t("stratified_sortitions.upload_sample.strata_not_configured", scope: "decidim.stratified_sortitions.admin") }
+          end
+        end
 
-          @stratified_sortition = stratified_sortition
-          @sample_participants_count = @stratified_sortition.sample_participants.count
-          @last_sample = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :desc).first
-          @samples = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :asc)
-          @strata_data = strata_data(@stratified_sortition)
-          @candidates_data = candidates_data(@stratified_sortition)
+        def execute
+          unless stratified_sortition.can_execute?
+            redirect_to edit_stratified_sortition_path(stratified_sortition),
+                          flash: { warning: t("stratified_sortitions.execute.empty_sample_participants", scope: "decidim.stratified_sortitions.admin") }
+          end
         end
 
         def execute_stratified_sortition
@@ -118,7 +129,7 @@ module Decidim
                       disposition: "attachment"
           else
             flash[:error] = @result.error
-            redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
+            redirect_to execute_stratified_sortition_path(stratified_sortition)
           end
         end
 
