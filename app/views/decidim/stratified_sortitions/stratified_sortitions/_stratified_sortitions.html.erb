@@ -1,0 +1,13 @@
+<% if @stratified_sortitions.any? %>
+  <h2 class="h5 md:h3 decorator" aria-live="polite" aria-atomic="true"><%= t("count", scope: "decidim.stratified_sortitions.stratified_sortitions.stratified_sortitions_count", count: @stratified_sortitions.total_count) %></h2>
+
+  <%= order_selector available_orders, i18n_scope: "decidim.stratified_sortitions.stratified_sortitions.orders" %>
+
+  <div class="card__list-list">
+    <%= render @stratified_sortitions %>
+  </div>
+
+  <%= decidim_paginate @stratified_sortitions %>
+<% else %>
+  <%= cell "decidim/announcement", t("empty", scope: "decidim.stratified_sortitions.stratified_sortitions.index") %>
+<% end %>

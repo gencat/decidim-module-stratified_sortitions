@@ -1,0 +1,15 @@
+<% executed = stratified_sortition.panel_portfolio&.sampled? %>
+<% count = executed ? stratified_sortition.panel_portfolio.selected_panel.size : stratified_sortition.num_candidates %>
+
+<div id="stratified-sortition-<%= stratified_sortition.id %>-results-count">
+  <span class="stratified-sortition__aside__count-number">
+    <%= count %>
+  </span>
+  <span class="stratified-sortition__aside__count-text">
+    <% if executed %>
+      <%= t(".count_selected", count:) %>
+    <% else %>
+      <%= t(".count", count:) %>
+    <% end %>
+  </span>
+</div>

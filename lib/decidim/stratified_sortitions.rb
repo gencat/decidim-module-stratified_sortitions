@@ -16,6 +16,10 @@ module Decidim
       15
     end
 
+    config_accessor :leximin_algorithm do
+      "https://www.nature.com/articles/s41586-021-03788-6"
+    end
+
     def self.derive_random_seed(seed)
       return nil unless seed
 

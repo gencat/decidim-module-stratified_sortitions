@@ -13,7 +13,7 @@ module Decidim
       helper Decidim::CheckBoxesTreeHelper
       helper Decidim::PaginateHelper
 
-      helper_method :stratified_sortitions
+      helper_method :stratified_sortitions, :stratified_sortition
 
       def index
         @stratified_sortitions = search.result
@@ -22,14 +22,17 @@ module Decidim
       end
 
       def show
-        @stratified_sortition = StratifiedSortition.find(params[:id])
-        @stratified_sortition_scope = stratified_sortition_scope
+        raise ActionController::RoutingError, "Not Found" unless stratified_sortition
       end
 
       private
 
+      def stratified_sortition
+        @stratified_sortition ||= search_collection.find_by(id: params[:id])
+      end
+
       def stratified_sortition_scope
-        @stratified_sortition_scope ||= current_organization.scopes.find_by(id: @stratified_sortition.decidim_scope_id)
+        @stratified_sortition_scope ||= current_organization.scopes.find_by(id: stratified_sortition&.decidim_scope_id)
       end
 
       def stratified_sortitions
@@ -37,7 +40,14 @@ module Decidim
       end
 
       def search_collection
-        ::Decidim::StratifiedSortitions::StratifiedSortition.where(component: current_component).published
+        ::Decidim::StratifiedSortitions::StratifiedSortition.where(component: current_component)
+      end
+
+      def default_filter_params
+        {
+          search_text_cont: "",
+          with_any_state: "all"
+        }
       end
     end
   end

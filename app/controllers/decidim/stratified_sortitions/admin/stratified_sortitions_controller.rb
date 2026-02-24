@@ -111,6 +111,7 @@ module Decidim
         def execute_stratified_sortition
           @result = FairSortitionService.new(stratified_sortition).call
           if @result.success?
+            stratified_sortition.update!(status: "executed")
             csv_data = generate_sortition_csv(@result)
             send_data csv_data,
                       filename: "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}.csv",

@@ -160,6 +160,62 @@ en:
           remove_uploaded_samples:
             success: "Uploaded samples have been successfully removed."
             error: "There was an error removing the uploaded samples."
+      stratified_sortitions:
+        count:
+          candidates_count:
+            one: 1 candidate
+            other: "%{count} candidates"
+        filters:
+          all: All
+          pending: Pending
+          executed: Executed
+          state: Status
+        index:
+          empty: There are no stratified sortitions yet.
+        orders:
+          label: 'Order stratified sortitions by:'
+          random: Random
+          recent: Recent
+        results_count:
+          count:
+            one: Candidate to select
+            other: Candidates to select
+          count_selected:
+            one: Selected candidate
+            other: Selected candidates
+        show:
+          introduction: 'This page contains the details of the stratified sortition %{reference}. By means of this sortition, %{num_candidates} candidates have been selected using a stratified random selection algorithm that ensures fair representation across all defined strata.'
+          description: Description
+          selection_criteria: Selection criteria
+          selected_profiles_description: Selected profiles description
+          strata: Strata
+          max_quota: Max quota
+          selected_participants: Selected participants
+          selected_participants_count:
+            one: 1 participant has been selected
+            other: "%{count} participants have been selected"
+          sortition_details: Sortition details
+          num_candidates: Number of candidates
+          status: Status
+          strata_count: Number of strata
+          algorithm: Algorithm
+          algorithm_name: LEXIMIN
+          algorithm_description: Stratified random selection algorithm that ensures fair representation across all defined strata
+          reproducibility_details: Sortition reproducibility
+          verification_seed: Verification seed
+          random_value_used: Random value used
+          selected_panel_index: Selected panel index
+          selected_at: Selected at
+          statuses:
+            pending: Pending
+            executed: Executed
+        stratified_sortition:
+          num_candidates: candidates to select
+          strata_count: strata
+        stratified_sortitions_count:
+          count:
+            one: 1 stratified sortition
+            other: "%{count} stratified sortitions"
       errors:
         panel_portfolio:
           already_sampled: "Portfolio already sampled"

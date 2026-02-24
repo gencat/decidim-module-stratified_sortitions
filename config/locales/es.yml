@@ -162,6 +162,62 @@ es:
           remove_uploaded_samples:
             success: "Las muestras cargadas se han eliminado correctamente."
             error: "Ha ocurrido un error al eliminar las muestras cargadas."
+      stratified_sortitions:
+        count:
+          candidates_count:
+            one: 1 candidato
+            other: "%{count} candidatos"
+        filters:
+          all: Todos
+          pending: Pendiente
+          executed: Ejecutado
+          state: Estado
+        index:
+          empty: Aún no hay sorteos estratificados.
+        orders:
+          label: 'Ordenar sorteos estratificados por:'
+          random: Aleatorio
+          recent: Reciente
+        results_count:
+          count:
+            one: Candidato a seleccionar
+            other: Candidatos a seleccionar
+          count_selected:
+            one: Candidato seleccionado
+            other: Candidatos seleccionados
+        show:
+          introduction: 'Esta página contiene los detalles del sorteo estratificado %{reference}. Mediante este sorteo, se han seleccionado %{num_candidates} candidatos utilizando un algoritmo de selección aleatoria estratificada que garantiza la representación justa en todos los estratos definidos.'
+          description: Descripción
+          selection_criteria: Criterios de selección
+          selected_profiles_description: Descripción de los perfiles seleccionados
+          strata: Estratos
+          max_quota: Cuota máxima
+          selected_participants: Participantes seleccionados
+          selected_participants_count:
+            one: Se ha seleccionado 1 participante
+            other: "Se han seleccionado %{count} participantes"
+          sortition_details: Detalles del sorteo
+          num_candidates: Número de candidatos
+          status: Estado
+          strata_count: Número de estratos
+          algorithm: Algoritmo
+          algorithm_name: LEXIMIN
+          algorithm_description: Algoritmo de selección aleatoria estratificada que garantiza la representación justa en todos los estratos definidos
+          reproducibility_details: Reproducibilidad del sorteo
+          verification_seed: Semilla de verificación
+          random_value_used: Valor aleatorio utilizado
+          selected_panel_index: Índice del panel seleccionado
+          selected_at: Seleccionado el
+          statuses:
+            pending: Pendiente
+            executed: Ejecutado
+        stratified_sortition:
+          num_candidates: candidatos a seleccionar
+          strata_count: estratos
+        stratified_sortitions_count:
+          count:
+            one: 1 sorteo estratificado
+            other: "%{count} sorteos estratificados"
       errors:
         panel_portfolio:
           already_sampled: "La cartera ya ha sido muestreada"

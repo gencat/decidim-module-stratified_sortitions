@@ -162,6 +162,62 @@ ca:
           remove_uploaded_samples:
             success: "Les mostres carregades s'han eliminat correctament."
             error: "Hi ha hagut un error en eliminar les mostres carregades."
+      stratified_sortitions:
+        count:
+          candidates_count:
+            one: 1 candidat
+            other: "%{count} candidats"
+        filters:
+          all: Tots
+          pending: Pendent
+          executed: Executat
+          state: Estat
+        index:
+          empty: Encara no hi ha sortejos estratificats.
+        orders:
+          label: 'Ordenar sortejos estratificats per:'
+          random: Aleatori
+          recent: Recent
+        results_count:
+          count:
+            one: Candidat a seleccionar
+            other: Candidats a seleccionar
+          count_selected:
+            one: Candidat seleccionat
+            other: Candidats seleccionats
+        show:
+          introduction: "Aquesta pàgina conté els detalls del sorteig estratificat %{reference}. Mitjançant aquest sorteig, s'han seleccionat %{num_candidates} candidats utilitzant un algorisme de selecció aleatòria estratificada que garanteix la representació justa en tots els estrats definits."
+          description: Descripció
+          selection_criteria: Criteris de selecció
+          selected_profiles_description: Descripció dels perfils seleccionats
+          strata: Estrats
+          max_quota: Quota màxima
+          selected_participants: Participants seleccionats
+          selected_participants_count:
+            one: S'ha seleccionat 1 participant
+            other: "S'han seleccionat %{count} participants"
+          sortition_details: Detalls del sorteig
+          num_candidates: Nombre de candidats
+          status: Estat
+          strata_count: Nombre d'estrats
+          algorithm: Algorisme
+          algorithm_name: LEXIMIN
+          algorithm_description: Algorisme de selecció aleatòria estratificada que garanteix la representació justa en tots els estrats definits
+          reproducibility_details: Reproductibilitat del sorteig
+          verification_seed: Llavor de verificació
+          random_value_used: Valor aleatori utilitzat
+          selected_panel_index: Índex del panell seleccionat
+          selected_at: Seleccionat el
+          statuses:
+            pending: Pendent
+            executed: Executat
+        stratified_sortition:
+          num_candidates: candidats a seleccionar
+          strata_count: estrats
+        stratified_sortitions_count:
+          count:
+            one: 1 sorteig estratificat
+            other: "%{count} sortejos estratificats"
       errors:
         panel_portfolio:
           already_sampled: "La cartera ja ha estat mostrejada"
