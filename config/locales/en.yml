@@ -29,7 +29,7 @@ en:
         settings:
           global:
             announcement: Announcement
-            publish_sortitions: Publish Stratified Sortitions
+            publish_sortitions: Publish comparative charts of the Sortitions
           step:
             announcement: Announcement
     stratified_sortitions:

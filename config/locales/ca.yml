@@ -29,7 +29,7 @@ ca:
         settings:
           global:
             announcement: Avís
-            publish_sortitions: Publicar sortejos estratificats
+            publish_sortitions: Publicar gràfics comparatius dels sortejos
           step:
             announcement: Avís
     stratified_sortitions:

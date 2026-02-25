@@ -29,7 +29,7 @@ es:
         settings:
           global:
             announcement: Aviso
-            publish_sortitions: Publicar sorteos estratificados
+            publish_sortitions: Publicar gráficos comparativos de los sorteos
           step:
             announcement: Aviso
     stratified_sortitions:
