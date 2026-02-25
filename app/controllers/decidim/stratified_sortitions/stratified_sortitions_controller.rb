@@ -46,7 +46,7 @@ module Decidim
       def default_filter_params
         {
           search_text_cont: "",
-          with_any_state: "all"
+          with_any_state: "all",
         }
       end
     end

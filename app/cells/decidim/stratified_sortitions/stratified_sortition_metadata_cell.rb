@@ -19,20 +19,20 @@ module Decidim
       def candidates_item
         {
           text: data_with_text(model.num_candidates.to_s, t("decidim.stratified_sortitions.stratified_sortitions.stratified_sortition.num_candidates")),
-          icon: "group-line"
+          icon: "group-line",
         }
       end
 
       def status_item
         {
-          text: content_tag(:span, class: "label #{status_classes}") { status_name }
+          text: content_tag(:span, class: "label #{status_classes}") { status_name },
         }
       end
 
       def strata_item
         {
           text: data_with_text(model.strata.count.to_s, t("decidim.stratified_sortitions.stratified_sortitions.stratified_sortition.strata_count")),
-          icon: "bar-chart-box-line"
+          icon: "bar-chart-box-line",
         }
       end
 

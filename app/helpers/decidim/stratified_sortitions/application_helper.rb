@@ -50,7 +50,7 @@ module Decidim
         [
           ["all", t("all", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")],
           ["pending", t("pending", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")],
-          ["executed", t("executed", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")]
+          ["executed", t("executed", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")],
         ]
       end
     end
