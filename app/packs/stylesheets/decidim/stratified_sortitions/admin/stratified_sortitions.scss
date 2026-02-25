@@ -1,3 +1,51 @@
+.stratified_sortition_header {
+  border: 0;
+}
+
+.stratified_sortition_nav {
+  border-bottom: 2px solid #CCC;
+  margin-bottom: 20px;
+  overflow: visible;
+
+  .import-sample-btn {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    position: relative;
+    top: 3px;
+    border-bottom: 2px solid transparent;
+    color: #ccc;
+    fill: #ccc;
+
+    button {
+      all: unset;
+      display: inline-flex;
+      gap: 0.4rem;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }
+    
+    &:hover {
+      color: rgba(21, 90, 191, 0.7);
+      fill: rgba(21, 90, 191, 0.7);
+      border-bottom: 2px solid rgba(21, 90, 191, 0.7);
+    }
+  }
+
+  .active {
+    color: rgba(21, 90, 191, 1);
+    fill: rgba(21, 90, 191, 1);
+    border-bottom: 2px solid rgba(21, 90, 191, 1);
+  }
+
+  button[disabled] {
+    cursor: not-allowed !important;
+  }
+}
+
 .stratum-fields,
 .substratum-fields {
   display: flex;
@@ -10,9 +58,6 @@
   }
 }
 
-.import-sample-btn {
-  white-space: nowrap;
-}
 
 .example-file-census-container {
   padding:1em;

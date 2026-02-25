@@ -1,0 +1,19 @@
+<div class="flex items-left stratified_sortition_nav">
+  <%= button_to edit_stratified_sortition_path(stratified_sortition),
+      method: :get,
+      class: "import-sample-btn #{'active' if action_name == 'edit'}" do %>
+    <%= icon "settings-4-line" %> <%= t("actions.configure", scope: "decidim.stratified_sortitions.admin") %>
+  <% end %>
+  <%= button_to upload_sample_stratified_sortition_path(stratified_sortition),
+      method: :get,
+      class: "import-sample-btn #{'active' if action_name == 'upload_sample'}",
+      disabled: !stratified_sortition.strata_and_substrata_configured? do %>
+    <%= icon "group-line" %> <%= t("actions.census_management", scope: "decidim.stratified_sortitions.admin") %>
+  <% end %>
+  <%= button_to execute_stratified_sortition_path(stratified_sortition),
+      method: :get,
+      class: "import-sample-btn #{'active' if action_name == 'execute'}",
+      disabled: !stratified_sortition.can_execute? do %>
+    <%= icon "play-fill" %> <%= t("actions.execute", scope: "decidim.stratified_sortitions.admin") %>
+  <% end %>
+</div>

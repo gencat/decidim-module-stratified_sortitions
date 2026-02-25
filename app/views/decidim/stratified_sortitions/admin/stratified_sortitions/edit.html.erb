@@ -1,16 +1,12 @@
 <% add_decidim_page_title(t(".title")) %>
-<div class="item_show__header">
+<div class="item_show__header stratified_sortition_header">
   <h1 class="item_show__header-title">
     <%= t(".title") %>
   </h1>
-  <div class="flex items-center gap-x-4">
-    <%= button_to t("actions.census_management", scope: "decidim.stratified_sortitions.admin"),
-        upload_sample_stratified_sortition_path(stratified_sortition),
-        method: :get,
-        class: "button button__sm button__secondary import-sample-btn",
-        disabled: !stratified_sortition.strata_and_substrata_configured? %>
-  </div>
 </div>
+
+<%= render 'navigation_menu' %>
+
 <div class="item__edit item__edit-1col">
   <div class="item__edit-form">
     <%= decidim_form_for(@form, html: { class: "form-defaults form edit_stratified_sortition stratified_sortition_form_admin" })  do |f| %>

@@ -30,6 +30,8 @@ en:
           global:
             announcement: Announcement
             publish_sortitions: Publish Stratified Sortitions
+          step:
+            announcement: Announcement
     stratified_sortitions:
       admin:
         actions:
@@ -37,6 +39,7 @@ en:
           confirm_destroy: Are you sure you want to delete this %{name}?
           destroy: Delete
           duplicate: Duplicate
+          execute: Execute sortition
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
           census_management: Census management
@@ -58,7 +61,10 @@ en:
             has_problems: This stratified sortition couldn't be deleted due to related problems
             success: Stratified sortition successfully deleted
           execute:
+            empty_sample_participants: The sortition cannot be executed without a loaded census
+            execute_stratified_sortition: Execute stratified sortition
             success: Stratified sortition successfully executed
+            title: Execute stratified sortition
           duplicate:
             error: There's been a problem duplicating this stratified sortition
             success: Stratified sortition successfully duplicated
@@ -119,16 +125,18 @@ en:
             example: "Candidate data 1,Candidate data 2,Candidate data 3,Candidate data 4,Stratum 1,Stratum 2,Stratum 3,Stratum N<br>example@example.com,D,Higher,34<br>example@example.com,E,Higher,24<br><br>. . ."
             execute_stratified_sortition: Execute sortition
             execute_stratified_sortition_help: The sortition cannot be executed until records are uploaded.
-            filename_data: File name, on %{date}, number of records %{count}
+            filename_data: "%{filename}, on %{date}, number of records %{count}"
             gender: Gender
-            last_upload_date: The last upload was on February 24, 2025 10:41
+            last_upload_date: The last upload was on %{date}
             help: The first four columns are candidate data, such as email, ID, phone, or address, and the following columns are the strata defined in the stratified sortition. Each row represents a candidate.
             no_data: No data
             place: Place of birth
             remove_uploaded_samples: Remove uploaded samples
             confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?
+            strata_not_configured: You must configure strata and substrata first
             target: Target
-            title: Upload a new census
+            title: Manage census
+            upload_file: Upload a new census
             uploaded_file: Census data
             uploaded_files: "The following files have been added:"
             no_uploaded_files: "No files uploaded."

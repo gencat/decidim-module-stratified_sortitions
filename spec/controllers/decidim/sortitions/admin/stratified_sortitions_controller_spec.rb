@@ -257,6 +257,40 @@ module Decidim
             expect(imported.sum).to eq(stratified_sortition.sample_participants.count)
           end
         end
+
+        describe "execute" do
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+            }
+          end
+
+          context "when stratified sortition can be executed" do
+            before do
+              stratum = create(:stratum, stratified_sortition:, kind: "value", name: { en: "Gender" })
+              create(:substratum, stratum:, name: { en: "Man" }, value: "H", max_quota_percentage: "50")
+              create(:substratum, stratum:, name: { en: "Woman" }, value: "D", max_quota_percentage: "50")
+
+              sample_import = create(:sample_import, stratified_sortition:)
+              participant = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
+              create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant, decidim_stratified_sortitions_stratum: stratum, decidim_stratified_sortitions_substratum: stratum.substrata.first)
+            end
+
+            it "renders the execute template" do
+              get(:execute, params:)
+              expect(response).to render_template(:execute)
+            end
+          end
+
+          context "when stratified sortition cannot be executed" do
+            it "redirects to edit with a warning" do
+              get(:execute, params:)
+              expect(response).to redirect_to(edit_stratified_sortition_path(stratified_sortition))
+              expect(flash[:warning]).to be_present
+            end
+          end
+        end
       end
     end
   end
