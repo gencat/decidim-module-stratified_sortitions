@@ -7,6 +7,7 @@ module Decidim
       #
       class StratifiedSortitionsController < Decidim::StratifiedSortitions::Admin::ApplicationController
         include Decidim::ApplicationHelper
+        include StrataChartsData
 
         helper StratifiedSortitions::ApplicationHelper
         helper Decidim::PaginateHelper
@@ -116,22 +117,82 @@ module Decidim
           unless stratified_sortition.can_execute?
             redirect_to edit_stratified_sortition_path(stratified_sortition),
                         flash: { warning: t("stratified_sortitions.execute.empty_sample_participants", scope: "decidim.stratified_sortitions.admin") }
+            return
           end
+
+          @stratified_sortition = stratified_sortition
+          @portfolio = @stratified_sortition.panel_portfolio
+          @strata = @stratified_sortition.strata.order(:position)
+          @selected_participants = if @portfolio&.sampled?
+                                    SampleParticipant
+                                      .where(id: @portfolio.selected_panel)
+                                      .includes(sample_participant_strata: [:decidim_stratified_sortitions_stratum, :decidim_stratified_sortitions_substratum])
+                                      .order(:id)
+                                      .to_a
+                                  else
+                                    []
+                                  end
+          @strata_data = strata_data(@stratified_sortition)
+          @candidates_data = candidates_data(@stratified_sortition)
+          @results_data = results_data(@stratified_sortition)
         end
 
         def execute_stratified_sortition
           @result = FairSortitionService.new(stratified_sortition).call
           if @result.success?
             stratified_sortition.update!(status: "executed")
-            csv_data = generate_sortition_csv(@result)
-            send_data csv_data,
-                      filename: "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}.csv",
-                      type: "text/csv",
-                      disposition: "attachment"
+            flash[:notice] = I18n.t("stratified_sortitions.execute.success", scope: "decidim.stratified_sortitions.admin")
           else
             flash[:error] = @result.error
-            redirect_to execute_stratified_sortition_path(stratified_sortition)
           end
+          redirect_to execute_stratified_sortition_path(stratified_sortition)
+        end
+
+        def export_charts_pdf
+          portfolio = stratified_sortition.panel_portfolio
+
+          unless portfolio&.sampled?
+            flash[:error] = I18n.t("stratified_sortitions.export_results.no_results", scope: "decidim.stratified_sortitions.admin")
+            redirect_to execute_stratified_sortition_path(stratified_sortition)
+            return
+          end
+
+          generator = ChartsPdfGenerator.new(
+            stratified_sortition,
+            strata_data(stratified_sortition),
+            candidates_data(stratified_sortition),
+            results_data(stratified_sortition),
+            locale: I18n.locale
+          )
+
+          filename = "sortition_charts_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}.pdf"
+          send_data generator.generate,
+                    filename: filename,
+                    type: "application/pdf",
+                    disposition: "attachment"
+        end
+
+        def export_results
+          format = params[:format]&.downcase || "csv"
+          portfolio = stratified_sortition.panel_portfolio
+
+          unless portfolio&.sampled?
+            flash[:error] = I18n.t("stratified_sortitions.export_results.no_results", scope: "decidim.stratified_sortitions.admin")
+            redirect_to execute_stratified_sortition_path(stratified_sortition)
+            return
+          end
+
+          exporter = SortitionResultsExporter.new(stratified_sortition)
+          export_data = case format
+                        when "excel" then exporter.export_excel
+                        when "json" then exporter.export_json
+                        else exporter.export_csv
+                        end
+          filename = "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}"
+
+          send_data export_data.read,
+                    filename: "#{filename}.#{export_data.extension}",
+                    disposition: "attachment"
         end
 
         private
@@ -160,114 +221,6 @@ module Decidim
           Decidim::StratifiedSortitions::Admin::SubstratumForm.new(stratum: stratum_form.model)
         end
 
-        def strata_data(stratified_sortition)
-          stratified_sortition.strata.map do |stratum|
-            chart_data = stratum.substrata.map do |substratum|
-              quota_value = substratum.max_quota_percentage.present? ? substratum.max_quota_percentage.to_f : 0.0
-              label_with_percentage = "#{translated_attribute(substratum.name)} (#{quota_value}%)"
-              [label_with_percentage, quota_value]
-            end
-            chart_data = chart_data.reject { |_name, value| value.zero? }
-            {
-              stratum:,
-              chart_data:,
-            }
-          end
-        end
-
-        def candidates_data(stratified_sortition)
-          sample_candidates_ids = stratified_sortition.sample_participants.pluck(:id)
-          sample_candidates_stratum = fetch_sample_candidates_stratum(sample_candidates_ids)
-          by_stratum = group_by_stratum(sample_candidates_stratum)
-          by_stratum_and_substratum = group_by_stratum_and_substratum(sample_candidates_stratum)
-
-          stratified_sortition.strata.map do |stratum|
-            build_stratum_chart(stratum, by_stratum, by_stratum_and_substratum)
-          end
-        end
-
-        def fetch_sample_candidates_stratum(sample_candidates_ids)
-          Decidim::StratifiedSortitions::SampleParticipantStratum
-            .where(decidim_stratified_sortitions_sample_participant_id: sample_candidates_ids)
-            .select(:decidim_stratified_sortitions_sample_participant_id,
-                    :decidim_stratified_sortitions_stratum_id,
-                    :decidim_stratified_sortitions_substratum_id)
-            .distinct
-            .to_a
-        end
-
-        def group_by_stratum(sample_candidates_stratum)
-          sample_candidates_stratum.group_by(&:decidim_stratified_sortitions_stratum_id)
-        end
-
-        def group_by_stratum_and_substratum(sample_candidates_stratum)
-          sample_candidates_stratum.group_by do |s|
-            [s.decidim_stratified_sortitions_stratum_id, s.decidim_stratified_sortitions_substratum_id]
-          end
-        end
-
-        def build_stratum_chart(stratum, by_stratum, by_stratum_and_substratum)
-          substrata = stratum.substrata
-          total = by_stratum[stratum.id]&.map(&:decidim_stratified_sortitions_sample_participant_id)&.uniq&.count || 0
-          chart_data = substrata.map do |substratum|
-            build_substratum_chart_row(stratum, substratum, by_stratum_and_substratum, total)
-          end
-          chart_data = chart_data.reject { |_name, value| value.zero? }
-          { stratum:, chart_data: }
-        end
-
-        def build_substratum_chart_row(stratum, substratum, by_stratum_and_substratum, total)
-          ids = (by_stratum_and_substratum[[stratum.id, substratum.id]] || [])
-                .map(&:decidim_stratified_sortitions_sample_participant_id).uniq
-          count = ids.count
-          percentage = total.positive? ? ((count.to_f / total) * 100).round(1) : 0.0
-          label = "#{translated_attribute(substratum.name)} (#{percentage}%)"
-          [label, count]
-        end
-
-        # NOTE: This is a temporary export for see sortition results
-        def generate_sortition_csv(result)
-          require "csv"
-
-          CSV.generate(headers: true, col_sep: ";") do |csv|
-            csv << ["# INFORMACIÓ DEL SORTEIG"]
-            csv << ["Algorisme", result.selection_log[:algorithm]]
-            csv << ["Versió", result.selection_log[:version]]
-            csv << ["ID Sorteig", result.selection_log[:stratified_sortition_id]]
-            csv << ["Generat el", result.selection_log[:generated_at]]
-            csv << ["Temps de generació (s)", result.selection_log[:generation_time_seconds]]
-            csv << ["Nombre de panels", result.selection_log[:num_panels]]
-            csv << ["Iteracions", result.selection_log[:num_iterations]]
-            csv << ["Convergència", result.selection_log[:convergence_achieved]]
-            csv << ["Seleccionat el", result.selection_log[:selected_at]]
-            csv << ["Índex panel seleccionat", result.selection_log[:selected_panel_index]]
-            csv << ["Seed de verificació", result.selection_log[:verification_seed]]
-            csv << ["Valor aleatori", result.selection_log[:random_value_used]]
-            csv << ["Probabilitat panel seleccionat", result.selection_log[:selected_panel_probability]]
-
-            if result.selection_log[:fairness_metrics].present?
-              csv << [""]
-              csv << ["# MÈTRIQUES D'EQUITAT"]
-              result.selection_log[:fairness_metrics].each do |key, value|
-                csv << [key.to_s.humanize, value]
-              end
-            end
-
-            csv << [""]
-            csv << ["# PARTICIPANTS SELECCIONATS"]
-            csv << %w[ID Dada_Personal_1(Identificador únic) Dada_Personal_2 Dada_Personal_3 Dada_Personal_4]
-
-            result.selected_participants.each do |participant|
-              csv << [
-                participant.id,
-                participant.personal_data_1,
-                participant.personal_data_2,
-                participant.personal_data_3,
-                participant.personal_data_4,
-              ]
-            end
-          end
-        end
       end
     end
   end

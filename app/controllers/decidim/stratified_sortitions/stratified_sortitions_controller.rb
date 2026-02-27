@@ -9,6 +9,7 @@ module Decidim
       include FilterResource
       include Paginable
       include OrderableStratifiedSortitions
+      include StrataChartsData
 
       helper Decidim::CheckBoxesTreeHelper
       helper Decidim::PaginateHelper
@@ -23,6 +24,12 @@ module Decidim
 
       def show
         raise ActionController::RoutingError, "Not Found" unless stratified_sortition
+
+        if current_component.settings.publish_sortitions
+          @strata_data = strata_data(stratified_sortition) if stratified_sortition.strata_and_substrata_configured?
+          @candidates_data = candidates_data(stratified_sortition) if stratified_sortition.can_execute?
+          @results_data = results_data(stratified_sortition) if stratified_sortition.panel_portfolio&.sampled?
+        end
       end
 
       private

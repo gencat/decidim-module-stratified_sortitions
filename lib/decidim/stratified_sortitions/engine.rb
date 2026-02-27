@@ -2,6 +2,7 @@
 
 require "rails"
 require "active_support/all"
+require "chartkick"
 
 require "decidim/core"
 

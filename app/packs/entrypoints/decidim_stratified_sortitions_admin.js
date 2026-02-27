@@ -1,5 +1,6 @@
 import "src/decidim/stratified_sortitions/stratum_fields"
 import "src/decidim/stratified_sortitions/substratum_fields"
+import "src/decidim/stratified_sortitions/results_tabs"
 
 import "chartkick/chart.js"
 

@@ -1,0 +1,107 @@
+# frozen_string_literal: true
+
+module Decidim
+  module StratifiedSortitions
+    # Serializer for sortition results export.
+    # Includes sortition metadata only in the first row and participant data in each row.
+    class SortitionResultSerializer < Decidim::Exporters::Serializer
+      # Reset the metadata flag before each export run.
+      def self.reset!
+        @metadata_serialized = false
+      end
+
+      def self.metadata_serialized?
+        @metadata_serialized == true
+      end
+
+      def self.metadata_serialized!
+        @metadata_serialized = true
+      end
+
+      def initialize(resource)
+        @resource = resource
+      end
+
+      # @return [Hash] serialized data for one participant with sortition metadata (only first row)
+      def serialize
+        participant = resource
+        portfolio = participant.decidim_stratified_sortition.panel_portfolio
+        audit_log = portfolio.audit_log
+
+        data = if self.class.metadata_serialized?
+                 metadata_blank(audit_log)
+               else
+                 self.class.metadata_serialized!
+                 metadata_filled(audit_log)
+               end
+
+        data.merge!(participant_data(participant))
+        data
+      end
+
+      private
+
+      def metadata_filled(audit_log)
+        {
+          algorithm: audit_log[:algorithm],
+          version: audit_log[:version],
+          stratified_sortition_id: audit_log[:stratified_sortition_id],
+          generated_at: audit_log[:generated_at],
+          generation_time_seconds: audit_log[:generation_time_seconds],
+          num_panels: audit_log[:num_panels],
+          num_iterations: audit_log[:num_iterations],
+          convergence_achieved: audit_log[:convergence_achieved],
+          selected_at: audit_log[:selected_at],
+          selected_panel_index: audit_log[:selected_panel_index],
+          verification_seed: audit_log[:verification_seed],
+          random_value_used: audit_log[:random_value_used],
+          selected_panel_probability: audit_log[:selected_panel_probability],
+        }
+      end
+
+      def metadata_blank(audit_log)
+        {
+          algorithm: nil,
+          version: nil,
+          stratified_sortition_id: nil,
+          generated_at: nil,
+          generation_time_seconds: nil,
+          num_panels: nil,
+          num_iterations: nil,
+          convergence_achieved: nil,
+          selected_at: nil,
+          selected_panel_index: nil,
+          verification_seed: nil,
+          random_value_used: nil,
+          selected_panel_probability: nil,
+        }
+      end
+
+      def participant_data(participant)
+        data = {
+          personal_data_1: participant.personal_data_1,
+          personal_data_2: participant.personal_data_2,
+          personal_data_3: participant.personal_data_3,
+          personal_data_4: participant.personal_data_4,
+        }
+
+        # Add strata columns dynamically
+        strata = participant.decidim_stratified_sortition.strata.order(:position)
+        strata.each do |stratum|
+          stratum_name = stratum.name.values.compact.first || stratum.id.to_s
+          participant_stratum = participant.sample_participant_strata.find { |ps| ps.decidim_stratified_sortitions_stratum_id == stratum.id }
+          substratum_name = participant_stratum&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first
+          data[:"stratum_#{stratum_name}"] = substratum_name || "-"
+        end
+
+        if participant.decidim_stratified_sortition.panel_portfolio.audit_log[:fairness_metrics].present?
+          participant.decidim_stratified_sortition.panel_portfolio.audit_log[:fairness_metrics].each do |key, value|
+            data[:"fairness_#{key}"] = value
+          end
+        end
+
+        data
+      end
+    end
+  end
+end

@@ -61,10 +61,55 @@ es:
             has_problems: Este sorteo estratificado no se pudo eliminar debido a problemas relacionados
             success: Sorteo estratificado eliminado con éxito
           execute:
+            candidates: Candidatos
+            chart_results: Gráficos de distribución
+            tab_charts: Gráficos comparativos
+            tab_participants: Participantes seleccionados
             empty_sample_participants: No se puede ejecutar el sorteo sin un censo cargado
             execute_stratified_sortition: Ejecutar sorteo estratificado
+            confirm_execute_title: Confirmación
+            confirm_execute_body: Al ejecutar el sorteo este quedará registrado a la plataforma y la acción será irreversible. No se podrán editar los datos, la configuración de los estratos ni la muestra.
+            confirm_execute_ok: Ejecutar sorteo
+            confirm_execute_cancel: Cancelar
+            export_results: Exportar resultados
+            export_csv: Exportar CSV
+            export_excel: Exportar Excel
+            export_json: Exportar JSON
+            export_charts_pdf: Exportar gráficos PDF
+            pdf_title: "Resultados del sorteo %{name}"
+            pdf_subtitle: Gráficos comparativos de distribución de la muestra
+            pdf_belongs_to: "Pertenece a: %{space_name}"
+            pdf_algorithm: "Algoritmo usado: %{algorithm}"
+            pdf_executed_at: "Sorteo realizado el: %{date}"
+            pdf_no_data: Sin datos
+            algorithm: Algoritmo
+            generated_at: Generado el
+            generation_time: Tiempo de generación
+            total_participants: Total de participantes
+            num_panels: Número de paneles
+            selected_at: Seleccionado el
+            verification_seed: Seed de verificación
+            random_value_used: Valor aleatorio utilizado
+            selected_panel_probability: Probabilidad del panel seleccionado
+            selected_participants:
+              one: "1 participante seleccionado"
+              other: "%{count} participantes seleccionados"
+            participant_id: ID
+            personal_data_1: Dato personal 1
+            personal_data_2: Dato personal 2
+            personal_data_3: Dato personal 3
+            personal_data_4: Dato personal 4
+            no_results_yet: El sorteo aún no se ha ejecutado.
+            confirm_participants_title: Muestra el listado de las participantes seleccionadas
+            confirm_participants_body: Estás accediendo a información y datos personales. Esta acción quedará registrada.
+            confirm_participants_ok: Muestra
+            confirm_participants_cancel: Cancelar
+            results: Resultados
             success: Sorteo estratificado ejecutado con éxito
+            target: Objetivo
             title: Ejecutar sorteo estratificado
+          export_results:
+            no_results: No hay resultados para exportar. Ejecute el sorteo primero.
           duplicate:
             error: Ha habido un problema al duplicar este sorteo estratificado
             success: Sorteo estratificado duplicado con éxito
@@ -214,6 +259,11 @@ es:
           random_value_used: Valor aleatorio utilizado
           selected_panel_index: Índice del panel seleccionado
           selected_at: Seleccionado el
+          strata_charts: Distribución de estratos
+          target: Objetivo
+          candidates: Candidatos
+          no_data: Sin datos
+          results: Resultados
           statuses:
             pending: Pendiente
             executed: Ejecutado

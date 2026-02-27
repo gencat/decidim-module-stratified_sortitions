@@ -1,6 +1,8 @@
 import "src/decidim/stratified_sortitions/stratum_fields"
 import "src/decidim/stratified_sortitions/substratum_fields"
 
+import "chartkick/chart.js"
+
 // Images
 require.context("../images", true)
 

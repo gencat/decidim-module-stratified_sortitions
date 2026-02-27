@@ -64,7 +64,55 @@ ca:
             error: S'ha produït un problema en duplicar aquest sorteig estratificat
             success: Sorteig estratificat duplicat amb èxit
           execute:
+            candidates: Candidats
+            chart_results: Gràfics de distribució
+            tab_charts: Gràfics comparatius
+            tab_participants: Participants seleccionats
+            empty_sample_participants: No es pot executar el sorteig sense un cens carregat
+            execute_stratified_sortition: Executar sorteig estratificat
+            confirm_execute_title: Confirmació
+            confirm_execute_body: En executar el sorteig aquest quedarà registrat a la plataforma i l'acció serà irreversible. No es podran editar les dades, la configuració dels estrats ni la mostra.
+            confirm_execute_ok: Executar sorteig
+            confirm_execute_cancel: Cancel·lar
+            export_results: Exportar resultats
+            export_csv: Exportar CSV
+            export_excel: Exportar Excel
+            export_json: Exportar JSON
+            export_charts_pdf: Exportar gràfics PDF
+            pdf_title: "Resultats del sorteig %{name}"
+            pdf_subtitle: Gràfics comparatius de distribució de la mostra
+            pdf_belongs_to: "Pertany a: %{space_name}"
+            pdf_algorithm: "Algorisme utilitzat: %{algorithm}"
+            pdf_executed_at: "Sorteig realitzat el: %{date}"
+            pdf_no_data: Sense dades
+            algorithm: Algorisme
+            generated_at: Generat el
+            generation_time: Temps de generació
+            total_participants: Total de participants
+            num_panels: Nombre de panels
+            selected_at: Seleccionat el
+            verification_seed: Seed de verificació
+            random_value_used: Valor aleatori utilitzat
+            selected_panel_probability: Probabilitat del panel seleccionat
+            selected_participants:
+              one: "1 participant seleccionat"
+              other: "%{count} participants seleccionats"
+            participant_id: ID
+            personal_data_1: Dada personal 1
+            personal_data_2: Dada personal 2
+            personal_data_3: Dada personal 3
+            personal_data_4: Dada personal 4
+            no_results_yet: El sorteig encara no s'ha executat.
+            confirm_participants_title: Mostra el llistat de les participants seleccionades
+            confirm_participants_body: Estàs accedint a informació i dades personals. Aquesta acció quedarà registrada.
+            confirm_participants_ok: Mostra
+            confirm_participants_cancel: Cancel·lar
+            results: Resultats
             success: Sorteig estratificat executat amb èxit
+            target: Objectiu
+            title: Executar sorteig estratificat
+          export_results:
+            no_results: No hi ha resultats per exportar. Executeu el sorteig primer.
           index:
             selected: Sortejos estratificats seleccionats
             title: Sortejos estratificats
@@ -74,10 +122,6 @@ ca:
           edit:
             title: Editar sorteig estratificat
             update: Actualitzar
-          execute:
-            empty_sample_participants: No es pot executar el sorteig sense un cens carregat
-            execute_stratified_sortition: Executar sorteig estratificat
-            title: Executar sorteig estratificat
           form:
             data: Informació general
             description: Descripció
@@ -135,7 +179,7 @@ ca:
             place: Lloc de naixement
             remove_uploaded_samples: Eliminar mostres carregades
             strata_not_configured: Primer has de configurar els estrats i subestrats
-            target: Target
+            target: Objectiu
             title: Gestionar cens
             upload_file: Pujar un nou cens
             uploaded_file: Dades del cens carregat
@@ -215,6 +259,11 @@ ca:
           random_value_used: Valor aleatori utilitzat
           selected_panel_index: Índex del panell seleccionat
           selected_at: Seleccionat el
+          strata_charts: Distribució d'estrats
+          target: Objectiu
+          candidates: Candidats
+          no_data: Sense dades
+          results: Resultats
           statuses:
             pending: Pendent
             executed: Executat

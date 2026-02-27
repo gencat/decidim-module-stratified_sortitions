@@ -29,3 +29,29 @@
 a.stratified-sortition__aside-element-item__title {
   @apply text-secondary underline;
 }
+
+.chart-col {
+  margin-bottom: 50px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.target {
+  border-left: 1px solid #6B7280CC;
+}
+
+.public-charts {
+  flex-wrap: wrap;
+  // gap: 1em;
+}
+
+.charts-column {
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  padding: 1rem;
+
+  h3 { 
+    text-align: center;
+  }
+}
