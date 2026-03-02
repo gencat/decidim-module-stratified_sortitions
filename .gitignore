@@ -21,3 +21,6 @@ development_app
 
 /node_modules/
 package-lock.json
+
+config/application.yml
+config/database.yml

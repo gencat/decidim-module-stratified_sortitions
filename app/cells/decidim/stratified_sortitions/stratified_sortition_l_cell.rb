@@ -10,10 +10,6 @@ module Decidim
 
       private
 
-      def has_author?
-        false
-      end
-
       def has_state?
         true
       end
