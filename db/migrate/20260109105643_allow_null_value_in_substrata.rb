@@ -2,7 +2,9 @@
 
 class AllowNullValueInSubstrata < ActiveRecord::Migration[7.0]
   def change
-    change_column_null :decidim_stratified_sortitions_substrata, :value, true
-    change_column_default :decidim_stratified_sortitions_substrata, :value, nil
+    change_table :decidim_stratified_sortitions_substrata, bulk: true do |t|
+      t.change_null :value, true
+      t.change_default :value, nil
+    end
   end
 end

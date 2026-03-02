@@ -21,7 +21,6 @@ Decidim.register_component(:stratified_sortitions) do |component|
   # component.actions = %w()
 
   component.settings(:global) do |settings|
-    settings.attribute :announcement, type: :text, translated: true, editor: true
     settings.attribute :publish_sortitions, type: :boolean, default: true
   end
 

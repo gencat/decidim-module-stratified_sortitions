@@ -1,0 +1,5 @@
+var $stratified_sortitions = $('#stratified_sortitions');
+var $orderFilterInput = $('.order_filter');
+
+$stratified_sortitions.html('<%= j(render partial: "stratified_sortitions").strip.html_safe %>');
+$orderFilterInput.val('<%= order %>');

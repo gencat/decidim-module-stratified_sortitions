@@ -26,15 +26,22 @@ module Decidim
         where("title ->> '#{I18n.locale}' ILIKE ?", "%#{search_text}%")
       }
 
+      scope :with_any_state, lambda { |*values|
+        values = values.flatten.compact_blank
+        return all if values.empty? || values.include?("all")
+
+        where(status: values)
+      }
+
       def self.ransackable_scopes(_auth_object = nil)
-        [:search_text_cont]
+        [:search_text_cont, :with_any_state]
       end
 
       searchable_fields({
                           participatory_space: :itself,
                           A: :title,
                           B: :description,
-                          datetime: :published_at,
+                          datetime: :created_at,
                         })
 
       def strata_and_substrata_configured?

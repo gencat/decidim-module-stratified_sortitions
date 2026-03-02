@@ -40,6 +40,19 @@ module Decidim
           truncate translated_attribute(title), length: options[:max_length], omission: options[:omission]
         end
       end
+
+      def filter_sections_stratified_sortitions
+        sections = [{ method: :with_any_state, collection: filter_state_values, label_scope: "decidim.stratified_sortitions.stratified_sortitions.filters", id: "state" }]
+        sections.reject { |item| item[:collection].blank? }
+      end
+
+      def filter_state_values
+        [
+          ["all", t("all", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")],
+          ["pending", t("pending", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")],
+          ["executed", t("executed", scope: "decidim.stratified_sortitions.stratified_sortitions.filters")],
+        ]
+      end
     end
   end
 end
