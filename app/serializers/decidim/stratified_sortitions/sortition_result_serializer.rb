@@ -19,7 +19,7 @@ module Decidim
       end
 
       def initialize(resource)
-        @resource = resource
+        super
       end
 
       # @return [Hash] serialized data for one participant with sortition metadata (only first row)
@@ -78,29 +78,38 @@ module Decidim
       end
 
       def participant_data(participant)
-        data = {
+        data = personal_data_fields(participant)
+        add_strata_columns(data, participant)
+        add_fairness_metrics(data, participant)
+        data
+      end
+
+      def personal_data_fields(participant)
+        {
           personal_data_1: participant.personal_data_1,
           personal_data_2: participant.personal_data_2,
           personal_data_3: participant.personal_data_3,
           personal_data_4: participant.personal_data_4,
         }
+      end
 
-        # Add strata columns dynamically
+      def add_strata_columns(data, participant)
         strata = participant.decidim_stratified_sortition.strata.order(:position)
         strata.each do |stratum|
           stratum_name = stratum.name.values.compact.first || stratum.id.to_s
-          participant_stratum = participant.sample_participant_strata.find { |ps| ps.decidim_stratified_sortitions_stratum_id == stratum.id }
+          participant_stratum = participant.sample_participant_strata.find do |ps|
+            ps.decidim_stratified_sortitions_stratum_id == stratum.id
+          end
           substratum_name = participant_stratum&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first
           data[:"stratum_#{stratum_name}"] = substratum_name || "-"
         end
+      end
 
-        if participant.decidim_stratified_sortition.panel_portfolio.audit_log[:fairness_metrics].present?
-          participant.decidim_stratified_sortition.panel_portfolio.audit_log[:fairness_metrics].each do |key, value|
-            data[:"fairness_#{key}"] = value
-          end
-        end
+      def add_fairness_metrics(data, participant)
+        metrics = participant.decidim_stratified_sortition.panel_portfolio.audit_log[:fairness_metrics]
+        return if metrics.blank?
 
-        data
+        metrics.each { |key, value| data[:"fairness_#{key}"] = value }
       end
     end
   end

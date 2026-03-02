@@ -31,13 +31,13 @@ module Decidim
                personal_data_1: "ID002", personal_data_2: "Bob", personal_data_3: "B", personal_data_4: "Y")
       end
 
-      let!(:ps1) do
+      let!(:participant_stratum_one) do
         create(:sample_participant_stratum,
                decidim_stratified_sortitions_sample_participant: participant_1,
                decidim_stratified_sortitions_stratum: stratum,
                decidim_stratified_sortitions_substratum: substratum_f)
       end
-      let!(:ps2) do
+      let!(:participant_stratum_two) do
         create(:sample_participant_stratum,
                decidim_stratified_sortitions_sample_participant: participant_2,
                decidim_stratified_sortitions_stratum: stratum,
