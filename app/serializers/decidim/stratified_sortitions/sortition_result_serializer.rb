@@ -18,10 +18,6 @@ module Decidim
         @metadata_serialized = true
       end
 
-      def initialize(resource)
-        super
-      end
-
       # @return [Hash] serialized data for one participant with sortition metadata (only first row)
       def serialize
         participant = resource
@@ -96,13 +92,17 @@ module Decidim
       def add_strata_columns(data, participant)
         strata = participant.decidim_stratified_sortition.strata.order(:position)
         strata.each do |stratum|
-          stratum_name = stratum.name.values.compact.first || stratum.id.to_s
-          participant_stratum = participant.sample_participant_strata.find do |ps|
-            ps.decidim_stratified_sortitions_stratum_id == stratum.id
-          end
-          substratum_name = participant_stratum&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first
-          data[:"stratum_#{stratum_name}"] = substratum_name || "-"
+          ps = participant.sample_participant_strata.find { |s| s.decidim_stratified_sortitions_stratum_id == stratum.id }
+          data[:"stratum_#{stratum_key(stratum)}"] = substratum_name_for(ps)
         end
+      end
+
+      def stratum_key(stratum)
+        stratum.name.values.compact.first || stratum.id.to_s
+      end
+
+      def substratum_name_for(participant_stratum)
+        participant_stratum&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first || "-"
       end
 
       def add_fairness_metrics(data, participant)
