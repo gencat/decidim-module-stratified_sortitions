@@ -182,17 +182,10 @@ module Decidim
             return
           end
 
-          exporter = SortitionResultsExporter.new(stratified_sortition)
-          export_data = case format
-                        when "excel" then exporter.export_excel
-                        when "json" then exporter.export_json
-                        else exporter.export_csv
-                        end
-          filename = "sortition_results_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}"
+          SortitionResultsExportJob.perform_later(current_user, stratified_sortition, format)
 
-          send_data export_data.read,
-                    filename: "#{filename}.#{export_data.extension}",
-                    disposition: "attachment"
+          flash[:notice] = I18n.t("decidim.admin.exports.notice")
+          redirect_to execute_stratified_sortition_path(stratified_sortition)
         end
 
         private
