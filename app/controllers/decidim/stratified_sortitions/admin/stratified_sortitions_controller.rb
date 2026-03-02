@@ -124,13 +124,13 @@ module Decidim
           @portfolio = @stratified_sortition.panel_portfolio
           @strata = @stratified_sortition.strata.order(:position)
           @selected_participants = if @portfolio&.sampled?
-                                    SampleParticipant
-                                      .where(id: @portfolio.selected_panel)
-                                      .includes(sample_participant_strata: [:decidim_stratified_sortitions_stratum, :decidim_stratified_sortitions_substratum])
-                                      .order(:id)
-                                      .to_a
-                                  else
-                                    []
+                                     SampleParticipant
+                                       .where(id: @portfolio.selected_panel)
+                                       .includes(sample_participant_strata: [:decidim_stratified_sortitions_stratum, :decidim_stratified_sortitions_substratum])
+                                       .order(:id)
+                                       .to_a
+                                   else
+                                     []
                                   end
           @strata_data = strata_data(@stratified_sortition)
           @candidates_data = candidates_data(@stratified_sortition)
@@ -167,7 +167,7 @@ module Decidim
 
           filename = "sortition_charts_#{stratified_sortition.id}_#{Time.current.strftime("%Y%m%d_%H%M%S")}.pdf"
           send_data generator.generate,
-                    filename: filename,
+                    filename:,
                     type: "application/pdf",
                     disposition: "attachment"
         end
@@ -213,7 +213,6 @@ module Decidim
         def blank_substratum(stratum_form)
           Decidim::StratifiedSortitions::Admin::SubstratumForm.new(stratum: stratum_form.model)
         end
-
       end
     end
   end

@@ -14,9 +14,9 @@ module Decidim
         let(:component) { create(:stratified_sortition_component, participatory_space: participatory_process) }
         let(:stratified_sortition) { create(:stratified_sortition, component:) }
 
-        let(:csv_data)   { instance_double(Decidim::Exporters::ExportData, extension: "csv") }
+        let(:csv_data) { instance_double(Decidim::Exporters::ExportData, extension: "csv") }
         let(:excel_data) { instance_double(Decidim::Exporters::ExportData, extension: "xlsx") }
-        let(:json_data)  { instance_double(Decidim::Exporters::ExportData, extension: "json") }
+        let(:json_data) { instance_double(Decidim::Exporters::ExportData, extension: "json") }
         let(:exporter_double) do
           instance_double(SortitionResultsExporter,
                           export_csv: csv_data,

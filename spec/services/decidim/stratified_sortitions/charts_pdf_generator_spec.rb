@@ -28,24 +28,24 @@ module Decidim
         [
           {
             stratum:,
-            chart_data: [["Man", 50], ["Woman", 50]]
-          }
+            chart_data: [["Man", 50], ["Woman", 50]],
+          },
         ]
       end
       let(:candidates_data) do
         [
           {
             stratum:,
-            chart_data: [["Man", 3], ["Woman", 4]]
-          }
+            chart_data: [["Man", 3], ["Woman", 4]],
+          },
         ]
       end
       let(:results_data) do
         [
           {
             stratum:,
-            chart_data: [["Man", 2], ["Woman", 3]]
-          }
+            chart_data: [["Man", 2], ["Woman", 3]],
+          },
         ]
       end
 
@@ -95,7 +95,7 @@ module Decidim
 
         context "with a sampled portfolio" do
           let!(:sample_import) { create(:sample_import, stratified_sortition:) }
-          let!(:participant)    { create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import) }
+          let!(:participant) { create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import) }
           let!(:portfolio) do
             create(:panel_portfolio,
                    stratified_sortition:,

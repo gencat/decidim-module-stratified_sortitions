@@ -32,9 +32,7 @@ module Decidim
       end
 
       def results_data(stratified_sortition)
-        unless stratified_sortition.panel_portfolio&.sampled?
-          return stratified_sortition.strata.map { |stratum| { stratum:, chart_data: [] } }
-        end
+        return stratified_sortition.strata.map { |stratum| { stratum:, chart_data: [] } } unless stratified_sortition.panel_portfolio&.sampled?
 
         selected_ids = stratified_sortition.panel_portfolio.selected_panel
         participants_distribution_data(stratified_sortition, selected_ids)

@@ -40,7 +40,7 @@ module Decidim
           col_target: t("target"),
           col_candidates: t("candidates"),
           col_results: t("results"),
-          strata_chart_data: build_strata_chart_data
+          strata_chart_data: build_strata_chart_data,
         }
       end
 
@@ -50,7 +50,7 @@ module Decidim
             name: translated_name(sd[:stratum].name),
             target: sd[:chart_data],
             candidates: @candidates_data[idx][:chart_data],
-            results: @results_data[idx][:chart_data]
+            results: @results_data[idx][:chart_data],
           }
         end
       end

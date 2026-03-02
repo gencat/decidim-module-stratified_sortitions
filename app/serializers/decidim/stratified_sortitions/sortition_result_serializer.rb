@@ -59,7 +59,7 @@ module Decidim
         }
       end
 
-      def metadata_blank(audit_log)
+      def metadata_blank(_audit_log)
         {
           algorithm: nil,
           version: nil,

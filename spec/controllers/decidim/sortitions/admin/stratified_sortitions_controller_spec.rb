@@ -297,7 +297,7 @@ module Decidim
             {
               participatory_process_slug: component.participatory_space.slug,
               id: stratified_sortition.id,
-              format: "csv"
+              format: "csv",
             }
           end
 
@@ -369,7 +369,7 @@ module Decidim
           let(:params) do
             {
               participatory_process_slug: component.participatory_space.slug,
-              id: stratified_sortition.id
+              id: stratified_sortition.id,
             }
           end
 

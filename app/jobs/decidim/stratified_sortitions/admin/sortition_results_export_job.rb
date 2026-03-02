@@ -14,8 +14,8 @@ module Decidim
 
           export_data = case format
                         when "excel" then exporter.export_excel
-                        when "json"  then exporter.export_json
-                        else              exporter.export_csv
+                        when "json" then exporter.export_json
+                        else exporter.export_csv
                         end
 
           export_name = "sortition_results_#{stratified_sortition.id}"

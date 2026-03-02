@@ -22,9 +22,9 @@ module Decidim
         @audit_log = @portfolio.audit_log
         @strata = stratified_sortition.strata.order(:position)
         @participants = SampleParticipant
-                          .where(id: @portfolio.selected_panel)
-                          .includes(sample_participant_strata: %i[decidim_stratified_sortitions_stratum decidim_stratified_sortitions_substratum])
-                          .order(:id)
+                        .where(id: @portfolio.selected_panel)
+                        .includes(sample_participant_strata: [:decidim_stratified_sortitions_stratum, :decidim_stratified_sortitions_substratum])
+                        .order(:id)
         @total_participants = stratified_sortition.sample_participants.count
       end
 
@@ -77,7 +77,7 @@ module Decidim
           metadata: metadata_headers.zip(metadata_values).to_h,
           participants: @participants.map do |p|
             participant_headers.zip(participant_row(p)).to_h
-          end
+          end,
         }
         Decidim::Exporters::ExportData.new(JSON.pretty_generate(data), "json")
       end
@@ -85,11 +85,11 @@ module Decidim
       private
 
       def metadata_headers
-        @metadata_headers ||= %w[
+        @metadata_headers ||= %w(
           algorithm total_participants generated_at generation_time
           num_panels selected_at verification_seed random_value_used
           selected_panel_probability
-        ]
+        )
       end
 
       def metadata_values
@@ -108,7 +108,7 @@ module Decidim
 
       def participant_headers
         @participant_headers ||= begin
-          headers = %w[personal_data_1 personal_data_2 personal_data_3 personal_data_4]
+          headers = %w(personal_data_1 personal_data_2 personal_data_3 personal_data_4)
           @strata.each do |stratum|
             stratum_name = stratum.name.values.compact.first || stratum.id.to_s
             headers << "stratum_#{stratum_name}"
@@ -132,7 +132,7 @@ module Decidim
         row
       end
 
-      def style_header_row(worksheet, row_index, col_count)
+      def style_header_row(worksheet, row_index, _col_count)
         worksheet.change_row_fill(row_index, "c0c0c0")
         worksheet.change_row_bold(row_index, true)
         worksheet.change_row_horizontal_alignment(row_index, "center")
