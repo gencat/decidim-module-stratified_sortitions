@@ -131,7 +131,7 @@ module Decidim
                                        .to_a
                                    else
                                      []
-                                  end
+                                   end
           @strata_data = strata_data(@stratified_sortition)
           @candidates_data = candidates_data(@stratified_sortition)
           @results_data = results_data(@stratified_sortition)

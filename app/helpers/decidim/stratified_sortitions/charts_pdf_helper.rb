@@ -34,10 +34,10 @@ module Decidim
           start_rad = (start_angle - 90) * Math::PI / 180.0
           end_rad = (end_angle - 90) * Math::PI / 180.0
 
-          x1 = cx + (r * Math.cos(start_rad))
-          y1 = cy + (r * Math.sin(start_rad))
-          x2 = cx + (r * Math.cos(end_rad))
-          y2 = cy + (r * Math.sin(end_rad))
+          x_1 = cx + (r * Math.cos(start_rad))
+          y_1 = cy + (r * Math.sin(start_rad))
+          x_2 = cx + (r * Math.cos(end_rad))
+          y_2 = cy + (r * Math.sin(end_rad))
 
           color = CHART_COLORS[idx % CHART_COLORS.size]
           large_arc = slice > 180 ? 1 : 0
@@ -45,7 +45,9 @@ module Decidim
           paths << if slice >= 359.99
                      %(<circle cx="#{cx}" cy="#{cy}" r="#{r}" fill="#{color}" stroke="white" stroke-width="1"/>)
                    else
-                     %(<path d="M#{cx},#{cy} L#{x1.round(2)},#{y1.round(2)} A#{r},#{r} 0 #{large_arc},1 #{x2.round(2)},#{y2.round(2)} Z" fill="#{color}" stroke="white" stroke-width="1"/>)
+                     path_d = "M#{cx},#{cy} L#{x_1.round(2)},#{y_1.round(2)} " \
+                              "A#{r},#{r} 0 #{large_arc},1 #{x_2.round(2)},#{y_2.round(2)} Z"
+                     %(<path d="#{path_d}" fill="#{color}" stroke="white" stroke-width="1"/>)
                    end
         end
 
