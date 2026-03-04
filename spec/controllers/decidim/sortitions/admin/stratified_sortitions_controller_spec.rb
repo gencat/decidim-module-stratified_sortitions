@@ -82,7 +82,7 @@ module Decidim
           context "with valid params" do
             it "redirects to the stratified sortitions list" do
               post(:create, params:)
-              expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
+              expect(response).to redirect_to(edit_stratified_sortition_path(stratified_sortition))
             end
 
             it "creates a stratified sortition associated with the current component" do
