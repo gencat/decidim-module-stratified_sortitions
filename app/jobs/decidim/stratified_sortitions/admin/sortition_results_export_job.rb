@@ -20,7 +20,7 @@ module Decidim
 
           export_name = "sortition_results_#{stratified_sortition.id}"
 
-          Decidim::ExportMailer.export(user, export_name, export_data).deliver_now
+          Decidim::ExportMailer.export(user, export_name, export_data).deliver_later
         end
       end
     end
