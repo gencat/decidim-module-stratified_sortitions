@@ -36,7 +36,7 @@ module Decidim
           Decidim::StratifiedSortitions::Admin::CreateStratifiedSortition.call(@form) do
             on(:ok) do
               flash[:notice] = I18n.t("stratified_sortitions.create.success", scope: "decidim.stratified_sortitions.admin")
-              redirect_to stratified_sortitions_path(assembly_slug: -1, component_id: -1)
+              redirect_to edit_stratified_sortition_path(stratified_sortition)
             end
 
             on(:invalid) do
@@ -199,7 +199,7 @@ module Decidim
         end
 
         def stratified_sortition
-          @stratified_sortition ||= collection.find(params[:id])
+          @stratified_sortition ||= collection.find_by(id: params[:id])
         end
 
         def form_presenter
