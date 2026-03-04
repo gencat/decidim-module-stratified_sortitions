@@ -1,35 +1,10 @@
 <div class="flex items-left stratified_sortition_nav">
-  <% if stratified_sortition.present? %>
-    <%= button_to edit_stratified_sortition_path(stratified_sortition),
+  <% navigation_menu_items(stratified_sortition).each do |item| %>
+    <%= button_to item[:path],
         method: :get,
-        class: "import-sample-btn #{'active' if action_name == 'edit'}" do %>
-      <%= icon "settings-4-line" %> <%= t("actions.configure", scope: "decidim.stratified_sortitions.admin") %>
-    <% end %>
-    <%= button_to upload_sample_stratified_sortition_path(stratified_sortition),
-        method: :get,
-        class: "import-sample-btn #{'active' if action_name == 'upload_sample'}",
-        disabled: !stratified_sortition.strata_and_substrata_configured? do %>
-      <%= icon "group-line" %> <%= t("actions.census_management", scope: "decidim.stratified_sortitions.admin") %>
-    <% end %>
-    <%= button_to execute_stratified_sortition_path(stratified_sortition),
-        method: :get,
-        class: "import-sample-btn #{'active' if action_name == 'execute'}",
-        disabled: !stratified_sortition.can_execute? do %>
-      <%= icon "play-fill" %> <%= t("actions.execute", scope: "decidim.stratified_sortitions.admin") %>
-    <% end %>
-  <% else %>
-    <%= button_to new_stratified_sortition_path,
-        method: :get,
-        class: "import-sample-btn #{'active' if %w[new edit].include?(action_name)}" do %>
-      <%= icon "settings-4-line" %> <%= t("actions.configure", scope: "decidim.stratified_sortitions.admin") %>
-    <% end %>
-    <%= button_to '#', class: "import-sample-btn #{'active' if action_name == 'upload_sample'}",
-        disabled: true do %>
-      <%= icon "group-line" %> <%= t("actions.census_management", scope: "decidim.stratified_sortitions.admin") %>
-    <% end %>
-    <%= button_to '#', class: "import-sample-btn #{'active' if action_name == 'execute'}",
-        disabled: true do %>
-      <%= icon "play-fill" %> <%= t("actions.execute", scope: "decidim.stratified_sortitions.admin") %>
+        class: "import-sample-btn #{'active' if item[:active]}",
+        disabled: item[:disabled] do %>
+      <%= icon item[:icon] %> <%= item[:label] %>
     <% end %>
   <% end %>
 </div>
