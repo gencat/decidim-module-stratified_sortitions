@@ -64,7 +64,7 @@ module Decidim
             label: t("actions.execute", scope: "decidim.stratified_sortitions.admin"),
             active: action_name == "execute",
             disabled: has_sortition ? !sortition.can_execute? : true,
-          }
+          },
         ]
       end
 
