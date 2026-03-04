@@ -34,9 +34,9 @@ module Decidim
           @form = form(Decidim::StratifiedSortitions::Admin::StratifiedSortitionsForm).from_params(params)
 
           Decidim::StratifiedSortitions::Admin::CreateStratifiedSortition.call(@form) do
-            on(:ok) do
+            on(:ok) do |created_sortition|
               flash[:notice] = I18n.t("stratified_sortitions.create.success", scope: "decidim.stratified_sortitions.admin")
-              redirect_to edit_stratified_sortition_path(stratified_sortition)
+              redirect_to edit_stratified_sortition_path(created_sortition)
             end
 
             on(:invalid) do
