@@ -26,6 +26,7 @@ module Decidim
           errors.concat(check_pool_size)
           errors.concat(check_quota_consistency)
           errors.concat(check_category_coverage)
+          errors.concat(check_cross_strata_feasibility) if errors.empty?
 
           {
             feasible: errors.empty?,
@@ -149,6 +150,51 @@ module Decidim
           end
 
           incomplete
+        end
+
+        # Checks that the combination of max_quota_percentage constraints across all strata
+        # can be satisfied simultaneously. For each pair of substrata from different strata,
+        # there must be enough volunteers that belong to both categories.
+        def check_cross_strata_feasibility
+          errors = []
+          k = @cb.panel_size
+          return errors if k.nil? || k <= 0
+
+          strata = @cb.strata_info
+          return errors if strata.size < 2
+
+          # For each stratum, check that the sum of volunteers per substratum
+          # that also appear in at least one substratum of every other stratum
+          # is enough to fill the panel
+          strata.each do |stratum|
+            stratum_name = extract_name(stratum[:name])
+
+            stratum[:substrata].each do |substratum|
+              cat_id = substratum[:id]
+              max_quota = substratum[:max_quota]
+              percentage = substratum[:percentage]
+              volunteers_in_cat = @cb.category_volunteers[cat_id]&.size || 0
+
+              # Skip if no restriction (percentage 0 means unrestricted), no quota, or no volunteers
+              next if percentage.zero? || max_quota.zero? || volunteers_in_cat.zero?
+
+              # Check if this substratum's max quota exceeds available volunteers
+              next unless max_quota > volunteers_in_cat
+
+              substratum_name = extract_name(substratum[:name])
+
+              errors << I18n.t(
+                "decidim.stratified_sortitions.errors.feasibility.substratum_quota_exceeds_volunteers",
+                substratum_name:,
+                stratum_name:,
+                max_quota:,
+                volunteers_count: volunteers_in_cat,
+                percentage:
+              )
+            end
+          end
+
+          errors
         end
 
         def extract_name(name_field)
