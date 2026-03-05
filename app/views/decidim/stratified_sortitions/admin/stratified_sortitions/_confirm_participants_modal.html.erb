@@ -1,0 +1,18 @@
+<%= decidim_modal id: "confirm-participants-modal" do %>
+  <div data-dialog-container>
+    <h2 id="dialog-title-confirm-participants-modal" tabindex="-1" data-dialog-title>
+      <%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_participants_title") %>
+    </h2>
+    <div>
+      <p id="dialog-desc-confirm-participants-modal"><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_participants_body") %></p>
+    </div>
+  </div>
+  <div data-dialog-actions class="flex flex-col-reverse md:flex-row">
+    <button class="button button__lg button__transparent-secondary w-full md:w-auto" data-dialog-close="confirm-participants-modal">
+      <span><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_participants_cancel") %></span>
+    </button>
+    <button type="button" class="button button__lg button__secondary w-full md:w-auto" id="confirm-show-participants">
+      <span><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_participants_ok") %></span>
+    </button>
+  </div>
+<% end %>

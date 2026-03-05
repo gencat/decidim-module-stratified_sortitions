@@ -61,10 +61,55 @@ en:
             has_problems: This stratified sortition couldn't be deleted due to related problems
             success: Stratified sortition successfully deleted
           execute:
+            candidates: Candidates
+            chart_results: Distribution charts
+            tab_charts: Comparative charts
+            tab_participants: Selected participants
             empty_sample_participants: The sortition cannot be executed without a loaded census
             execute_stratified_sortition: Execute stratified sortition
+            confirm_execute_title: Confirmation
+            confirm_execute_body: Once the sortition is executed, it will be recorded on the platform and the action will be irreversible. The data, the strata configuration, and the sample cannot be edited.
+            confirm_execute_ok: Execute sortition
+            confirm_execute_cancel: Cancel
+            export_results: Export results
+            export_csv: Export CSV
+            export_excel: Export Excel
+            export_json: Export JSON
+            export_charts_pdf: Export charts PDF
+            pdf_title: "Sortition results: %{name}"
+            pdf_subtitle: Comparative sample distribution charts
+            pdf_belongs_to: "Belongs to: %{space_name}"
+            pdf_algorithm: "Algorithm used: %{algorithm}"
+            pdf_executed_at: "Sortition performed on: %{date}"
+            pdf_no_data: No data
+            algorithm: Algorithm
+            generated_at: Generated at
+            generation_time: Generation time
+            total_participants: Total participants
+            num_panels: Number of panels
+            selected_at: Selected at
+            verification_seed: Verification seed
+            random_value_used: Random value used
+            selected_panel_probability: Selected panel probability
+            selected_participants:
+              one: "1 selected participant"
+              other: "%{count} selected participants"
+            participant_id: ID
+            personal_data_1: Personal data 1
+            personal_data_2: Personal data 2
+            personal_data_3: Personal data 3
+            personal_data_4: Personal data 4
+            no_results_yet: The sortition has not been executed yet.
+            confirm_participants_title: Show the list of selected participants
+            confirm_participants_body: You are accessing personal information and data. This action will be recorded.
+            confirm_participants_ok: Show
+            confirm_participants_cancel: Cancel
+            results: Results
             success: Stratified sortition successfully executed
+            target: Target
             title: Execute stratified sortition
+          export_results:
+            no_results: There are no results to export. Execute the sortition first.
           duplicate:
             error: There's been a problem duplicating this stratified sortition
             success: Stratified sortition successfully duplicated
@@ -214,6 +259,11 @@ en:
           random_value_used: Random value used
           selected_panel_index: Selected panel index
           selected_at: Selected at
+          strata_charts: Strata distribution
+          target: Target
+          candidates: Candidates
+          no_data: No data
+          results: Results
           statuses:
             pending: Pending
             executed: Executed

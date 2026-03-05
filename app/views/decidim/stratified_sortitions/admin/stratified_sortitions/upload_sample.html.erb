@@ -31,10 +31,10 @@
         <%= file_field_tag :file, id: 'sample-file-input' %>
 
         <% if @stratified_sortition.strata_and_substrata_configured? %>
-          <%= submit_tag t('.title'), id: 'sample-submit-button', class: 'button button__sm button__secondary hollow tiny button--title', disabled: true %>
+          <%= submit_tag t('.upload_file'), id: 'sample-submit-button', class: 'button button__sm button__secondary hollow tiny button--title', disabled: true %>
         <% else %>
           <p class="mr-2"><%= t('.configure_strata_first') %></p>
-          <%= submit_tag t('.title'), class: 'button button__sm button__secondary hollow tiny button--title', disabled: true, title: t('.configure_strata_first') %>
+          <%= submit_tag t('.upload_file'), class: 'button button__sm button__secondary hollow tiny button--title', disabled: true, title: t('.configure_strata_first') %>
         <% end %>
       </div>
     <% end %>
@@ -67,18 +67,17 @@
   </div>
   <div class="mt-4 mb-4">
     <div class="row chart-row">
-      <div class="col-md-6 charts-column target">
-        <%= render partial: "strata_charts", locals: { strata_data: @strata_data, title: t(".target") } %>
-      </div>
       <div class="col-md-6 charts-column">
-        <%= render partial: "strata_charts", locals: { strata_data: @candidates_data, title: t(".candidates") } %>
+        <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @strata_data, title: t(".target") } %>
+      </div>
+      <div class="col-md-6 charts-column target">
+        <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @candidates_data, title: t(".candidates") } %>
       </div>
     </div>
     <div class="mt-16 census_file_type">
       <span>
         <%= t(".uploaded_files") %>
       </span>
-      
       <% if @samples.empty? %>
         <p><%= t('.no_uploaded_files') %></p>
       <% else %>

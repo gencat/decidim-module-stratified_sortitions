@@ -20,6 +20,8 @@ module Decidim
           post :process_sample, on: :member
           get :execute, on: :member
           post :execute_stratified_sortition, on: :member
+          post :export_results, on: :member
+          post :export_charts_pdf, on: :member
         end
 
         resources :samples, only: [:show, :create] do

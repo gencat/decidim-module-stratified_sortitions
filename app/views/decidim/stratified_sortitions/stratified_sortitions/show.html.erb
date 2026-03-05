@@ -56,6 +56,31 @@ edit_link(
     </section>
   <% end %>
 
+  <% if @strata_data.present? || @candidates_data.present? %>
+    <section class="layout-main__section">
+      <h2 class="h3">
+        <%= t("strata_charts", scope: "decidim.stratified_sortitions.stratified_sortitions.show") %>
+      </h2>
+      <div class="flex public-charts">
+        <div class="charts-column">
+          <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @strata_data, title: t("target", scope: "decidim.stratified_sortitions.stratified_sortitions.show") } %>
+        </div>
+
+        <% if @candidates_data %>
+          <div class="charts-column target">
+            <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @candidates_data, title: t("candidates", scope: "decidim.stratified_sortitions.stratified_sortitions.show") } %>
+          </div>
+        <% end %>
+
+        <% if @results_data.present? %>
+          <div class="charts-column target">
+            <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @results_data, title: t("results", scope: "decidim.stratified_sortitions.stratified_sortitions.show") } %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
   <% content_for :aside do %>
     <section class="layout-aside__section">
       <%= render partial: "results_count", locals: { stratified_sortition: } %>
