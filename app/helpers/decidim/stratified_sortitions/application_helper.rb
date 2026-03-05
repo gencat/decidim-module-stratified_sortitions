@@ -41,6 +41,33 @@ module Decidim
         end
       end
 
+      def navigation_menu_items(sortition)
+        has_sortition = sortition.present?
+
+        [
+          {
+            path: has_sortition ? edit_stratified_sortition_path(sortition) : new_stratified_sortition_path,
+            icon: "settings-4-line",
+            label: t("actions.configure", scope: "decidim.stratified_sortitions.admin"),
+            active: %w(new edit).include?(action_name),
+          },
+          {
+            path: has_sortition ? upload_sample_stratified_sortition_path(sortition) : "#",
+            icon: "group-line",
+            label: t("actions.census_management", scope: "decidim.stratified_sortitions.admin"),
+            active: action_name == "upload_sample",
+            disabled: has_sortition ? !sortition.strata_and_substrata_configured? : true,
+          },
+          {
+            path: has_sortition ? execute_stratified_sortition_path(sortition) : "#",
+            icon: "play-fill",
+            label: t("actions.execute", scope: "decidim.stratified_sortitions.admin"),
+            active: action_name == "execute",
+            disabled: has_sortition ? !sortition.can_execute? : true,
+          },
+        ]
+      end
+
       def filter_sections_stratified_sortitions
         sections = [{ method: :with_any_state, collection: filter_state_values, label_scope: "decidim.stratified_sortitions.stratified_sortitions.filters", id: "state" }]
         sections.reject { |item| item[:collection].blank? }

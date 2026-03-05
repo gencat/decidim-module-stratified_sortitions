@@ -80,9 +80,10 @@ module Decidim
           end
 
           context "with valid params" do
-            it "redirects to the stratified sortitions list" do
+            it "redirects to the newly created stratified sortition edit page" do
               post(:create, params:)
-              expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
+              created_sortition = StratifiedSortition.last
+              expect(response).to redirect_to(edit_stratified_sortition_path(created_sortition))
             end
 
             it "creates a stratified sortition associated with the current component" do
