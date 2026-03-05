@@ -227,6 +227,21 @@ module Decidim
 
                 include_examples "blocks the change with error", "cannot_change_substratum_position_with_sample_participants"
               end
+
+              context "when substratum position is nil in DB and form sends a position" do
+                let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: nil, max_quota_percentage: "10") }
+                let(:stratum_params) { base_stratum_params.merge(substrata: { substratum.id.to_s => base_substratum_params.merge(position: 0) }) }
+
+                include_examples "allows the change"
+              end
+            end
+
+            context "when stratum position is nil in DB and form sends a position" do
+              let!(:stratum) { create(:stratum, stratified_sortition:, name: { en: "Age" }, kind: "value", position: nil) }
+              let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: 0, max_quota_percentage: "10") }
+              let(:stratum_params) { base_stratum_params.merge(position: 0) }
+
+              include_examples "allows the change"
             end
           end
         end
