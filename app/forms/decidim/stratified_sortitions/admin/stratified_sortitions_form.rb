@@ -79,7 +79,9 @@ module Decidim
 
             errors.add(:strata, :cannot_change_stratum_kind_with_sample_participants) if existing_stratum.kind != stratum_form.kind
 
-            errors.add(:strata, :cannot_change_stratum_position_with_sample_participants) if existing_stratum.position.present? && existing_stratum.position != stratum_form.position.to_i
+            if existing_stratum.position.present? && existing_stratum.position != stratum_form.position.to_i
+              errors.add(:strata, :cannot_change_stratum_position_with_sample_participants)
+            end
           end
         end
 
