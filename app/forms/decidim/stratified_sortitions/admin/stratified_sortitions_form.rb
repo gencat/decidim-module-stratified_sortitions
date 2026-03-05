@@ -119,7 +119,9 @@ module Decidim
               errors.add(:strata, :cannot_change_substratum_range_with_sample_participants)
             end
 
-            errors.add(:strata, :cannot_change_substratum_position_with_sample_participants) if existing_substratum.position.present? && existing_substratum.position != substratum_form.position.to_i
+            if existing_substratum.position.present? && existing_substratum.position != substratum_form.position.to_i
+              errors.add(:strata, :cannot_change_substratum_position_with_sample_participants)
+            end
           end
         end
 
