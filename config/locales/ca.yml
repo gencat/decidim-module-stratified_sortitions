@@ -74,10 +74,11 @@ ca:
             confirm_execute_body: En executar el sorteig aquest quedarà registrat a la plataforma i l'acció serà irreversible. No es podran editar les dades, la configuració dels estrats ni la mostra.
             confirm_execute_ok: Executar sorteig
             confirm_execute_cancel: Cancel·lar
+            export: Exportar
             export_results: Exportar resultats
-            export_csv: Exportar CSV
-            export_excel: Exportar Excel
-            export_json: Exportar JSON
+            export_csv: Resultats del sorteig estratificat com a CSV
+            export_excel: Resultats del sorteig estratificat com a Excel
+            export_json: Resultats del sorteig estratificat com a JSON
             export_charts_pdf: Exportar gràfics PDF
             pdf_title: "Resultats del sorteig %{name}"
             pdf_subtitle: Gràfics comparatius de distribució de la mostra
@@ -94,6 +95,7 @@ ca:
             verification_seed: Seed de verificació
             random_value_used: Valor aleatori utilitzat
             selected_panel_probability: Probabilitat del panel seleccionat
+            selected_participants_title: Participants seleccionats
             selected_participants:
               one: "1 participant seleccionat"
               other: "%{count} participants seleccionats"
