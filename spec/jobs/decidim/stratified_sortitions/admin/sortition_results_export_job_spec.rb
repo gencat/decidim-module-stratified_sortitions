@@ -24,7 +24,7 @@ module Decidim
                           export_json: json_data)
         end
 
-        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery, deliver_now: true) }
 
         before do
           allow(SortitionResultsExporter).to receive(:new).and_return(exporter_double)
@@ -59,7 +59,7 @@ module Decidim
 
             it "delivers the email" do
               job.perform(user, stratified_sortition, "csv")
-              expect(mailer_double).to have_received(:deliver_later)
+              expect(mailer_double).to have_received(:deliver_now)
             end
           end
 

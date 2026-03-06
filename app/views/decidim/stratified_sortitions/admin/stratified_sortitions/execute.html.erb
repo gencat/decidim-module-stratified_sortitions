@@ -7,29 +7,32 @@
 <%= render 'navigation_menu' %>
 <div class="card">
   <div class="item_show__header actions-container">
-    <% unless stratified_sortition.panel_portfolio&.sampled? %>
-      <button type="button" class="button button__sm button__secondary" data-dialog-open="confirm-execute-modal">
-        <%= t('.execute_stratified_sortition') %>
-      </button>
-    <% end %>
+    <button type="button"
+            class="button button__sm button__secondary"
+            data-dialog-open="confirm-execute-modal"
+            disabled="<%= stratified_sortition.panel_portfolio&.sampled? %>">
+      <%= t('.execute_stratified_sortition') %>
+    </button>
     <% if stratified_sortition.panel_portfolio&.sampled? %>
-      <div class="export-buttons">
-        <%= button_to t(".export_csv"),
-                      export_results_stratified_sortition_path(stratified_sortition, format: "csv"),
-                      method: :post,
-                      class: "button button__sm button__secondary" %>
-        <%= button_to t(".export_excel"),
-                      export_results_stratified_sortition_path(stratified_sortition, format: "excel"),
-                      method: :post,
-                      class: "button button__sm button__secondary" %>
-        <%= button_to t(".export_json"),
-                      export_results_stratified_sortition_path(stratified_sortition, format: "json"),
-                      method: :post,
-                      class: "button button__sm button__secondary"%>
-        <%= button_to t(".export_charts_pdf"),
-                      export_charts_pdf_stratified_sortition_path(stratified_sortition),
-                      method: :post,
-                      class: "button button__sm button__secondary" %>
+      <span class="exports button button__sm button__secondary" data-toggle="export-dropdown">
+        <%= t(".export") %>
+        <%= icon "arrow-down-s-line", class: "dropdown-filter-icon" %>
+      </span>
+      <div class="dropdown-pane" id="export-dropdown" data-dropdown data-position="bottom" data-alignment="right" data-auto-focus="true" data-close-on-click="true">
+        <ul class="vertical menu add-components">
+          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "csv"), method: :post do %>
+            <li class="exports--format--csv"><%= t(".export_csv") %></li>
+          <% end %>
+          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "excel"), method: :post do %>
+            <li class="exports--format--excel"><%= t(".export_excel") %></li>
+          <% end %>
+          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "json"), method: :post do %>
+            <li class="exports--format--json"><%= t(".export_json") %></li>
+          <% end %>
+          <%= link_to export_charts_pdf_stratified_sortition_path(stratified_sortition), method: :post do %>
+            <li class="exports--format--pdf"><%= t(".export_charts_pdf") %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
   </div>
@@ -49,6 +52,7 @@
               <tr>
                 <th><%= t(".algorithm") %></th>
                 <th><%= t(".total_participants") %></th>
+                <th><%= t(".selected_participants_title") %></th>
                 <th><%= t(".generated_at") %></th>
                 <th><%= t(".generation_time") %></th>
                 <th><%= t(".num_panels") %></th>
@@ -62,6 +66,7 @@
               <tr>
                 <td><%= @portfolio.audit_log[:algorithm] %> v<%= @portfolio.audit_log[:version] %></td>
                 <td><%= stratified_sortition.sample_participants.count %></td>
+                <td><%= @portfolio.selected_panel.size %></td>
                 <td><%= l @portfolio.generated_at, format: :decidim_short %></td>
                 <td><%= number_with_precision(@portfolio.generation_time_seconds, precision: 2) %>s</td>
                 <td><%= @portfolio.num_panels %></td>
@@ -134,13 +139,8 @@
   </div>
 <% end %>
 
+<%= render stratified_sortition.panel_portfolio&.sampled? ? "confirm_participants_modal" : "confirm_execute_modal" %>
+
 <%= append_javascript_pack_tag "decidim_stratified_sortitions_admin" %>
 <%= append_stylesheet_pack_tag "decidim_stratified_sortitions_admin" %>
 
-<% unless stratified_sortition.panel_portfolio&.sampled? %>
-  <%= render "confirm_execute_modal" %>
-<% end %>
-
-<% if stratified_sortition.panel_portfolio&.sampled? %>
-  <%= render "confirm_participants_modal" %>
-<% end %>

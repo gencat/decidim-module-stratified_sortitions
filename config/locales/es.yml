@@ -71,10 +71,11 @@ es:
             confirm_execute_body: Al ejecutar el sorteo este quedará registrado a la plataforma y la acción será irreversible. No se podrán editar los datos, la configuración de los estratos ni la muestra.
             confirm_execute_ok: Ejecutar sorteo
             confirm_execute_cancel: Cancelar
+            export: Exportar
             export_results: Exportar resultados
-            export_csv: Exportar CSV
-            export_excel: Exportar Excel
-            export_json: Exportar JSON
+            export_csv: Resultados del sorteo estratificado como CSV
+            export_excel: Resultados del sorteo estratificado como Excel
+            export_json: Resultados del sorteo estratificado como JSON
             export_charts_pdf: Exportar gráficos PDF
             pdf_title: "Resultados del sorteo %{name}"
             pdf_subtitle: Gráficos comparativos de distribución de la muestra
@@ -91,6 +92,7 @@ es:
             verification_seed: Seed de verificación
             random_value_used: Valor aleatorio utilizado
             selected_panel_probability: Probabilidad del panel seleccionado
+            selected_participants_title: Participantes seleccionados
             selected_participants:
               one: "1 participante seleccionado"
               other: "%{count} participantes seleccionados"
