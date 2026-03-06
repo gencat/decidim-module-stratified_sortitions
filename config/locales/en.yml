@@ -287,6 +287,7 @@ en:
           stratum_insufficient_quotas: "Stratum '%{stratum_name}' has insufficient maximum quotas. The sum of maximum quotas (%{total_max}) is less than the panel size (%{panel_size})"
           stratum_percentages_exceed: "Stratum '%{stratum_name}' has percentages that sum to more than 100%% (%{total_percentage}%%)"
           substratum_insufficient_volunteers: "Substratum '%{substratum_name}' of stratum '%{stratum_name}' requires a minimum of %{min_quota} volunteers but only has %{volunteers_count}"
+          substratum_quota_exceeds_volunteers: "Substratum '%{substratum_name}' of stratum '%{stratum_name}' has a max quota of %{max_quota} (%{percentage}%%) but only %{volunteers_count} volunteer(s) belong to this category. Reduce the max quota percentage or add more participants in this category"
           volunteers_missing_strata: "There are %{count} volunteer(s) that do not have a substratum assigned for each stratum. This may cause problems in the selection algorithm"
           no_name: "No name"
         fair_sortition:
@@ -294,3 +295,6 @@ en:
           portfolio_generation_failed: "Error generating panel portfolio: %{error}"
           no_portfolio: "There is no panel portfolio. Execute `generate_portfolio` first"
           sampling_failed: "Error while sampling: %{error}"
+        leximin:
+          no_feasible_panel: "Could not find a valid initial panel. The combination of quota constraints (max percentages) and the available sample makes it impossible to form a panel. Possible causes: (1) The max quota percentages for some substrata are too restrictive for the available sample size. (2) There are not enough participants in certain substratum combinations. (3) The number of candidates to select is too large relative to the sample. Try adjusting the max quota percentages or uploading a larger sample."
+          internal_error: "Internal error in the selection algorithm: %{error}. Please verify that the strata configuration and max quota percentages are compatible with the loaded sample."
