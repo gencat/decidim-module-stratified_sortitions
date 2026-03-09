@@ -47,7 +47,7 @@ module Decidim
 
         def map_model(model)
           super
-          self.substrata = model.substrata.map do |substratum|
+          self.substrata = model.substrata.order(:position).map do |substratum|
             Decidim::StratifiedSortitions::Admin::SubstratumForm.from_model(substratum)
           end
         end

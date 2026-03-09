@@ -12,8 +12,8 @@ module Decidim
       private
 
       def strata_data(stratified_sortition)
-        stratified_sortition.strata.map do |stratum|
-          chart_data = stratum.substrata.map do |substratum|
+        stratified_sortition.strata.order(:position).map do |stratum|
+          chart_data = stratum.substrata.order(:position).map do |substratum|
             quota_value = substratum.max_quota_percentage.present? ? substratum.max_quota_percentage.to_f : 0.0
             label_with_percentage = "#{translated_attribute(substratum.name)} (#{quota_value}%)"
             [label_with_percentage, quota_value]
@@ -32,7 +32,7 @@ module Decidim
       end
 
       def results_data(stratified_sortition)
-        return stratified_sortition.strata.map { |stratum| { stratum:, chart_data: [] } } unless stratified_sortition.panel_portfolio&.sampled?
+        return stratified_sortition.strata.order(:position).map { |stratum| { stratum:, chart_data: [] } } unless stratified_sortition.panel_portfolio&.sampled?
 
         selected_ids = stratified_sortition.panel_portfolio.selected_panel
         participants_distribution_data(stratified_sortition, selected_ids)
@@ -43,7 +43,7 @@ module Decidim
         by_stratum = group_by_stratum(sample_candidates_stratum)
         by_stratum_and_substratum = group_by_stratum_and_substratum(sample_candidates_stratum)
 
-        stratified_sortition.strata.map do |stratum|
+        stratified_sortition.strata.order(:position).map do |stratum|
           build_stratum_chart(stratum, by_stratum, by_stratum_and_substratum)
         end
       end
@@ -69,7 +69,7 @@ module Decidim
       end
 
       def build_stratum_chart(stratum, by_stratum, by_stratum_and_substratum)
-        substrata = stratum.substrata
+        substrata = stratum.substrata.order(:position)
         total = by_stratum[stratum.id]&.map(&:decidim_stratified_sortitions_sample_participant_id)&.uniq&.count || 0
         chart_data = substrata.map do |substratum|
           build_substratum_chart_row(stratum, substratum, by_stratum_and_substratum, total)

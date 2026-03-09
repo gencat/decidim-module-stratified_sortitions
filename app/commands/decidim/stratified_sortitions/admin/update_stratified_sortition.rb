@@ -129,17 +129,17 @@ module Decidim
                   value: substratum_form.value,
                   range: substratum_form.range,
                   max_quota_percentage: substratum_form.max_quota_percentage,
-                  position: stratum_form.position
+                  position: substratum_form.position
                 )
                 updated_or_created_ids << substratum.id
               else
-                Decidim::StratifiedSortitions::Substratum.create!(
+                new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
                   stratum:,
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
                   max_quota_percentage: substratum_form.max_quota_percentage,
-                  position: stratum_form.position
+                  position: substratum_form.position
                 )
                 updated_or_created_ids << new_substratum.id
               end
@@ -150,7 +150,7 @@ module Decidim
                 value: substratum_form.value,
                 range: substratum_form.range,
                 max_quota_percentage: substratum_form.max_quota_percentage,
-                position: stratum_form.position
+                position: substratum_form.position
               )
               updated_or_created_ids << new_substratum.id
             end
