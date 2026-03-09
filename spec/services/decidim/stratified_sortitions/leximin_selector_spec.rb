@@ -107,6 +107,12 @@ module Decidim
           let(:result) { selector.call }
 
           it_behaves_like "a failed leximin result"
+
+          it "returns an i18n error message" do
+            expect(result.error).to be_present
+            # Should not contain raw hardcoded strings
+            expect(result.error).not_to include("LEXIMIN internal error:")
+          end
         end
 
         context "with no participants" do
@@ -122,7 +128,7 @@ module Decidim
           it_behaves_like "a failed leximin result"
 
           it "includes relevant error message" do
-            expect(result.error).to include("No volunteers in the pool.")
+            expect(result.error).to include(I18n.t("decidim.stratified_sortitions.errors.feasibility.no_volunteers"))
           end
         end
 

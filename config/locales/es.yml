@@ -287,6 +287,7 @@ es:
           stratum_insufficient_quotas: "El estrato '%{stratum_name}' tiene cuotas máximas insuficientes. La suma de cuotas máximas (%{total_max}) es menor que el tamaño del panel (%{panel_size})"
           stratum_percentages_exceed: "El estrato '%{stratum_name}' tiene porcentajes que suman más del 100%% (%{total_percentage}%%)"
           substratum_insufficient_volunteers: "El subestrato '%{substratum_name}' del estrato '%{stratum_name}' requiere un mínimo de %{min_quota} voluntarios pero solo tiene %{volunteers_count}"
+          substratum_quota_exceeds_volunteers: "El subestrato '%{substratum_name}' del estrato '%{stratum_name}' tiene una cuota máxima de %{max_quota} (%{percentage}%%) pero solo %{volunteers_count} voluntario(s) pertenecen a esta categoría. Reduzca el porcentaje de cuota máxima o añada más participantes en esta categoría"
           volunteers_missing_strata: "Hay %{count} voluntario(s) que no tienen asignado un subestrato para cada estrato. Esto puede causar problemas en el algoritmo de selección"
           no_name: "Sin nombre"
         fair_sortition:
@@ -294,3 +295,6 @@ es:
           portfolio_generation_failed: "Error generando la cartera de paneles: %{error}"
           no_portfolio: "No hay cartera de paneles. Ejecute `generate_portfolio` primero"
           sampling_failed: "Error en el muestreo: %{error}"
+        leximin:
+          no_feasible_panel: "No se pudo encontrar un panel inicial válido. La combinación de restricciones de cuota (porcentajes máximos) y la muestra disponible hacen imposible formar un panel. Posibles causas: (1) Los porcentajes de cuota máxima de algunos subestratos son demasiado restrictivos para el tamaño de la muestra disponible. (2) No hay suficientes participantes en ciertas combinaciones de subestratos. (3) El número de candidatos a seleccionar es demasiado grande en relación a la muestra. Intente ajustar los porcentajes de cuota máxima o cargue una muestra más grande."
+          internal_error: "Error interno en el algoritmo de selección: %{error}. Por favor, verifique que la configuración de los estratos y los porcentajes de cuota máxima son compatibles con la muestra cargada."

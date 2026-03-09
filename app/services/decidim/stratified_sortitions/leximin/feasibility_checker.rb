@@ -26,6 +26,7 @@ module Decidim
           errors.concat(check_pool_size)
           errors.concat(check_quota_consistency)
           errors.concat(check_category_coverage)
+          errors.concat(check_cross_strata_feasibility) if errors.empty?
 
           {
             feasible: errors.empty?,
@@ -149,6 +150,60 @@ module Decidim
           end
 
           incomplete
+        end
+
+        # Checks that the combination of max_quota_percentage constraints across all strata
+        # can be satisfied simultaneously. For each pair of substrata from different strata,
+        # there must be enough volunteers that belong to both categories.
+        def check_cross_strata_feasibility
+          errors = []
+          k = @cb.panel_size
+          return errors if k.nil? || k <= 0
+
+          strata = @cb.strata_info
+          return errors if strata.size < 2
+
+          strata.each do |stratum|
+            errors.concat(validate_stratum_quotas(stratum))
+          end
+
+          errors
+        end
+
+        def validate_stratum_quotas(stratum)
+          errors = []
+          stratum_name = extract_name(stratum[:name])
+
+          stratum[:substrata].each do |substratum|
+            error = validate_substratum_quota(substratum, stratum_name)
+            errors << error if error.present?
+          end
+
+          errors
+        end
+
+        def validate_substratum_quota(substratum, stratum_name)
+          cat_id = substratum[:id]
+          max_quota = substratum[:max_quota]
+          percentage = substratum[:percentage]
+          volunteers_in_cat = @cb.category_volunteers[cat_id]&.size || 0
+
+          # Skip if no restriction (percentage 0 means unrestricted), no quota, or no volunteers
+          return nil if percentage.zero? || max_quota.zero? || volunteers_in_cat.zero?
+
+          # Check if this substratum's max quota exceeds available volunteers
+          return nil unless max_quota > volunteers_in_cat
+
+          substratum_name = extract_name(substratum[:name])
+
+          I18n.t(
+            "decidim.stratified_sortitions.errors.feasibility.substratum_quota_exceeds_volunteers",
+            substratum_name:,
+            stratum_name:,
+            max_quota:,
+            volunteers_count: volunteers_in_cat,
+            percentage:
+          )
         end
 
         def extract_name(name_field)

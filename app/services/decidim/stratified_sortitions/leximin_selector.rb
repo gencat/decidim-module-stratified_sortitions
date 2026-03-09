@@ -58,7 +58,7 @@ module Decidim
         # Step 2: Initialize with one feasible panel
         panel_generator = Leximin::PanelGenerator.new(@constraint_builder)
         initial_panel = panel_generator.find_feasible_panel
-        return infeasible_result("No s'ha pogut trobar cap panel inicial vàlid") if initial_panel.nil?
+        return infeasible_result(I18n.t("decidim.stratified_sortitions.errors.leximin.no_feasible_panel")) if initial_panel.nil?
 
         panels = [initial_panel]
 
@@ -98,7 +98,7 @@ module Decidim
           probabilities: [],
           selection_probabilities: {},
           success: false,
-          error: "LEXIMIN internal error: #{e.message}"
+          error: I18n.t("decidim.stratified_sortitions.errors.leximin.internal_error", error: e.message)
         )
       end
 
