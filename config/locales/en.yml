@@ -71,10 +71,11 @@ en:
             confirm_execute_body: Once the sortition is executed, it will be recorded on the platform and the action will be irreversible. The data, the strata configuration, and the sample cannot be edited.
             confirm_execute_ok: Execute sortition
             confirm_execute_cancel: Cancel
+            export: Export
             export_results: Export results
-            export_csv: Export CSV
-            export_excel: Export Excel
-            export_json: Export JSON
+            export_csv: Stratified sortition results as CSV
+            export_excel: Stratified sortition results as Excel
+            export_json: Stratified sortition results as JSON
             export_charts_pdf: Export charts PDF
             pdf_title: "Sortition results: %{name}"
             pdf_subtitle: Comparative sample distribution charts
@@ -91,6 +92,7 @@ en:
             verification_seed: Verification seed
             random_value_used: Random value used
             selected_panel_probability: Selected panel probability
+            selected_participants_title: Selected participants
             selected_participants:
               one: "1 selected participant"
               other: "%{count} selected participants"
