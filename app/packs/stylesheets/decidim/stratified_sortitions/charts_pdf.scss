@@ -1,0 +1,148 @@
+/* =========================================================
+   BASE
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  padding: 20px 25px;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+h1 {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+h2 {
+  font-size: 11px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 11px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 6px 0 8px;
+}
+
+/* =========================================================
+   HEADER INFO BLOCK
+   ========================================================= */
+.info {
+  font-size: 9px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.info p {
+  margin: 0;
+}
+
+/* =========================================================
+   COLUMN HEADERS
+   ========================================================= */
+.column-headers {
+  width: 100%;
+  margin-top: 12px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  border-collapse: collapse;
+}
+
+.column-headers .col-header {
+  width: 33.33%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+/* =========================================================
+   STRATUM SECTIONS
+   ========================================================= */
+.stratum-section {
+  margin-bottom: 10px;
+  page-break-inside: avoid;
+}
+
+.stratum-title {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+/* =========================================================
+   CHARTS TABLE (3-column layout)
+   ========================================================= */
+.charts-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.chart-cell {
+  width: 33.33%;
+  text-align: center;
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.chart-cell + .chart-cell {
+  border-left: 1px solid #ddd;
+}
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+.legend {
+  font-size: 8px;
+  text-align: center;
+  display: block;
+  margin-top: 4px;
+}
+
+.legend-item {
+  margin-bottom: 4px;
+  margin-right: 8px;
+  text-align: left;
+  display: inline-block;
+}
+
+.legend-color {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* =========================================================
+   NO DATA STATE
+   ========================================================= */
+.no-data {
+  color: #999;
+  font-size: 9px;
+  padding: 20px 0;
+}

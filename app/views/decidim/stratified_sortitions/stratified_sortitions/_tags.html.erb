@@ -1,0 +1,9 @@
+<ul>
+  <li>
+    <%= link_to t("filters.pending", scope: "decidim.stratified_sortitions.stratified_sortitions"),
+                stratified_sortitions_path(filter: { with_any_state: "pending" }) if stratified_sortition.status == "pending" %>
+
+    <%= link_to t("filters.executed", scope: "decidim.stratified_sortitions.stratified_sortitions"),
+                stratified_sortitions_path(filter: { with_any_state: "executed" }) if stratified_sortition.status == "executed" %>
+  </li>
+</ul>

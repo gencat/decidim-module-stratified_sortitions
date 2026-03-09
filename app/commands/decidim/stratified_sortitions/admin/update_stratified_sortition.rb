@@ -128,7 +128,7 @@ module Decidim
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
-                  weighing: substratum_form.weighing,
+                  max_quota_percentage: substratum_form.max_quota_percentage,
                   position: stratum_form.position
                 )
                 updated_or_created_ids << substratum.id
@@ -138,7 +138,7 @@ module Decidim
                   name: substratum_form.name,
                   value: substratum_form.value,
                   range: substratum_form.range,
-                  weighing: substratum_form.weighing,
+                  max_quota_percentage: substratum_form.max_quota_percentage,
                   position: stratum_form.position
                 )
                 updated_or_created_ids << new_substratum.id
@@ -149,7 +149,7 @@ module Decidim
                 name: substratum_form.name,
                 value: substratum_form.value,
                 range: substratum_form.range,
-                weighing: substratum_form.weighing,
+                max_quota_percentage: substratum_form.max_quota_percentage,
                 position: stratum_form.position
               )
               updated_or_created_ids << new_substratum.id
@@ -174,7 +174,7 @@ module Decidim
               name: substratum_form.name,
               value: substratum_form.value,
               range: substratum_form.range,
-              weighing: substratum_form.weighing
+              max_quota_percentage: substratum_form.max_quota_percentage
             )
           end
         end

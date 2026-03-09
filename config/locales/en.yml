@@ -9,6 +9,19 @@ en:
         num_candidates: Number of Candidates
         selection_criteria: Selection Criteria
         selected_profiles_description: Selected Profiles Description
+    errors:
+      messages:
+        cannot_add_strata_with_sample_participants: "Cannot add strata when there are already imported participants"
+        cannot_delete_strata_with_sample_participants: "Cannot delete strata when there are already imported participants"
+        cannot_change_stratum_name_with_sample_participants: "Cannot change stratum name when there are already imported participants"
+        cannot_change_stratum_kind_with_sample_participants: "Cannot change stratum kind when there are already imported participants"
+        cannot_add_substrata_with_sample_participants: "Cannot add substrata when there are already imported participants"
+        cannot_delete_substrata_with_sample_participants: "Cannot delete substrata when there are already imported participants"
+        cannot_change_substratum_name_with_sample_participants: "Cannot change substratum name when there are already imported participants"
+        cannot_change_substratum_value_with_sample_participants: "Cannot change substratum value when there are already imported participants"
+        cannot_change_substratum_range_with_sample_participants: "Cannot change substratum range when there are already imported participants"
+        cannot_change_stratum_position_with_sample_participants: "Cannot change stratum position when there are already imported participants"
+        cannot_change_substratum_position_with_sample_participants: "Cannot change substratum position when there are already imported participants"
   decidim:
     components:
       stratified_sortitions:
@@ -16,7 +29,9 @@ en:
         settings:
           global:
             announcement: Announcement
-            publish_sortitions: Publish Stratified Sortitions
+            publish_sortitions: Publish comparative charts of the Sortitions
+          step:
+            announcement: Announcement
     stratified_sortitions:
       admin:
         actions:
@@ -24,9 +39,10 @@ en:
           confirm_destroy: Are you sure you want to delete this %{name}?
           destroy: Delete
           duplicate: Duplicate
+          execute: Execute sortition
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
-          upload_sample: "Import Census"
+          census_management: Census management
         models:
           stratified_sortition:
             fields:
@@ -44,6 +60,58 @@ en:
             error: There's been a problem deleting this stratified sortition
             has_problems: This stratified sortition couldn't be deleted due to related problems
             success: Stratified sortition successfully deleted
+          execute:
+            candidates: Candidates
+            chart_results: Distribution charts
+            tab_charts: Comparative charts
+            tab_participants: Selected participants
+            empty_sample_participants: The sortition cannot be executed without a loaded census
+            execute_stratified_sortition: Execute stratified sortition
+            confirm_execute_title: Confirmation
+            confirm_execute_body: Once the sortition is executed, it will be recorded on the platform and the action will be irreversible. The data, the strata configuration, and the sample cannot be edited.
+            confirm_execute_ok: Execute sortition
+            confirm_execute_cancel: Cancel
+            export: Export
+            export_results: Export results
+            export_csv: Stratified sortition results as CSV
+            export_excel: Stratified sortition results as Excel
+            export_json: Stratified sortition results as JSON
+            export_charts_pdf: Export charts PDF
+            pdf_title: "Sortition results: %{name}"
+            pdf_subtitle: Comparative sample distribution charts
+            pdf_belongs_to: "Belongs to: %{space_name}"
+            pdf_algorithm: "Algorithm used: %{algorithm}"
+            pdf_executed_at: "Sortition performed on: %{date}"
+            pdf_no_data: No data
+            algorithm: Algorithm
+            generated_at: Generated at
+            generation_time: Generation time
+            total_participants: Total participants
+            num_panels: Number of panels
+            selected_at: Selected at
+            verification_seed: Verification seed
+            random_value_used: Random value used
+            selected_panel_probability: Selected panel probability
+            selected_participants_title: Selected participants
+            selected_participants:
+              one: "1 selected participant"
+              other: "%{count} selected participants"
+            participant_id: ID
+            personal_data_1: Personal data 1
+            personal_data_2: Personal data 2
+            personal_data_3: Personal data 3
+            personal_data_4: Personal data 4
+            no_results_yet: The sortition has not been executed yet.
+            confirm_participants_title: Show the list of selected participants
+            confirm_participants_body: You are accessing personal information and data. This action will be recorded.
+            confirm_participants_ok: Show
+            confirm_participants_cancel: Cancel
+            results: Results
+            success: Stratified sortition successfully executed
+            target: Target
+            title: Execute stratified sortition
+          export_results:
+            no_results: There are no results to export. Execute the sortition first.
           duplicate:
             error: There's been a problem duplicating this stratified sortition
             success: Stratified sortition successfully duplicated
@@ -73,7 +141,7 @@ en:
               title: Kind
               value: Value
               numeric_range: Numeric range
-            title: Substrata
+            substrata_title: Substrata
             title: Strata
           substrata:
             add_substratum: Add substratum
@@ -87,13 +155,14 @@ en:
             range: Range
             range_placeholder: Range (e.g. 0-18)
             title: Substratum
-            weighing: Weighing
-            weighing_placeholder: Weighing
+            max_quota_percentage: Max quota (%)
+            max_quota_percentage_placeholder: Max quota %
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated
           upload_sample:
             age: Age group
+            candidates: Candidates
             census_file: Choose a file
             census_file_label: Excel.csv file with census data
             configure_strata_first: You must configure strata and substrata first
@@ -101,16 +170,20 @@ en:
             description: "It must be a file generated in Excel and exported as CSV with the following columns:"
             download_template: "Download CSV template"
             example: "Candidate data 1,Candidate data 2,Candidate data 3,Candidate data 4,Stratum 1,Stratum 2,Stratum 3,Stratum N<br>example@example.com,D,Higher,34<br>example@example.com,E,Higher,24<br><br>. . ."
-            filename_data: File name, on %{date}, number of records %{count}
+            execute_stratified_sortition: Execute sortition
+            execute_stratified_sortition_help: The sortition cannot be executed until records are uploaded.
+            filename_data: "%{filename}, on %{date}, number of records %{count}"
             gender: Gender
-            last_upload_date: The last upload was on February 24, 2025 10:41
-            help: "The sample must be a CSV or Excel file.<br> Each row represents a candidate."
+            last_upload_date: The last upload was on %{date}
+            help: The first four columns are candidate data, such as email, ID, phone, or address, and the following columns are the strata defined in the stratified sortition. Each row represents a candidate.
             no_data: No data
             place: Place of birth
             remove_uploaded_samples: Remove all records
             confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?
+            strata_not_configured: You must configure strata and substrata first
             target: Target
             title: Import new sample
+            upload_file: Upload a new census
             uploaded_file: Uploaded sample data
             uploaded_files: "The following files have been added:"
             no_uploaded_files: "No files uploaded."
@@ -142,3 +215,88 @@ en:
           remove_uploaded_samples:
             success: "Uploaded samples have been successfully removed."
             error: "There was an error removing the uploaded samples."
+      stratified_sortitions:
+        count:
+          candidates_count:
+            one: 1 candidate
+            other: "%{count} candidates"
+        filters:
+          all: All
+          pending: Pending
+          executed: Executed
+          state: Status
+        index:
+          empty: There are no stratified sortitions yet.
+        orders:
+          label: 'Order stratified sortitions by:'
+          random: Random
+          recent: Recent
+        results_count:
+          count:
+            one: Candidate to select
+            other: Candidates to select
+          count_selected:
+            one: Selected candidate
+            other: Selected candidates
+        show:
+          introduction: 'This page contains the details of the stratified sortition %{reference}. By means of this sortition, %{num_candidates} candidates have been selected using a stratified random selection algorithm that ensures fair representation across all defined strata.'
+          description: Description
+          selection_criteria: Selection criteria
+          selected_profiles_description: Selected profiles description
+          strata: Strata
+          max_quota: Max quota
+          selected_participants: Selected participants
+          selected_participants_count:
+            one: 1 participant has been selected
+            other: "%{count} participants have been selected"
+          sortition_details: Sortition details
+          num_candidates: Number of candidates
+          status: Status
+          strata_count: Number of strata
+          algorithm: Algorithm
+          algorithm_name: LEXIMIN
+          algorithm_description: Stratified random selection algorithm that ensures fair representation across all defined strata
+          reproducibility_details: Sortition reproducibility
+          verification_seed: Verification seed
+          random_value_used: Random value used
+          selected_panel_index: Selected panel index
+          selected_at: Selected at
+          strata_charts: Strata distribution
+          target: Target
+          candidates: Candidates
+          no_data: No data
+          results: Results
+          statuses:
+            pending: Pending
+            executed: Executed
+        stratified_sortition:
+          num_candidates: candidates to select
+          strata_count: strata
+        stratified_sortitions_count:
+          count:
+            one: 1 stratified sortition
+            other: "%{count} stratified sortitions"
+      errors:
+        panel_portfolio:
+          already_sampled: "Portfolio already sampled"
+          probabilities_size_mismatch: "must have the same size as panels (%{panels_count} panels, %{probabilities_count} probabilities)"
+          probabilities_sum_invalid: "must sum to 1.0 (currently %{total})"
+        feasibility:
+          panel_size_positive: "Panel size (num_candidates) must be a positive number"
+          no_categories: "No categories (substrata) defined. You must configure strata and substrata before running the algorithm"
+          no_volunteers: "No volunteers in the pool. You must import participants before running the sortition"
+          pool_too_small: "The volunteer pool (%{volunteers_count}) is smaller than the panel size (%{panel_size}). Add more participants or reduce the number of candidates to select"
+          stratum_insufficient_quotas: "Stratum '%{stratum_name}' has insufficient maximum quotas. The sum of maximum quotas (%{total_max}) is less than the panel size (%{panel_size})"
+          stratum_percentages_exceed: "Stratum '%{stratum_name}' has percentages that sum to more than 100%% (%{total_percentage}%%)"
+          substratum_insufficient_volunteers: "Substratum '%{substratum_name}' of stratum '%{stratum_name}' requires a minimum of %{min_quota} volunteers but only has %{volunteers_count}"
+          substratum_quota_exceeds_volunteers: "Substratum '%{substratum_name}' of stratum '%{stratum_name}' has a max quota of %{max_quota} (%{percentage}%%) but only %{volunteers_count} volunteer(s) belong to this category. Reduce the max quota percentage or add more participants in this category"
+          volunteers_missing_strata: "There are %{count} volunteer(s) that do not have a substratum assigned for each stratum. This may cause problems in the selection algorithm"
+          no_name: "No name"
+        fair_sortition:
+          already_performed: "The sortition has already been performed for this process"
+          portfolio_generation_failed: "Error generating panel portfolio: %{error}"
+          no_portfolio: "There is no panel portfolio. Execute `generate_portfolio` first"
+          sampling_failed: "Error while sampling: %{error}"
+        leximin:
+          no_feasible_panel: "Could not find a valid initial panel. The combination of quota constraints (max percentages) and the available sample makes it impossible to form a panel. Possible causes: (1) The max quota percentages for some substrata are too restrictive for the available sample size. (2) There are not enough participants in certain substratum combinations. (3) The number of candidates to select is too large relative to the sample. Try adjusting the max quota percentages or uploading a larger sample."
+          internal_error: "Internal error in the selection algorithm: %{error}. Please verify that the strata configuration and max quota percentages are compatible with the loaded sample."

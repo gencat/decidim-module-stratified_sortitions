@@ -9,6 +9,19 @@ ca:
         num_candidates: Nombre de candidats
         selection_criteria: Criteris de selecció
         selected_profiles_description: Descripció dels perfils seleccionats
+    errors:
+      messages:
+        cannot_add_strata_with_sample_participants: "No es poden afegir estrats quan ja hi ha participants importats"
+        cannot_delete_strata_with_sample_participants: "No es poden eliminar estrats quan ja hi ha participants importats"
+        cannot_change_stratum_name_with_sample_participants: "No es pot canviar el nom de l'estrat quan ja hi ha participants importats"
+        cannot_change_stratum_kind_with_sample_participants: "No es pot canviar el tipus de l'estrat quan ja hi ha participants importats"
+        cannot_add_substrata_with_sample_participants: "No es poden afegir subestrats quan ja hi ha participants importats"
+        cannot_delete_substrata_with_sample_participants: "No es poden eliminar subestrats quan ja hi ha participants importats"
+        cannot_change_substratum_name_with_sample_participants: "No es pot canviar el nom del subestrat quan ja hi ha participants importats"
+        cannot_change_substratum_value_with_sample_participants: "No es pot canviar el valor del subestrat quan ja hi ha participants importats"
+        cannot_change_substratum_range_with_sample_participants: "No es pot canviar el rang del subestrat quan ja hi ha participants importats"
+        cannot_change_stratum_position_with_sample_participants: "No es pot canviar la posició de l'estrat quan ja hi ha participants importats"
+        cannot_change_substratum_position_with_sample_participants: "No es pot canviar la posició del subestrat quan ja hi ha participants importats"
   decidim:
     components:
       stratified_sortitions:
@@ -16,7 +29,7 @@ ca:
         settings:
           global:
             announcement: Avís
-            publish_sortitions: Publicar sortejos estratificats
+            publish_sortitions: Publicar gràfics comparatius dels sortejos
           step:
             announcement: Avís
     stratified_sortitions:
@@ -26,9 +39,10 @@ ca:
           confirm_destroy: Segur que vols eliminar aquest %{name}?
           destroy: Esborra
           duplicate: Duplica
-          new_stratified_sortition: "Nou sortejo estratificat"
+          execute: Executar sorteig
+          new_stratified_sortition: "Nou sorteig estratificat"
           title: "Accions"
-          upload_sample: "Importar mostra"
+          census_management: Gestió cens
         models:
           stratified_sortition:
             fields:
@@ -40,23 +54,75 @@ ca:
               selected_profiles_description: Descripció dels perfils seleccionats
         stratified_sortitions:
           create:
-            error: S'ha produït un problema en crear aquest sortejo estratificat
-            success: Sortejo estratificat creat amb èxit
+            error: S'ha produït un problema en crear aquest sorteig estratificat
+            success: Sorteig estratificat creat amb èxit
           destroy:
-            error: S'ha produït un problema en eliminar aquest sortejo estratificat
-            has_problems: Aquest sortejo estratificat no s'ha pogut eliminar degut a problemes relacionats
-            success: Sortejo estratificat eliminat amb èxit
+            error: S'ha produït un problema en eliminar aquest sorteig estratificat
+            has_problems: Aquest sorteig estratificat no s'ha pogut eliminar degut a problemes relacionats
+            success: Sorteig estratificat eliminat amb èxit
           duplicate:
-            error: S'ha produït un problema en duplicar aquest sortejo estratificat
-            success: Sortejo estratificat duplicat amb èxit
+            error: S'ha produït un problema en duplicar aquest sorteig estratificat
+            success: Sorteig estratificat duplicat amb èxit
+          execute:
+            candidates: Candidats
+            chart_results: Gràfics de distribució
+            tab_charts: Gràfics comparatius
+            tab_participants: Participants seleccionats
+            empty_sample_participants: No es pot executar el sorteig sense un cens carregat
+            execute_stratified_sortition: Executar sorteig estratificat
+            confirm_execute_title: Confirmació
+            confirm_execute_body: En executar el sorteig aquest quedarà registrat a la plataforma i l'acció serà irreversible. No es podran editar les dades, la configuració dels estrats ni la mostra.
+            confirm_execute_ok: Executar sorteig
+            confirm_execute_cancel: Cancel·lar
+            export: Exportar
+            export_results: Exportar resultats
+            export_csv: Resultats del sorteig estratificat com a CSV
+            export_excel: Resultats del sorteig estratificat com a Excel
+            export_json: Resultats del sorteig estratificat com a JSON
+            export_charts_pdf: Exportar gràfics PDF
+            pdf_title: "Resultats del sorteig %{name}"
+            pdf_subtitle: Gràfics comparatius de distribució de la mostra
+            pdf_belongs_to: "Pertany a: %{space_name}"
+            pdf_algorithm: "Algorisme utilitzat: %{algorithm}"
+            pdf_executed_at: "Sorteig realitzat el: %{date}"
+            pdf_no_data: Sense dades
+            algorithm: Algorisme
+            generated_at: Generat el
+            generation_time: Temps de generació
+            total_participants: Total de participants
+            num_panels: Nombre de panels
+            selected_at: Seleccionat el
+            verification_seed: Seed de verificació
+            random_value_used: Valor aleatori utilitzat
+            selected_panel_probability: Probabilitat del panel seleccionat
+            selected_participants_title: Participants seleccionats
+            selected_participants:
+              one: "1 participant seleccionat"
+              other: "%{count} participants seleccionats"
+            participant_id: ID
+            personal_data_1: Dada personal 1
+            personal_data_2: Dada personal 2
+            personal_data_3: Dada personal 3
+            personal_data_4: Dada personal 4
+            no_results_yet: El sorteig encara no s'ha executat.
+            confirm_participants_title: Mostra el llistat de les participants seleccionades
+            confirm_participants_body: Estàs accedint a informació i dades personals. Aquesta acció quedarà registrada.
+            confirm_participants_ok: Mostra
+            confirm_participants_cancel: Cancel·lar
+            results: Resultats
+            success: Sorteig estratificat executat amb èxit
+            target: Objectiu
+            title: Executar sorteig estratificat
+          export_results:
+            no_results: No hi ha resultats per exportar. Executeu el sorteig primer.
           index:
             selected: Sortejos estratificats seleccionats
             title: Sortejos estratificats
           new:
             create: Crear
-            title: Nou sortejo estratificat
+            title: Nou sorteig estratificat
           edit:
-            title: Editar sortejo estratificat
+            title: Editar sorteig estratificat
             update: Actualitzar
           form:
             data: Informació general
@@ -89,20 +155,24 @@ ca:
             range: Rang
             range_placeholder: Rang (p. ex. 0-18)
             title: Subestrat
-            weighing: Ponderació
-            weighing_placeholder: Ponderació
+            max_quota_percentage: Quota màxima (%)
+            max_quota_percentage_placeholder: Quota màxima %
           update:
-            error: S'ha produït un problema en actualitzar aquest sortejo estratificat
-            success: Sortejo estratificat actualitzat amb èxit
+            error: S'ha produït un problema en actualitzar aquest sorteig estratificat
+            success: Sorteig estratificat actualitzat amb èxit
           upload_sample:
             age: Grup d'edat
+            candidates: Candidats
             census_file: Triar un fitxer
             census_file_label: Arxiu excel.csv amb les dades del cens
             configure_strata_first: Primer has de configurar els estrats i subestrats
+            confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
             count_uploaded_files: "<b>%{count}</b> registres carregats."
             description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
             download_template: "Descarregar plantilla CSV"
             example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
+            execute_stratified_sortition: Executar sorteig
+            execute_stratified_sortition_help: El sorteig no es pot executar fins que no es carreguin registres.
             filename_data: "%{filename}, el dia %{date}, número de registres %{count}"
             gender: Gènere
             last_upload_date: La última càrrega va ser el dia %{date}
@@ -110,8 +180,8 @@ ca:
             no_data: Sense dades
             place: Lloc de naixement
             remove_uploaded_samples: Eliminar tots els registres
-            confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
-            target: Target
+            confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les registres?
+            target: Objectiu
             title: Importar nova mostra
             uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
@@ -137,11 +207,96 @@ ca:
           errors:
             no_file: "No s'ha seleccionat cap fitxer."
             no_strata: "Has de configurar els estrats i subestrats abans de pujar una mostra."
-            pending: "Només pots pujar mostres quan el sortejo estratificat està en estat pendent."
+            pending: "Només pots pujar mostres quan el sorteig estratificat està en estat pendent."
         sample_imports:
           create:
             success: "La mostra s'està carregant en segon pla. Quan acabi rebràs un correu amb el resum de la importació."
           remove_uploaded_samples:
             success: "Les mostres carregades s'han eliminat correctament."
             error: "Hi ha hagut un error en eliminar les mostres carregades."
+      stratified_sortitions:
+        count:
+          candidates_count:
+            one: 1 candidat
+            other: "%{count} candidats"
+        filters:
+          all: Tots
+          pending: Pendent
+          executed: Executat
+          state: Estat
+        index:
+          empty: Encara no hi ha sortejos estratificats.
+        orders:
+          label: 'Ordenar sortejos estratificats per:'
+          random: Aleatori
+          recent: Recent
+        results_count:
+          count:
+            one: Candidat a seleccionar
+            other: Candidats a seleccionar
+          count_selected:
+            one: Candidat seleccionat
+            other: Candidats seleccionats
+        show:
+          introduction: "Aquesta pàgina conté els detalls del sorteig estratificat %{reference}. Mitjançant aquest sorteig, s'han seleccionat %{num_candidates} candidats utilitzant un algorisme de selecció aleatòria estratificada que garanteix la representació justa en tots els estrats definits."
+          description: Descripció
+          selection_criteria: Criteris de selecció
+          selected_profiles_description: Descripció dels perfils seleccionats
+          strata: Estrats
+          max_quota: Quota màxima
+          selected_participants: Participants seleccionats
+          selected_participants_count:
+            one: S'ha seleccionat 1 participant
+            other: "S'han seleccionat %{count} participants"
+          sortition_details: Detalls del sorteig
+          num_candidates: Nombre de candidats
+          status: Estat
+          strata_count: Nombre d'estrats
+          algorithm: Algorisme
+          algorithm_name: LEXIMIN
+          algorithm_description: Algorisme de selecció aleatòria estratificada que garanteix la representació justa en tots els estrats definits
+          reproducibility_details: Reproductibilitat del sorteig
+          verification_seed: Llavor de verificació
+          random_value_used: Valor aleatori utilitzat
+          selected_panel_index: Índex del panell seleccionat
+          selected_at: Seleccionat el
+          strata_charts: Distribució d'estrats
+          target: Objectiu
+          candidates: Candidats
+          no_data: Sense dades
+          results: Resultats
+          statuses:
+            pending: Pendent
+            executed: Executat
+        stratified_sortition:
+          num_candidates: candidats a seleccionar
+          strata_count: estrats
+        stratified_sortitions_count:
+          count:
+            one: 1 sorteig estratificat
+            other: "%{count} sortejos estratificats"
+      errors:
+        panel_portfolio:
+          already_sampled: "La cartera ja ha estat mostrejada"
+          probabilities_size_mismatch: "han de tenir la mateixa mida que els panells (%{panels_count} panells, %{probabilities_count} probabilitats)"
+          probabilities_sum_invalid: "han de sumar 1.0 (actualment %{total})"
+        feasibility:
+          panel_size_positive: "La mida del panell (num_candidates) ha de ser un número positiu"
+          no_categories: "No hi ha categories (substrats) definides. Cal configurar els estrats i substrats abans d'executar l'algorisme"
+          no_volunteers: "No hi ha voluntaris al pool. Cal importar participants abans d'executar el sorteig"
+          pool_too_small: "El pool de voluntaris (%{volunteers_count}) és més petit que la mida del panell (%{panel_size}). Afegiu més participants o reduïu el nombre de candidats a seleccionar"
+          stratum_insufficient_quotas: "L'estrat '%{stratum_name}' té quotes màximes insuficients. La suma de quotes màximes (%{total_max}) és menor que la mida del panell (%{panel_size})"
+          stratum_percentages_exceed: "L'estrat '%{stratum_name}' té percentatges que sumen més del 100%% (%{total_percentage}%%)"
+          substratum_insufficient_volunteers: "El substrat '%{substratum_name}' de l'estrat '%{stratum_name}' requereix mínim %{min_quota} voluntaris però només n'hi ha %{volunteers_count}"
+          substratum_quota_exceeds_volunteers: "El substrat '%{substratum_name}' de l'estrat '%{stratum_name}' té una quota màxima de %{max_quota} (%{percentage}%%) però només %{volunteers_count} voluntari(s) pertanyen a aquesta categoria. Reduïu el percentatge de quota màxima o afegiu més participants en aquesta categoria"
+          volunteers_missing_strata: "Hi ha %{count} voluntari(s) que no tenen assignat un substrat per a cada estrat. Això pot causar problemes en l'algorisme de selecció"
+          no_name: "Sense nom"
+        fair_sortition:
+          already_performed: "El sorteig ja s'ha realitzat per aquest procés"
+          portfolio_generation_failed: "Error generant la cartera de panells: %{error}"
+          no_portfolio: "No hi ha cartera de panels. Executeu `generate_portfolio` primer"
+          sampling_failed: "Error en el mostreig: %{error}"
+        leximin:
+          no_feasible_panel: "No s'ha pogut trobar cap panell inicial vàlid. La combinació de restriccions de quota (percentatges màxims) i la mostra disponible fan impossible formar un panell. Possibles causes: (1) Els percentatges de quota màxima d'alguns substrats són massa restrictius per a la mida de la mostra disponible. (2) No hi ha prou participants en certes combinacions de substrats. (3) El nombre de candidats a seleccionar és massa gran en relació a la mostra. Proveu d'ajustar els percentatges de quota màxima o carregueu una mostra més gran."
+          internal_error: "Error intern en l'algorisme de selecció: %{error}. Si us plau, verifiqueu que la configuració dels estrats i els percentatges de quota màxima són compatibles amb la mostra carregada."
 

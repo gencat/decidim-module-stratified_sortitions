@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "chartkick", "~> 5.2.1"
   s.add_dependency "decidim-admin", Decidim::StratifiedSortitions.decidim_version
   s.add_dependency "decidim-core", Decidim::StratifiedSortitions.decidim_version
+  s.add_dependency "ruby-cbc", "~> 0.3.19"
 
   s.metadata["rubygems_mfa_required"] = "true"
 end

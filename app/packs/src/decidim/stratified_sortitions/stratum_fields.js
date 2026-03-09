@@ -1,5 +1,6 @@
 import AutoButtonsByPositionComponent from "src/decidim/admin/auto_buttons_by_position.component"
 import AutoLabelByPositionComponent from "src/decidim/admin/auto_label_by_position.component"
+import createLiveTextUpdateComponent from "src/decidim/forms/admin/live_text_update.component"
 import createSortList from "src/decidim/admin/sort_list.component"
 import { initializeSubstrataWrapper } from "src/decidim/stratified_sortitions/substratum_fields"
 import { createAccordion } from "src/decidim/a11y"
@@ -86,6 +87,22 @@ $(() => {
     }
   };
 
+  const createDynamicStratumTitle = (fieldId) => {
+    const targetSelector = `#${fieldId} .stratum-title-statement`;
+    const locale = $(targetSelector).data("locale");
+    const maxLength = $(targetSelector).data("max-length");
+    const omission = $(targetSelector).data("omission");
+    const placeholder = $(targetSelector).data("placeholder");
+
+    return createLiveTextUpdateComponent({
+      inputSelector: `#${fieldId} input[name$=\\[name_${locale}\\]]`,
+      targetSelector: targetSelector,
+      maxLength: maxLength,
+      omission: omission,
+      placeholder: placeholder
+    });
+  }
+
   $(document).on("click", ".add-stratum", function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -118,12 +135,13 @@ $(() => {
 
       updateSubstratumFieldsVisibility($newField);
       createCollapsibleStratum($newField);
+      createDynamicStratumTitle($newField.attr("id"));
 
       const $newPanel = $newField.find('.collapsible');
       const $newToggle = $newField.find('.stratum--collapse');
       if ($newPanel.length && $newToggle.length) {
-        $newToggle.attr('aria-expanded', 'false');
-        $newPanel.attr('aria-hidden', 'true').hide();
+        $newToggle.attr('aria-expanded', 'true');
+        $newPanel.attr('aria-hidden', 'false').show();
       }
 
       createSortableList();
@@ -244,6 +262,7 @@ $(() => {
     hideDeletedStratum($target);
     updateSubstratumFieldsVisibility($target);
     createCollapsibleStratum($target);
+    createDynamicStratumTitle($target.attr("id"));
   });
 
   makeRequiredCatalanFields();

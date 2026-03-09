@@ -1,0 +1,38 @@
+<h1><%= @title %></h1>
+<h2><%= @subtitle %></h2>
+<hr>
+
+<div class="info">
+  <p><%= @belongs_to %></p>
+  <p><%= @algorithm %></p>
+  <p><%= @executed_at %></p>
+</div>
+
+<table class="column-headers">
+  <tr>
+    <td class="col-header"><%= @col_target %></td>
+    <td class="col-header"><%= @col_candidates %></td>
+    <td class="col-header"><%= @col_results %></td>
+  </tr>
+</table>
+
+<% @strata_chart_data.each do |stratum_row| %>
+  <div class="stratum-section">
+    <div class="stratum-title"><%= stratum_row[:name] %></div>
+    <table class="charts-table">
+      <tr>
+        <% [:target, :candidates, :results].each do |col| %>
+          <td class="chart-cell">
+            <% chart_data = stratum_row[col] %>
+            <% if chart_data.present? %>
+              <%= svg_pie_chart(chart_data) %>
+              <%= legend_html(chart_data) %>
+            <% else %>
+              <div class="no-data"><%= @no_data_text %></div>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+<% end %>

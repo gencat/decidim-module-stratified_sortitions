@@ -1,0 +1,19 @@
+<%= decidim_modal id: "confirm-execute-modal" do %>
+  <div data-dialog-container>
+    <h2 id="dialog-title-confirm-execute-modal" tabindex="-1" data-dialog-title>
+      <%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_execute_title") %>
+    </h2>
+    <div>
+      <p id="dialog-desc-confirm-execute-modal"><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_execute_body") %></p>
+    </div>
+  </div>
+  <div data-dialog-actions class="flex flex-col-reverse md:flex-row">
+    <button class="button button__lg button__transparent-secondary w-full md:w-auto" data-dialog-close="confirm-execute-modal">
+      <span><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_execute_cancel") %></span>
+    </button>
+    <%= button_to t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_execute_ok"),
+                  execute_stratified_sortition_stratified_sortition_path(stratified_sortition),
+                  method: :post,
+                  class: "button button__lg button__secondary w-full md:w-auto" %>
+  </div>
+<% end %>

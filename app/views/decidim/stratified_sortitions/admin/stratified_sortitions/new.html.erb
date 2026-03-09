@@ -4,6 +4,9 @@
     <%= t(".title") %>
   </h1>
 </div>
+
+<%= render 'navigation_menu' %>
+
 <div class="item__edit item__edit-1col">
   <div class="item__edit-form">
     <%= decidim_form_for(@form, html: { class: "form-defaults form new_stratified_sortition stratified_sortition_form_admin" }) do |f| %>

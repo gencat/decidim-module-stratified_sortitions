@@ -9,7 +9,7 @@ module Decidim
         translatable_attribute :name, String
         attribute :value, String
         attribute :range, String
-        attribute :weighing, String
+        attribute :max_quota_percentage, String
         attribute :deleted, Boolean, default: false
         attribute :position, Integer
 

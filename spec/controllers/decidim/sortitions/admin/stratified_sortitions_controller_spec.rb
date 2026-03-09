@@ -80,9 +80,10 @@ module Decidim
           end
 
           context "with valid params" do
-            it "redirects to the stratified sortitions list" do
+            it "redirects to the newly created stratified sortition edit page" do
               post(:create, params:)
-              expect(response).to redirect_to(stratified_sortitions_path(assembly_slug: -1, component_id: -1))
+              created_sortition = StratifiedSortition.last
+              expect(response).to redirect_to(edit_stratified_sortition_path(created_sortition))
             end
 
             it "creates a stratified sortition associated with the current component" do
@@ -202,6 +203,222 @@ module Decidim
             it "redirects to stratified sortitions list newly created stratified sortition" do
               patch(:update, params:)
               expect(response).to redirect_to(edit_stratified_sortition_path(stratified_sortition))
+            end
+          end
+        end
+
+        describe "upload_sample" do
+          let(:stratified_sortition) { create(:stratified_sortition) }
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+            }
+          end
+
+          before do
+            stratum_1 = create(:stratum, stratified_sortition:, kind: "value", name: { ca: "Gènere", es: "Género", en: "Gender" })
+            substratum_1 = create(:substratum, stratum: stratum_1, name: { ca: "Home", es: "Hombre", en: "Man" }, value: "H", max_quota_percentage: "50")
+            substratum_2 = create(:substratum, stratum: stratum_1, name: { ca: "Dona", es: "Mujer", en: "Woman" }, value: "D", max_quota_percentage: "50")
+
+            sample_import = create(:sample_import, stratified_sortition:)
+            participant_1 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
+            participant_2 = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
+
+            create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant_1, decidim_stratified_sortitions_stratum: stratum_1, decidim_stratified_sortitions_substratum: substratum_1)
+            create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant_2, decidim_stratified_sortitions_stratum: stratum_1, decidim_stratified_sortitions_substratum: substratum_2)
+          end
+
+          it "renders the upload_sample template" do
+            get(:upload_sample, params:)
+            expect(response).to render_template(:upload_sample)
+          end
+
+          it "assigns @stratified_sortition" do
+            get(:upload_sample, params:)
+            expect(assigns(:stratified_sortition)).to eq(stratified_sortition)
+          end
+
+          it "assigns @sample_participants_count" do
+            get(:upload_sample, params:)
+            expect(assigns(:sample_participants_count)).to eq(stratified_sortition.sample_participants.count)
+          end
+
+          it "assigns @strata_data and @candidates_data" do
+            get(:upload_sample, params:)
+            expect(assigns(:strata_data)).to be_an(Array)
+            expect(assigns(:candidates_data)).to be_an(Array)
+            expect(assigns(:strata_data).first[:stratum]).to be_present
+            expect(assigns(:candidates_data).first[:stratum]).to be_present
+          end
+
+          it "@candidates_data refleja los datos importados" do
+            get(:upload_sample, params:)
+            imported = assigns(:candidates_data).first[:chart_data].map(&:last)
+            expect(imported.sum).to eq(stratified_sortition.sample_participants.count)
+          end
+        end
+
+        describe "execute" do
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+            }
+          end
+
+          context "when stratified sortition can be executed" do
+            before do
+              stratum = create(:stratum, stratified_sortition:, kind: "value", name: { en: "Gender" })
+              create(:substratum, stratum:, name: { en: "Man" }, value: "H", max_quota_percentage: "50")
+              create(:substratum, stratum:, name: { en: "Woman" }, value: "D", max_quota_percentage: "50")
+
+              sample_import = create(:sample_import, stratified_sortition:)
+              participant = create(:sample_participant, decidim_stratified_sortition: stratified_sortition, decidim_stratified_sortitions_sample_import: sample_import)
+              create(:sample_participant_stratum, decidim_stratified_sortitions_sample_participant: participant, decidim_stratified_sortitions_stratum: stratum, decidim_stratified_sortitions_substratum: stratum.substrata.first)
+            end
+
+            it "renders the execute template" do
+              get(:execute, params:)
+              expect(response).to render_template(:execute)
+            end
+          end
+
+          context "when stratified sortition cannot be executed" do
+            it "redirects to edit with a warning" do
+              get(:execute, params:)
+              expect(response).to redirect_to(edit_stratified_sortition_path(stratified_sortition))
+              expect(flash[:warning]).to be_present
+            end
+          end
+        end
+
+        describe "export_results" do
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+              format: "csv",
+            }
+          end
+
+          context "when the portfolio is not sampled" do
+            it "redirects to the execute page with an error" do
+              post(:export_results, params:)
+              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
+              expect(flash[:error]).to be_present
+            end
+
+            it "does not enqueue a job" do
+              expect { post(:export_results, params:) }
+                .not_to have_enqueued_job(Decidim::StratifiedSortitions::Admin::SortitionResultsExportJob)
+            end
+          end
+
+          context "when the portfolio is sampled" do
+            let(:sample_import) { create(:sample_import, stratified_sortition:) }
+            let!(:participant) do
+              create(:sample_participant,
+                     decidim_stratified_sortition: stratified_sortition,
+                     decidim_stratified_sortitions_sample_import: sample_import)
+            end
+            let!(:portfolio) do
+              create(:panel_portfolio,
+                     :sampled,
+                     stratified_sortition:,
+                     panels: [[participant.id]],
+                     probabilities: [1.0],
+                     selection_probabilities: { participant.id => 1.0 })
+            end
+
+            it "redirects back to the execute page" do
+              post(:export_results, params:)
+              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
+            end
+
+            it "sets a notice flash message" do
+              post(:export_results, params:)
+              expect(flash[:notice]).to be_present
+            end
+
+            it "enqueues the SortitionResultsExportJob" do
+              expect { post(:export_results, params:) }
+                .to have_enqueued_job(Decidim::StratifiedSortitions::Admin::SortitionResultsExportJob)
+            end
+
+            it "enqueues with the correct format argument" do
+              post(:export_results, params: params.merge(format: "excel"))
+              expect(Decidim::StratifiedSortitions::Admin::SortitionResultsExportJob)
+                .to have_been_enqueued.with(anything, anything, "excel")
+            end
+
+            it "enqueues with json format when requested" do
+              post(:export_results, params: params.merge(format: "json"))
+              expect(Decidim::StratifiedSortitions::Admin::SortitionResultsExportJob)
+                .to have_been_enqueued.with(anything, anything, "json")
+            end
+
+            it "defaults to csv when no format is given" do
+              post(:export_results, params: params.except(:format))
+              expect(Decidim::StratifiedSortitions::Admin::SortitionResultsExportJob)
+                .to have_been_enqueued.with(anything, anything, "csv")
+            end
+          end
+        end
+
+        describe "export_charts_pdf" do
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+            }
+          end
+
+          context "when the portfolio is not sampled" do
+            it "redirects to the execute page with an error" do
+              post(:export_charts_pdf, params:)
+              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
+              expect(flash[:error]).to be_present
+            end
+          end
+
+          context "when the portfolio is sampled" do
+            let(:sample_import) { create(:sample_import, stratified_sortition:) }
+            let!(:participant) do
+              create(:sample_participant,
+                     decidim_stratified_sortition: stratified_sortition,
+                     decidim_stratified_sortitions_sample_import: sample_import)
+            end
+            let!(:portfolio) do
+              create(:panel_portfolio,
+                     :sampled,
+                     stratified_sortition:,
+                     panels: [[participant.id]],
+                     probabilities: [1.0],
+                     selection_probabilities: { participant.id => 1.0 })
+            end
+
+            let(:pdf_double) { instance_double(WickedPdf) }
+
+            before do
+              allow(WickedPdf).to receive(:new).and_return(pdf_double)
+              allow(pdf_double).to receive(:pdf_from_string).and_return("%PDF-fake")
+            end
+
+            it "returns a PDF file" do
+              post(:export_charts_pdf, params:)
+              expect(response.content_type).to match("application/pdf")
+            end
+
+            it "sets a filename with the sortition id" do
+              post(:export_charts_pdf, params:)
+              expect(response.headers["Content-Disposition"])
+                .to include("sortition_charts_#{stratified_sortition.id}")
+            end
+
+            it "calls the ChartsPdfGenerator" do
+              post(:export_charts_pdf, params:)
+              expect(pdf_double).to have_received(:pdf_from_string)
             end
           end
         end

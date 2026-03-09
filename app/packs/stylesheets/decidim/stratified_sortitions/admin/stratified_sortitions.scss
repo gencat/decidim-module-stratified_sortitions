@@ -1,3 +1,51 @@
+.stratified_sortition_header {
+  border: 0;
+}
+
+.stratified_sortition_nav {
+  border-bottom: 2px solid #CCC;
+  margin-bottom: 20px;
+  overflow: visible;
+
+  .import-sample-btn {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    position: relative;
+    top: 3px;
+    border-bottom: 2px solid transparent;
+    color: #ccc;
+    fill: #ccc;
+
+    button {
+      all: unset;
+      display: inline-flex;
+      gap: 0.4rem;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }
+    
+    &:hover {
+      color: rgba(21, 90, 191, 0.7);
+      fill: rgba(21, 90, 191, 0.7);
+      border-bottom: 2px solid rgba(21, 90, 191, 0.7);
+    }
+  }
+
+  .active {
+    color: rgba(21, 90, 191, 1);
+    fill: rgba(21, 90, 191, 1);
+    border-bottom: 2px solid rgba(21, 90, 191, 1);
+  }
+
+  button[disabled] {
+    cursor: not-allowed !important;
+  }
+}
+
 .stratum-fields,
 .substratum-fields {
   display: flex;
@@ -9,6 +57,7 @@
     width: 100%;
   }
 }
+
 
 .example-file-census-container {
   padding:1em;
@@ -26,30 +75,44 @@
 
 .chart-row {
   display: flex;
-  gap: 4em;
-  margin-top: 1em;
   flex-wrap: wrap;
-  justify-content: start;
+  margin-top: 1em;
+  gap: 1em;
 }
 
 .chart-col {
-  flex: 1 1 250px;
-  min-width: 220px;
-  max-width: 450px;
   display: flex;
   flex-direction: column;
+  margin-top: 1em;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.chart-place {
-  max-width: 380px;
+.charts-column {
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.target {
+  border-left: 1px solid #6B7280CC;
 }
 
 @media (max-width: 900px) {
   .chart-row {
+    flex-direction: column;
     gap: 2em;
   }
-  .chart-col {
-    max-width: 100%;
+
+  .charts-column {
+    flex: 1 1 auto;
+  }
+
+  .target {
+    border-left: none;
   }
 }
 
@@ -71,6 +134,57 @@
 
     .icon-expand {
       @apply block;
+    }
+  }
+}
+
+input[readonly] {
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+}
+
+.actions-container {
+  justify-content: space-between;
+
+  .export-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.results-sub-nav {
+  border-bottom: 2px solid #CCC;
+  margin-bottom: 20px;
+  margin-top: 8px;
+  overflow: visible;
+
+  .results-tab {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    position: relative;
+    top: 2px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: #999;
+    fill: #999;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &:hover {
+      color: rgba(21, 90, 191, 0.7);
+      fill: rgba(21, 90, 191, 0.7);
+      border-bottom: 2px solid rgba(21, 90, 191, 0.7);
+    }
+
+    &.active {
+      color: rgba(21, 90, 191, 1);
+      fill: rgba(21, 90, 191, 1);
+      border-bottom: 2px solid rgba(21, 90, 191, 1);
     }
   }
 }

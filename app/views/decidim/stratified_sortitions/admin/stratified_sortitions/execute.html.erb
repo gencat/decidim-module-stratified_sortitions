@@ -1,0 +1,146 @@
+<% add_decidim_page_title(t(".title")) %>
+<div class="item_show__header stratified_sortition_header">
+  <h1 class="item_show__header-title">
+    <%= t(".title") %>
+  </h1>
+</div>
+<%= render 'navigation_menu' %>
+<div class="card">
+  <div class="item_show__header actions-container">
+    <button type="button"
+            class="button button__sm button__secondary"
+            data-dialog-open="confirm-execute-modal"
+            disabled="<%= stratified_sortition.panel_portfolio&.sampled? %>">
+      <%= t('.execute_stratified_sortition') %>
+    </button>
+    <% if stratified_sortition.panel_portfolio&.sampled? %>
+      <span class="exports button button__sm button__secondary" data-toggle="export-dropdown">
+        <%= t(".export") %>
+        <%= icon "arrow-down-s-line", class: "dropdown-filter-icon" %>
+      </span>
+      <div class="dropdown-pane" id="export-dropdown" data-dropdown data-position="bottom" data-alignment="right" data-auto-focus="true" data-close-on-click="true">
+        <ul class="vertical menu add-components">
+          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "csv"), method: :post do %>
+            <li class="exports--format--csv"><%= t(".export_csv") %></li>
+          <% end %>
+          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "excel"), method: :post do %>
+            <li class="exports--format--excel"><%= t(".export_excel") %></li>
+          <% end %>
+          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "json"), method: :post do %>
+            <li class="exports--format--json"><%= t(".export_json") %></li>
+          <% end %>
+          <%= link_to export_charts_pdf_stratified_sortition_path(stratified_sortition), method: :post do %>
+            <li class="exports--format--pdf"><%= t(".export_charts_pdf") %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if stratified_sortition.panel_portfolio&.sampled? %>
+  <div class="card mt-12">
+    <div class="item_show__header">
+      <h1 class="item_show__header-title">
+        <%= t(".results") %>
+      </h1>
+    </div>
+    <div class="mt-4 mb-4">
+      <% if @portfolio&.sampled? %>
+        <div class="sortition-metadata mb-8">
+          <table class="table-list">
+            <thead>
+              <tr>
+                <th><%= t(".algorithm") %></th>
+                <th><%= t(".total_participants") %></th>
+                <th><%= t(".selected_participants_title") %></th>
+                <th><%= t(".generated_at") %></th>
+                <th><%= t(".generation_time") %></th>
+                <th><%= t(".num_panels") %></th>
+                <th><%= t(".selected_at") %></th>
+                <th><%= t(".verification_seed") %></th>
+                <th><%= t(".random_value_used") %></th>
+                <th><%= t(".selected_panel_probability") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= @portfolio.audit_log[:algorithm] %> v<%= @portfolio.audit_log[:version] %></td>
+                <td><%= stratified_sortition.sample_participants.count %></td>
+                <td><%= @portfolio.selected_panel.size %></td>
+                <td><%= l @portfolio.generated_at, format: :decidim_short %></td>
+                <td><%= number_with_precision(@portfolio.generation_time_seconds, precision: 2) %>s</td>
+                <td><%= @portfolio.num_panels %></td>
+                <td><%= l @portfolio.selected_at, format: :decidim_short %></td>
+                <td><code><%= @portfolio.verification_seed || "-" %></code></td>
+                <td><code><%= @portfolio.random_value_used %></code></td>
+                <td><%= number_to_percentage(@portfolio.selected_panel_probability.to_f * 100, precision: 4) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="results-sub-nav flex items-left" data-results-tabs>
+          <button type="button" class="results-tab active" data-tab-target="charts-section">
+            <%= icon "bar-chart-box-line" %> <%= t(".tab_charts") %>
+          </button>
+          <button type="button" class="results-tab" data-tab-target="participants-section" data-dialog-open="confirm-participants-modal">
+            <%= icon "group-line" %> <%= t(".tab_participants") %>
+          </button>
+        </div>
+
+        <div id="charts-section" class="results-tab-panel" data-tab-panel>
+          <div class="chart-row">
+            <div class="charts-column">
+              <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @strata_data, title: t(".target") } %>
+            </div>
+            <div class="charts-column target">
+              <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @candidates_data, title: t(".candidates") } %>
+            </div>
+            <div class="charts-column target">
+              <%= render partial: "decidim/stratified_sortitions/shared/strata_charts", locals: { strata_data: @results_data, title: t(".results") } %>
+            </div>
+          </div>
+        </div>
+
+        <div id="participants-section" class="results-tab-panel" style="display: none;" data-tab-panel>
+          <h2 class="h4 mb-4"><%= t(".selected_participants", count: @selected_participants.size) %></h2>
+          <table class="table-list">
+            <thead>
+              <tr>
+                <th><%= t(".personal_data_1") %></th>
+                <th><%= t(".personal_data_2") %></th>
+                <th><%= t(".personal_data_3") %></th>
+                <th><%= t(".personal_data_4") %></th>
+                <% @strata.each do |stratum| %>
+                  <th><%= translated_attribute(stratum.name) %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @selected_participants.each do |participant| %>
+                <tr>
+                  <td><%= participant.personal_data_1 %></td>
+                  <td><%= participant.personal_data_2 %></td>
+                  <td><%= participant.personal_data_3 %></td>
+                  <td><%= participant.personal_data_4 %></td>
+                  <% @strata.each do |stratum| %>
+                    <% participant_stratum = participant.sample_participant_strata.find { |ps| ps.decidim_stratified_sortitions_stratum_id == stratum.id } %>
+                    <td><%= participant_stratum ? translated_attribute(participant_stratum.decidim_stratified_sortitions_substratum&.name) : "-" %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-muted"><%= t(".no_results_yet") %></p>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= render stratified_sortition.panel_portfolio&.sampled? ? "confirm_participants_modal" : "confirm_execute_modal" %>
+
+<%= append_javascript_pack_tag "decidim_stratified_sortitions_admin" %>
+<%= append_stylesheet_pack_tag "decidim_stratified_sortitions_admin" %>
+

@@ -1,0 +1,10 @@
+<div class="flex items-left stratified_sortition_nav">
+  <% navigation_menu_items(stratified_sortition).each do |item| %>
+    <%= button_to item[:path],
+        method: :get,
+        class: "import-sample-btn #{'active' if item[:active]}",
+        disabled: item[:disabled] do %>
+      <%= icon item[:icon] %> <%= item[:label] %>
+    <% end %>
+  <% end %>
+</div>

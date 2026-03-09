@@ -38,7 +38,7 @@
         <% @stratified_sortitions.each do |stratified_sortition| %>
           <tr>
             <td>
-              <%= translated_attribute(stratified_sortition.title) %>
+              <%= link_to translated_attribute(stratified_sortition.title), edit_stratified_sortition_path(stratified_sortition) %>
             </td>
             <td>
               <%= stratified_sortition.num_candidates %>
@@ -54,7 +54,7 @@
                 <%= icon_link_to "pencil-line", edit_stratified_sortition_path(stratified_sortition), t("actions.configure", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--new" %>
               <% end %>
               <% if allowed_to? :destroy, :stratified_sortition, stratified_sortition: stratified_sortition %>
-                <%= icon_link_to "close-circle-line", stratified_sortition, t("actions.destroy", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.stratified_sortitions.admin", name: translated_attribute(stratified_sortition.title)) } %>
+                <%= icon_link_to "delete-bin-line", stratified_sortition, t("actions.destroy", scope: "decidim.stratified_sortitions.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.stratified_sortitions.admin", name: translated_attribute(stratified_sortition.title)) } %>
               <% end %>
             </td>
           </tr>

@@ -10,6 +10,8 @@ gem "decidim", DECIDIM_VERSION
 gem "decidim-stratified_sortitions", path: "."
 
 gem "bootsnap"
+
+# COIN-OR CBC solver for LEXIMIN algorithm (ILP/LP optimization)
 gem "puma", ">= 4.3"
 
 gem "chartkick"

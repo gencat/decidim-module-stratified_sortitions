@@ -9,6 +9,19 @@ es:
         num_candidates: Número de candidatos
         selection_criteria: Criterios de selección
         selected_profiles_description: Descripción de los perfiles seleccionados
+    errors:
+      messages:
+        cannot_add_strata_with_sample_participants: "No se pueden añadir estratos cuando ya hay participantes importados"
+        cannot_delete_strata_with_sample_participants: "No se pueden eliminar estratos cuando ya hay participantes importados"
+        cannot_change_stratum_name_with_sample_participants: "No se puede cambiar el nombre del estrato cuando ya hay participantes importados"
+        cannot_change_stratum_kind_with_sample_participants: "No se puede cambiar el tipo del estrato cuando ya hay participantes importados"
+        cannot_add_substrata_with_sample_participants: "No se pueden añadir subestratos cuando ya hay participantes importados"
+        cannot_delete_substrata_with_sample_participants: "No se pueden eliminar subestratos cuando ya hay participantes importados"
+        cannot_change_substratum_name_with_sample_participants: "No se puede cambiar el nombre del subestrato cuando ya hay participantes importados"
+        cannot_change_substratum_value_with_sample_participants: "No se puede cambiar el valor del subestrato cuando ya hay participantes importados"
+        cannot_change_substratum_range_with_sample_participants: "No se puede cambiar el rango del subestrato cuando ya hay participantes importados"
+        cannot_change_stratum_position_with_sample_participants: "No se puede cambiar la posición del estrato cuando ya hay participantes importados"
+        cannot_change_substratum_position_with_sample_participants: "No se puede cambiar la posición del subestrato cuando ya hay participantes importados"
   decidim:
     components:
       stratified_sortitions:
@@ -16,7 +29,7 @@ es:
         settings:
           global:
             announcement: Aviso
-            publish_sortitions: Publicar sorteos estratificados
+            publish_sortitions: Publicar gráficos comparativos de los sorteos
           step:
             announcement: Aviso
     stratified_sortitions:
@@ -26,9 +39,10 @@ es:
           confirm_destroy: ¿Estás seguro de que quieres eliminar este %{name}?
           destroy: Eliminar
           duplicate: Duplicar
+          execute: Ejecutar sorteo
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
-          upload_sample: Importar muestra
+          census_management: Gestión censo
         models:
           stratified_sortition:
             fields:
@@ -46,6 +60,58 @@ es:
             error: Ha habido un problema al eliminar este sorteo estratificado
             has_problems: Este sorteo estratificado no se pudo eliminar debido a problemas relacionados
             success: Sorteo estratificado eliminado con éxito
+          execute:
+            candidates: Candidatos
+            chart_results: Gráficos de distribución
+            tab_charts: Gráficos comparativos
+            tab_participants: Participantes seleccionados
+            empty_sample_participants: No se puede ejecutar el sorteo sin un censo cargado
+            execute_stratified_sortition: Ejecutar sorteo estratificado
+            confirm_execute_title: Confirmación
+            confirm_execute_body: Al ejecutar el sorteo este quedará registrado a la plataforma y la acción será irreversible. No se podrán editar los datos, la configuración de los estratos ni la muestra.
+            confirm_execute_ok: Ejecutar sorteo
+            confirm_execute_cancel: Cancelar
+            export: Exportar
+            export_results: Exportar resultados
+            export_csv: Resultados del sorteo estratificado como CSV
+            export_excel: Resultados del sorteo estratificado como Excel
+            export_json: Resultados del sorteo estratificado como JSON
+            export_charts_pdf: Exportar gráficos PDF
+            pdf_title: "Resultados del sorteo %{name}"
+            pdf_subtitle: Gráficos comparativos de distribución de la muestra
+            pdf_belongs_to: "Pertenece a: %{space_name}"
+            pdf_algorithm: "Algoritmo usado: %{algorithm}"
+            pdf_executed_at: "Sorteo realizado el: %{date}"
+            pdf_no_data: Sin datos
+            algorithm: Algoritmo
+            generated_at: Generado el
+            generation_time: Tiempo de generación
+            total_participants: Total de participantes
+            num_panels: Número de paneles
+            selected_at: Seleccionado el
+            verification_seed: Seed de verificación
+            random_value_used: Valor aleatorio utilizado
+            selected_panel_probability: Probabilidad del panel seleccionado
+            selected_participants_title: Participantes seleccionados
+            selected_participants:
+              one: "1 participante seleccionado"
+              other: "%{count} participantes seleccionados"
+            participant_id: ID
+            personal_data_1: Dato personal 1
+            personal_data_2: Dato personal 2
+            personal_data_3: Dato personal 3
+            personal_data_4: Dato personal 4
+            no_results_yet: El sorteo aún no se ha ejecutado.
+            confirm_participants_title: Muestra el listado de las participantes seleccionadas
+            confirm_participants_body: Estás accediendo a información y datos personales. Esta acción quedará registrada.
+            confirm_participants_ok: Muestra
+            confirm_participants_cancel: Cancelar
+            results: Resultados
+            success: Sorteo estratificado ejecutado con éxito
+            target: Objetivo
+            title: Ejecutar sorteo estratificado
+          export_results:
+            no_results: No hay resultados para exportar. Ejecute el sorteo primero.
           duplicate:
             error: Ha habido un problema al duplicar este sorteo estratificado
             success: Sorteo estratificado duplicado con éxito
@@ -89,13 +155,14 @@ es:
             range: Rango
             range_placeholder: Rango (p. ej. 0-18)
             title: Subestrato
-            weighing: Ponderación
-            weighing_placeholder: Ponderación
+            max_quota_percentage: Cuota máxima (%)
+            max_quota_percentage_placeholder: Cuota máxima %
           update:
             error: Ha habido un problema al actualizar este sorteo estratificado
             success: Sorteo estratificado actualizado con éxito
           upload_sample:
             age: Grupo de edad
+            candidates: Candidatos
             census_file: Elegir un archivo
             census_file_label: Archivo excel.csv con los datos del censo
             configure_strata_first: Primero debes configurar los estratos y subestratos
@@ -103,16 +170,20 @@ es:
             description: "Debe ser un archivo generado en Excel y exportado en CSV con las siguientes columnas:"
             download_template: "Descargar plantilla CSV"
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
-            filename_data: Nombre de archivo, el día %{date}, número de registros %{count}
+            execute_stratified_sortition: Ejecutar sorteo
+            execute_stratified_sortition_help: El sorteo no se puede ejecutar hasta que no se carguen registros.
+            filename_data: "%{filename}, el día %{date}, número de registros %{count}"
             gender: Género
-            last_upload_date: La última carga fue el día Febrero 24, 2025 10:41
-            help: "La muestra debe ser un archivo CSV o Excel.<br> Cada fila representa un candidato/candidata."
+            last_upload_date: La última carga fue el día %{date}
+            help: Las cuatro primeras columnas son datos del candidato, por ejemplo correo electrónico, DNI, teléfono o dirección y las siguientes columnas son los estratos definidos en el sorteo estratificado. Cada fila representa un candidato.
             no_data: No hay datos
             place: Lugar de nacimiento
             remove_uploaded_samples: Eliminar todos los registros
             confirm_remove_uploaded_samples: ¿Estás seguro de que quieres eliminar todas las muestras cargadas?
+            strata_not_configured: Primero debes configurar los estratos y subestratos
             target: Objetivo
             title: Importar nueva muestra
+            upload_file: Subir un nuevo censo
             uploaded_file: Datos de la muestra cargada
             uploaded_files: "Se han agregado los siguientes archivos:"
             no_uploaded_files: "No hay archivos cargados."
@@ -144,3 +215,88 @@ es:
           remove_uploaded_samples:
             success: "Las muestras cargadas se han eliminado correctamente."
             error: "Ha ocurrido un error al eliminar las muestras cargadas."
+      stratified_sortitions:
+        count:
+          candidates_count:
+            one: 1 candidato
+            other: "%{count} candidatos"
+        filters:
+          all: Todos
+          pending: Pendiente
+          executed: Ejecutado
+          state: Estado
+        index:
+          empty: Aún no hay sorteos estratificados.
+        orders:
+          label: 'Ordenar sorteos estratificados por:'
+          random: Aleatorio
+          recent: Reciente
+        results_count:
+          count:
+            one: Candidato a seleccionar
+            other: Candidatos a seleccionar
+          count_selected:
+            one: Candidato seleccionado
+            other: Candidatos seleccionados
+        show:
+          introduction: 'Esta página contiene los detalles del sorteo estratificado %{reference}. Mediante este sorteo, se han seleccionado %{num_candidates} candidatos utilizando un algoritmo de selección aleatoria estratificada que garantiza la representación justa en todos los estratos definidos.'
+          description: Descripción
+          selection_criteria: Criterios de selección
+          selected_profiles_description: Descripción de los perfiles seleccionados
+          strata: Estratos
+          max_quota: Cuota máxima
+          selected_participants: Participantes seleccionados
+          selected_participants_count:
+            one: Se ha seleccionado 1 participante
+            other: "Se han seleccionado %{count} participantes"
+          sortition_details: Detalles del sorteo
+          num_candidates: Número de candidatos
+          status: Estado
+          strata_count: Número de estratos
+          algorithm: Algoritmo
+          algorithm_name: LEXIMIN
+          algorithm_description: Algoritmo de selección aleatoria estratificada que garantiza la representación justa en todos los estratos definidos
+          reproducibility_details: Reproducibilidad del sorteo
+          verification_seed: Semilla de verificación
+          random_value_used: Valor aleatorio utilizado
+          selected_panel_index: Índice del panel seleccionado
+          selected_at: Seleccionado el
+          strata_charts: Distribución de estratos
+          target: Objetivo
+          candidates: Candidatos
+          no_data: Sin datos
+          results: Resultados
+          statuses:
+            pending: Pendiente
+            executed: Ejecutado
+        stratified_sortition:
+          num_candidates: candidatos a seleccionar
+          strata_count: estratos
+        stratified_sortitions_count:
+          count:
+            one: 1 sorteo estratificado
+            other: "%{count} sorteos estratificados"
+      errors:
+        panel_portfolio:
+          already_sampled: "La cartera ya ha sido muestreada"
+          probabilities_size_mismatch: "deben tener el mismo tamaño que los paneles (%{panels_count} paneles, %{probabilities_count} probabilidades)"
+          probabilities_sum_invalid: "deben sumar 1.0 (actualmente %{total})"
+        feasibility:
+          panel_size_positive: "El tamaño del panel (num_candidates) debe ser un número positivo"
+          no_categories: "No hay categorías (subestratos) definidas. Debe configurar los estratos y subestratos antes de ejecutar el algoritmo"
+          no_volunteers: "No hay voluntarios en el pool. Debe importar participantes antes de ejecutar el sorteo"
+          pool_too_small: "El pool de voluntarios (%{volunteers_count}) es más pequeño que el tamaño del panel (%{panel_size}). Agregue más participantes o reduzca el número de candidatos a seleccionar"
+          stratum_insufficient_quotas: "El estrato '%{stratum_name}' tiene cuotas máximas insuficientes. La suma de cuotas máximas (%{total_max}) es menor que el tamaño del panel (%{panel_size})"
+          stratum_percentages_exceed: "El estrato '%{stratum_name}' tiene porcentajes que suman más del 100%% (%{total_percentage}%%)"
+          substratum_insufficient_volunteers: "El subestrato '%{substratum_name}' del estrato '%{stratum_name}' requiere un mínimo de %{min_quota} voluntarios pero solo tiene %{volunteers_count}"
+          substratum_quota_exceeds_volunteers: "El subestrato '%{substratum_name}' del estrato '%{stratum_name}' tiene una cuota máxima de %{max_quota} (%{percentage}%%) pero solo %{volunteers_count} voluntario(s) pertenecen a esta categoría. Reduzca el porcentaje de cuota máxima o añada más participantes en esta categoría"
+          volunteers_missing_strata: "Hay %{count} voluntario(s) que no tienen asignado un subestrato para cada estrato. Esto puede causar problemas en el algoritmo de selección"
+          no_name: "Sin nombre"
+        fair_sortition:
+          already_performed: "El sorteo ya se ha realizado para este proceso"
+          portfolio_generation_failed: "Error generando la cartera de paneles: %{error}"
+          no_portfolio: "No hay cartera de paneles. Ejecute `generate_portfolio` primero"
+          sampling_failed: "Error en el muestreo: %{error}"
+        leximin:
+          no_feasible_panel: "No se pudo encontrar un panel inicial válido. La combinación de restricciones de cuota (porcentajes máximos) y la muestra disponible hacen imposible formar un panel. Posibles causas: (1) Los porcentajes de cuota máxima de algunos subestratos son demasiado restrictivos para el tamaño de la muestra disponible. (2) No hay suficientes participantes en ciertas combinaciones de subestratos. (3) El número de candidatos a seleccionar es demasiado grande en relación a la muestra. Intente ajustar los porcentajes de cuota máxima o cargue una muestra más grande."
+          internal_error: "Error interno en el algoritmo de selección: %{error}. Por favor, verifique que la configuración de los estratos y los porcentajes de cuota máxima son compatibles con la muestra cargada."
