@@ -51,6 +51,10 @@ module Decidim
       def can_execute?
         strata_and_substrata_configured? && !sample_participants.empty?
       end
+
+      def executed?
+        status == "executed"
+      end
     end
   end
 end
