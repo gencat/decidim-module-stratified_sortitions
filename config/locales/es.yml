@@ -183,10 +183,12 @@ es:
             strata_not_configured: Primero debes configurar los estratos y subestratos
             target: Objetivo
             title: Importar nueva muestra
-            upload_file: Subir un nuevo censo
+            upload_file: Subir archivo
             uploaded_file: Datos de la muestra cargada
             uploaded_files: "Se han agregado los siguientes archivos:"
             no_uploaded_files: "No hay archivos cargados."
+            help_csv: Se admiten archivos CSV
+            help_format: Archivo .csv con el censo
         import_mailer:
           subject: "Resultado de la importación de la muestra"
           import:

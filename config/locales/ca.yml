@@ -183,9 +183,12 @@ ca:
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les registres?
             target: Objectiu
             title: Importar nova mostra
+            upload_file: Afegir arxiu
             uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
             no_uploaded_files: "No hi ha fitxers carregats."
+            help_csv: Es suporten fitxers CSV
+            help_format: Fitxer .csv amb el cens
         import_mailer:
           subject: "Resultat de la importació de la mostra"
           import:

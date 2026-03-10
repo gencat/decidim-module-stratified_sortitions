@@ -183,10 +183,12 @@ en:
             strata_not_configured: You must configure strata and substrata first
             target: Target
             title: Import new sample
-            upload_file: Upload a new census
+            upload_file: Upload file
             uploaded_file: Uploaded sample data
             uploaded_files: "The following files have been added:"
             no_uploaded_files: "No files uploaded."
+            help_csv: CSV files are supported
+            help_format: .csv file with census
         import_mailer:
           subject: "Sample import result"
           import:

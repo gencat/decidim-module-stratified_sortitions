@@ -9,6 +9,9 @@ module Decidim
       include Decidim::TranslatableAttributes
 
       belongs_to :stratum, class_name: "Decidim::StratifiedSortitions::Stratum", foreign_key: "decidim_stratified_sortitions_stratum_id"
+      has_many :sample_participant_strata, class_name: "Decidim::StratifiedSortitions::SampleParticipantStratum",
+                                           foreign_key: "decidim_stratified_sortitions_substratum_id",
+                                           dependent: :destroy
 
       translatable_fields :name
     end
