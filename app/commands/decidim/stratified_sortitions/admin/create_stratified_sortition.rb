@@ -62,7 +62,8 @@ module Decidim
             stratum = Decidim::StratifiedSortitions::Stratum.create!(
               stratified_sortition:,
               name: stratum_form.name,
-              kind: stratum_form.kind
+              kind: stratum_form.kind,
+              position: stratum_form.position
             )
 
             stratum_form.substrata_to_persist.each do |substratum_form|
@@ -71,7 +72,8 @@ module Decidim
                 name: substratum_form.name,
                 value: substratum_form.value,
                 range: substratum_form.range,
-                max_quota_percentage: substratum_form.max_quota_percentage
+                max_quota_percentage: substratum_form.max_quota_percentage,
+                position: substratum_form.position
               )
             end
           end

@@ -37,7 +37,7 @@ module Decidim
 
         def map_model(model)
           super
-          self.strata = model.strata.map do |stratum|
+          self.strata = model.strata.order(:position).map do |stratum|
             Decidim::StratifiedSortitions::Admin::StratumForm.from_model(stratum)
           end
         end

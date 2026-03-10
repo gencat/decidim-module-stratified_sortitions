@@ -91,21 +91,11 @@ module Decidim
                   position: stratum_form.position
                 )
               else
-                stratum_object = Decidim::StratifiedSortitions::Stratum.create!(
-                  stratified_sortition:,
-                  name: stratum_form.name,
-                  kind: stratum_form.kind,
-                  position: stratum_form.position
-                )
+                stratum_object = create_stratum(stratified_sortition, stratum_form)
               end
               update_substrata(stratum_object, stratum_form)
             else
-              stratum_object = Decidim::StratifiedSortitions::Stratum.create!(
-                stratified_sortition:,
-                name: stratum_form.name,
-                kind: stratum_form.kind,
-                position: stratum_form.position
-              )
+              stratum_object = create_stratum(stratified_sortition, stratum_form)
               create_substrata(stratum_object, stratum_form)
             end
           end
@@ -129,29 +119,15 @@ module Decidim
                   value: substratum_form.value,
                   range: substratum_form.range,
                   max_quota_percentage: substratum_form.max_quota_percentage,
-                  position: stratum_form.position
+                  position: substratum_form.position
                 )
                 updated_or_created_ids << substratum.id
               else
-                Decidim::StratifiedSortitions::Substratum.create!(
-                  stratum:,
-                  name: substratum_form.name,
-                  value: substratum_form.value,
-                  range: substratum_form.range,
-                  max_quota_percentage: substratum_form.max_quota_percentage,
-                  position: stratum_form.position
-                )
+                new_substratum = create_substratum(stratum, substratum_form)
                 updated_or_created_ids << new_substratum.id
               end
             else
-              new_substratum = Decidim::StratifiedSortitions::Substratum.create!(
-                stratum:,
-                name: substratum_form.name,
-                value: substratum_form.value,
-                range: substratum_form.range,
-                max_quota_percentage: substratum_form.max_quota_percentage,
-                position: stratum_form.position
-              )
+              new_substratum = create_substratum(stratum, substratum_form)
               updated_or_created_ids << new_substratum.id
             end
           end
@@ -167,16 +143,30 @@ module Decidim
           end
         end
 
+        def create_stratum(stratified_sortition, stratum_form)
+          Decidim::StratifiedSortitions::Stratum.create!(
+            stratified_sortition:,
+            name: stratum_form.name,
+            kind: stratum_form.kind,
+            position: stratum_form.position
+          )
+        end
+
         def create_substrata(stratum, stratum_form)
           stratum_form.substrata_to_persist.each do |substratum_form|
-            Decidim::StratifiedSortitions::Substratum.create!(
-              stratum:,
-              name: substratum_form.name,
-              value: substratum_form.value,
-              range: substratum_form.range,
-              max_quota_percentage: substratum_form.max_quota_percentage
-            )
+            create_substratum(stratum, substratum_form)
           end
+        end
+
+        def create_substratum(stratum, substratum_form)
+          Decidim::StratifiedSortitions::Substratum.create!(
+            stratum:,
+            name: substratum_form.name,
+            value: substratum_form.value,
+            range: substratum_form.range,
+            max_quota_percentage: substratum_form.max_quota_percentage,
+            position: substratum_form.position
+          )
         end
       end
     end
