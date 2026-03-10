@@ -192,3 +192,15 @@ input[readonly] {
 .upload-census-btn {
   margin: 0 !important;
 }
+
+.upload-disabled-wrapper {
+  cursor: not-allowed;
+  width: auto;
+
+  .upload-census-btn {
+    pointer-events: none;
+    border: 1px solid #3e4c5c;
+    background-color: #efefef;
+    color: #3e4c5c;
+  }
+}
