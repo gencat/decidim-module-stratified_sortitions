@@ -41,7 +41,31 @@ module Decidim
             current_user,
           ) do
             @duplicated_stratified_sortition = stratified_sortition.dup
-            @duplicated_stratified_sortition.save!
+            @duplicated_stratified_sortition.status = :pending
+            if @duplicated_stratified_sortition.save!
+              duplicate_strata
+              @duplicated_stratified_sortition
+            else
+              broadcast(:invalid)
+            end
+          end
+        end
+
+        def duplicate_strata
+          stratified_sortition.strata.order(:position).each do |stratum|
+            new_stratum = stratum.dup
+            new_stratum.decidim_stratified_sortition_id = @duplicated_stratified_sortition.id
+            new_stratum.save!
+
+            duplicate_substrata(stratum, new_stratum)
+          end
+        end
+
+        def duplicate_substrata(stratum, new_stratum)
+          stratum.substrata.order(:position).each do |substratum|
+            new_substratum = substratum.dup
+            new_substratum.decidim_stratified_sortitions_stratum_id = new_stratum.id
+            new_substratum.save!
           end
         end
       end
