@@ -98,7 +98,7 @@ module Decidim
             end
 
             it "does not modify the original strata" do
-              expect { command.call }.not_to change { stratified_sortition.strata.reload.count }
+              expect { command.call }.not_to(change { stratified_sortition.strata.reload.count })
             end
           end
 
@@ -119,31 +119,25 @@ module Decidim
             end
 
             it "does not create a new sortition" do
-              expect {
-                begin
-                  command.call
-                rescue ActiveRecord::RecordInvalid
-                  nil
-                end
-              }.not_to change(Decidim::StratifiedSortitions::StratifiedSortition, :count)
+              expect do
+                command.call
+              rescue ActiveRecord::RecordInvalid
+                nil
+              end.not_to change(Decidim::StratifiedSortitions::StratifiedSortition, :count)
             end
 
             it "does not duplicate strata or substrata" do
-              expect {
-                begin
-                  command.call
-                rescue ActiveRecord::RecordInvalid
-                  nil
-                end
-              }.not_to change(Decidim::StratifiedSortitions::Stratum, :count)
+              expect do
+                command.call
+              rescue ActiveRecord::RecordInvalid
+                nil
+              end.not_to change(Decidim::StratifiedSortitions::Stratum, :count)
 
-              expect {
-                begin
-                  command.call
-                rescue ActiveRecord::RecordInvalid
-                  nil
-                end
-              }.not_to change(Decidim::StratifiedSortitions::Substratum, :count)
+              expect do
+                command.call
+              rescue ActiveRecord::RecordInvalid
+                nil
+              end.not_to change(Decidim::StratifiedSortitions::Substratum, :count)
             end
           end
         end
