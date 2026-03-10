@@ -1,14 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const fileInput = document.getElementById('sample-file-input');
-  const submitButton = document.getElementById('sample-submit-button');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("sample-upload-form");
+  if (!form) return;
 
-  if (!fileInput || !submitButton) return;
+  const modal = form.querySelector("[data-dialog]");
+  if (!modal) return;
 
-  const toggle = () => {
-    const hasFile = fileInput.files && fileInput.files.length > 0;
-    submitButton.disabled = !hasFile;
-  };
+  const saveButton = modal.querySelector("[data-dropzone-save]");
+  if (!saveButton) return;
 
-  toggle();
-  fileInput.addEventListener('change', toggle);
+  saveButton.addEventListener("click", () => {
+    // Allow Decidim's upload_field.js handler to run first (updateActiveUploads),
+    // then submit the form.
+    setTimeout(() => form.submit(), 100);
+  });
 });

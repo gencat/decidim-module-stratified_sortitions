@@ -7,12 +7,12 @@ module Decidim
       class ImportSample < Decidim::Command
         # Public: Initializes the command.
         #
-        # file - The CSV file to import
+        # form - A SampleUploadForm with the file blob
         # stratified_sortition - The stratified sortition to import samples to
         # user - The user performing the import
-        def initialize(file, stratified_sortition, user)
+        def initialize(form, stratified_sortition, user)
           super()
-          @file = file
+          @form = form
           @stratified_sortition = stratified_sortition
           @user = user
         end
@@ -24,8 +24,14 @@ module Decidim
         #
         # Returns nothing.
         def call
+          return broadcast(:invalid) unless @form.valid?
+
+          blob = @form.file
+          file_content = blob.download
+          filename = blob.filename.to_s
+
           Decidim::StratifiedSortitions::Admin::ImportSampleJob
-            .perform_later(@file.read, @file.original_filename, @stratified_sortition, @user)
+            .perform_later(file_content, filename, @stratified_sortition, @user)
           broadcast(:ok)
         end
       end

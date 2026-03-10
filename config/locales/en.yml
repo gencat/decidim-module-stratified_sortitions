@@ -178,15 +178,17 @@ en:
             help: The first four columns are candidate data, such as email, ID, phone, or address, and the following columns are the strata defined in the stratified sortition. Each row represents a candidate.
             no_data: No data
             place: Place of birth
-            remove_uploaded_samples: Remove uploaded samples
+            remove_uploaded_samples: Remove all records
             confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?
             strata_not_configured: You must configure strata and substrata first
             target: Target
-            title: Manage census
-            upload_file: Upload a new census
-            uploaded_file: Census data
+            title: Import new sample
+            upload_file: Upload file
+            uploaded_file: Uploaded sample data
             uploaded_files: "The following files have been added:"
             no_uploaded_files: "No files uploaded."
+            help_csv: CSV files are supported
+            help_format: .csv file with census
         import_mailer:
           subject: "Sample import result"
           import:

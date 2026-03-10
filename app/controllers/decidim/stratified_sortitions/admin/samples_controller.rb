@@ -26,7 +26,9 @@ module Decidim
         def create
           enforce_permission_to :upload_sample, :stratified_sortition
 
-          Decidim::StratifiedSortitions::Admin::ImportSample.call(params[:file], stratified_sortition, current_user) do
+          @form = form(SampleUploadForm).from_params(params)
+
+          Decidim::StratifiedSortitions::Admin::ImportSample.call(@form, stratified_sortition, current_user) do
             on(:ok) do
               flash[:notice] = I18n.t("sample_imports.create.success", scope: "decidim.stratified_sortitions.admin")
               redirect_to upload_sample_stratified_sortition_path(stratified_sortition)

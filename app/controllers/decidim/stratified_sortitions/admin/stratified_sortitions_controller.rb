@@ -102,6 +102,7 @@ module Decidim
           enforce_permission_to :upload_sample, :stratified_sortition
           if stratified_sortition.strata_and_substrata_configured?
             @stratified_sortition = stratified_sortition
+            @form = SampleUploadForm.new
             @sample_participants_count = @stratified_sortition.sample_participants.count
             @last_sample = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :desc).first
             @samples = SampleImport.where(stratified_sortition: @stratified_sortition).order(created_at: :asc)

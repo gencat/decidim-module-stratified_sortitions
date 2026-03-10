@@ -6,13 +6,6 @@
 </div>
 <%= render 'navigation_menu' %>
 <div class="card mt-12">
-  <div class="item_show__header">
-    <h1 class="item_show__header-title">
-      <div>
-        <%= t(".upload_file") %>
-      </div>
-    </h1>
-  </div>
   <div class="mt-1">
     <%= t(".description") %>
   </div>
@@ -22,21 +15,14 @@
       <%= link_to t('.download_template'), download_template_samples_path(id: @stratified_sortition.id), class: 'button button__sm button__secondary' %>
     </div>
   </div>
-  <div class="card-section mt-4">
-    <%= t(".help") %>
-  </div>
   <div class="row mt-4">
-    <%= form_tag samples_path(id: @stratified_sortition.id), multipart: true, class: 'form' do %>
-      <div class="flex">
-        <%= file_field_tag :file, id: 'sample-file-input' %>
-
-        <% if @stratified_sortition.strata_and_substrata_configured? %>
-          <%= submit_tag t('.upload_file'), id: 'sample-submit-button', class: 'button button__sm button__secondary hollow tiny button--title', disabled: true %>
-        <% else %>
-          <p class="mr-2"><%= t('.configure_strata_first') %></p>
-          <%= submit_tag t('.upload_file'), class: 'button button__sm button__secondary hollow tiny button--title', disabled: true, title: t('.configure_strata_first') %>
-        <% end %>
-      </div>
+    <%= decidim_form_for(@form, url: samples_path(id: @stratified_sortition.id), method: :post, html: { id: "sample-upload-form", class: "form", multipart: true }) do |form| %>
+      <%= form.upload :file,
+            label: false,
+            required: true,
+            help: [t(".help_csv"), t(".help_format")],
+            button_label: t(".upload_file"),
+            button_class: "button button__sm button__secondary upload-census-btn" %>
     <% end %>
   </div>
 </div>

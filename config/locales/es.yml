@@ -178,15 +178,17 @@ es:
             help: Las cuatro primeras columnas son datos del candidato, por ejemplo correo electrónico, DNI, teléfono o dirección y las siguientes columnas son los estratos definidos en el sorteo estratificado. Cada fila representa un candidato.
             no_data: No hay datos
             place: Lugar de nacimiento
-            remove_uploaded_samples: Eliminar muestras cargadas
+            remove_uploaded_samples: Eliminar todos los registros
             confirm_remove_uploaded_samples: ¿Estás seguro de que quieres eliminar todas las muestras cargadas?
             strata_not_configured: Primero debes configurar los estratos y subestratos
             target: Objetivo
-            title: Gestionar censo
-            upload_file: Subir un nuevo censo
-            uploaded_file: Datos del censo
+            title: Importar nueva muestra
+            upload_file: Subir archivo
+            uploaded_file: Datos de la muestra cargada
             uploaded_files: "Se han agregado los siguientes archivos:"
             no_uploaded_files: "No hay archivos cargados."
+            help_csv: Se admiten archivos CSV
+            help_format: Archivo .csv con el censo
         import_mailer:
           subject: "Resultado de la importación de la muestra"
           import:
