@@ -6,7 +6,7 @@ es:
         created_at: Fecha de creación
         title: Título
         description: Descripción
-        num_candidates: Número de candidatos
+        num_candidates: Número de personas candidatas a seleccionar
         selection_criteria: Criterios de selección
         selected_profiles_description: Descripción de los perfiles seleccionados
     errors:
@@ -42,14 +42,14 @@ es:
           execute: Ejecutar sorteo
           new_stratified_sortition: "Nuevo sorteo estratificado"
           title: "Acciones"
-          census_management: Gestión censo
+          census_management: Gestionar muestra
         models:
           stratified_sortition:
             fields:
               created_at: Fecha de creación
               title: Título
               description: Descripción
-              num_candidates: Número de candidatos
+              num_candidates: Número de candidatas a seleccionar
               selection_criteria: Criterios de selección
               selected_profiles_description: Descripción de los perfiles seleccionados
         stratified_sortitions:
@@ -182,7 +182,8 @@ es:
             confirm_remove_uploaded_samples: ¿Estás seguro de que quieres eliminar todas las muestras cargadas?
             strata_not_configured: Primero debes configurar los estratos y subestratos
             target: Objetivo
-            title: Importar nueva muestra
+            title: Gestionar muestra
+            upload_census: Subir una nueva muestra
             upload_file: Subir archivo
             uploaded_file: Datos de la muestra cargada
             uploaded_files: "Se han agregado los siguientes archivos:"
@@ -252,7 +253,7 @@ es:
             one: Se ha seleccionado 1 participante
             other: "Se han seleccionado %{count} participantes"
           sortition_details: Detalles del sorteo
-          num_candidates: Número de candidatos
+          num_candidates: Número de candidatas a seleccionar
           status: Estado
           strata_count: Número de estratos
           algorithm: Algoritmo

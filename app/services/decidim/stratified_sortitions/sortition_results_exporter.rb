@@ -84,12 +84,21 @@ module Decidim
 
       private
 
+      def i18n_scope
+        "decidim.stratified_sortitions.admin.stratified_sortitions.execute"
+      end
+
       def metadata_headers
-        @metadata_headers ||= %w(
-          algorithm total_participants generated_at generation_time
-          num_panels selected_at verification_seed random_value_used
-          selected_panel_probability
-        )
+        @metadata_headers ||= [
+          I18n.t("algorithm", scope: i18n_scope),
+          I18n.t("total_participants", scope: i18n_scope),
+          I18n.t("generated_at", scope: i18n_scope),
+          I18n.t("generation_time", scope: i18n_scope),
+          I18n.t("num_panels", scope: i18n_scope),
+          I18n.t("selected_at", scope: i18n_scope),
+          I18n.t("random_value_used", scope: i18n_scope),
+          I18n.t("selected_panel_probability", scope: i18n_scope),
+        ]
       end
 
       def metadata_values
@@ -100,7 +109,6 @@ module Decidim
           @portfolio.generation_time_seconds,
           @portfolio.num_panels,
           @portfolio.selected_at,
-          @portfolio.verification_seed || "-",
           @portfolio.random_value_used,
           format_percentage(@portfolio.selected_panel_probability),
         ]
@@ -108,10 +116,16 @@ module Decidim
 
       def participant_headers
         @participant_headers ||= begin
-          headers = %w(personal_data_1 personal_data_2 personal_data_3 personal_data_4)
+          template_scope = "decidim.stratified_sortitions.admin.samples.template"
+          headers = [
+            I18n.t("personal_data_1", scope: template_scope),
+            I18n.t("personal_data_2", scope: template_scope),
+            I18n.t("personal_data_3", scope: template_scope),
+            I18n.t("personal_data_4", scope: template_scope),
+          ]
           @strata.each do |stratum|
             stratum_name = stratum.name.values.compact.first || stratum.id.to_s
-            headers << "stratum_#{stratum_name}"
+            headers << stratum_name
           end
           headers
         end
