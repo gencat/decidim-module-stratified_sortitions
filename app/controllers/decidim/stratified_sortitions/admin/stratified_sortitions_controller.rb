@@ -142,6 +142,7 @@ module Decidim
           @result = FairSortitionService.new(stratified_sortition).call
           if @result.success?
             stratified_sortition.update!(status: "executed")
+            Decidim.traceability.perform_action!("execute", stratified_sortition, current_user, visibility: "all")
             flash[:notice] = I18n.t("stratified_sortitions.execute.success", scope: "decidim.stratified_sortitions.admin")
           else
             flash[:error] = @result.error
@@ -185,8 +186,22 @@ module Decidim
 
           SortitionResultsExportJob.perform_later(current_user, stratified_sortition, format)
 
+          Decidim.traceability.perform_action!("export_results", stratified_sortition, current_user, visibility: "all")
           flash[:notice] = I18n.t("decidim.admin.exports.notice")
           redirect_to execute_stratified_sortition_path(stratified_sortition)
+        end
+
+        def log_view_participants
+          portfolio = stratified_sortition.panel_portfolio
+
+          unless portfolio&.sampled?
+            head :unprocessable_entity
+            return
+          end
+
+          Decidim.traceability.perform_action!("view_participants", stratified_sortition, current_user, visibility: "all")
+
+          head :ok
         end
 
         private
