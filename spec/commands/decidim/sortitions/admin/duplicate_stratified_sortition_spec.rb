@@ -48,11 +48,11 @@ module Decidim
           end
 
           context "when the sortition has strata and substrata" do
-            let!(:stratum1) { create(:stratum, stratified_sortition:, position: 0, name: { en: "Gender" }, kind: "value") }
-            let!(:stratum2) { create(:stratum, stratified_sortition:, position: 1, name: { en: "Age" }, kind: "numeric_range") }
-            let!(:substratum1a) { create(:substratum, stratum: stratum1, position: 0, name: { en: "Male" }, value: { en: "M" }, max_quota_percentage: "60") }
-            let!(:substratum1b) { create(:substratum, stratum: stratum1, position: 1, name: { en: "Female" }, value: { en: "F" }, max_quota_percentage: "60") }
-            let!(:substratum2a) { create(:substratum, stratum: stratum2, position: 0, name: { en: "18-30" }, range: "18-30", max_quota_percentage: "50") }
+            let!(:stratum_1) { create(:stratum, stratified_sortition:, position: 0, name: { en: "Gender" }, kind: "value") }
+            let!(:stratum_2) { create(:stratum, stratified_sortition:, position: 1, name: { en: "Age" }, kind: "numeric_range") }
+            let!(:substratum_1a) { create(:substratum, stratum: stratum_1, position: 0, name: { en: "Male" }, value: { en: "M" }, max_quota_percentage: "60") }
+            let!(:substratum_1b) { create(:substratum, stratum: stratum_1, position: 1, name: { en: "Female" }, value: { en: "F" }, max_quota_percentage: "60") }
+            let!(:substratum_2a) { create(:substratum, stratum: stratum_2, position: 0, name: { en: "18-30" }, range: "18-30", max_quota_percentage: "50") }
 
             it "duplicates all strata" do
               expect { command.call }.to change(Decidim::StratifiedSortitions::Stratum, :count).by(2)
@@ -68,12 +68,12 @@ module Decidim
               duplicated_strata = duplicated.strata.order(:position)
 
               expect(duplicated_strata.size).to eq(2)
-              expect(duplicated_strata[0].name).to eq(stratum1.name)
-              expect(duplicated_strata[0].kind).to eq(stratum1.kind)
-              expect(duplicated_strata[0].position).to eq(stratum1.position)
-              expect(duplicated_strata[1].name).to eq(stratum2.name)
-              expect(duplicated_strata[1].kind).to eq(stratum2.kind)
-              expect(duplicated_strata[1].position).to eq(stratum2.position)
+              expect(duplicated_strata[0].name).to eq(stratum_1.name)
+              expect(duplicated_strata[0].kind).to eq(stratum_1.kind)
+              expect(duplicated_strata[0].position).to eq(stratum_1.position)
+              expect(duplicated_strata[1].name).to eq(stratum_2.name)
+              expect(duplicated_strata[1].kind).to eq(stratum_2.kind)
+              expect(duplicated_strata[1].position).to eq(stratum_2.position)
             end
 
             it "copies substrata attributes and links them to the new strata" do
@@ -83,18 +83,18 @@ module Decidim
 
               substrata_of_first = duplicated_strata[0].substrata.order(:position)
               expect(substrata_of_first.size).to eq(2)
-              expect(substrata_of_first[0].name).to eq(substratum1a.name)
-              expect(substrata_of_first[0].value).to eq(substratum1a.value)
-              expect(substrata_of_first[0].max_quota_percentage).to eq(substratum1a.max_quota_percentage)
-              expect(substrata_of_first[0].position).to eq(substratum1a.position)
-              expect(substrata_of_first[1].name).to eq(substratum1b.name)
-              expect(substrata_of_first[1].position).to eq(substratum1b.position)
+              expect(substrata_of_first[0].name).to eq(substratum_1a.name)
+              expect(substrata_of_first[0].value).to eq(substratum_1a.value)
+              expect(substrata_of_first[0].max_quota_percentage).to eq(substratum_1a.max_quota_percentage)
+              expect(substrata_of_first[0].position).to eq(substratum_1a.position)
+              expect(substrata_of_first[1].name).to eq(substratum_1b.name)
+              expect(substrata_of_first[1].position).to eq(substratum_1b.position)
 
               substrata_of_second = duplicated_strata[1].substrata.order(:position)
               expect(substrata_of_second.size).to eq(1)
-              expect(substrata_of_second[0].name).to eq(substratum2a.name)
-              expect(substrata_of_second[0].range).to eq(substratum2a.range)
-              expect(substrata_of_second[0].max_quota_percentage).to eq(substratum2a.max_quota_percentage)
+              expect(substrata_of_second[0].name).to eq(substratum_2a.name)
+              expect(substrata_of_second[0].range).to eq(substratum_2a.range)
+              expect(substrata_of_second[0].max_quota_percentage).to eq(substratum_2a.max_quota_percentage)
             end
 
             it "does not modify the original strata" do
