@@ -30,6 +30,7 @@ module Decidim
 
           Decidim::StratifiedSortitions::Admin::ImportSample.call(@form, stratified_sortition, current_user) do
             on(:ok) do
+              Decidim.traceability.perform_action!("import_sample", stratified_sortition, current_user, visibility: "all")
               flash[:notice] = I18n.t("sample_imports.create.success", scope: "decidim.stratified_sortitions.admin")
               redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
             end
@@ -46,6 +47,7 @@ module Decidim
 
           Decidim::StratifiedSortitions::Admin::RemoveUploadedSamples.call(stratified_sortition) do
             on(:ok) do
+              Decidim.traceability.perform_action!("remove_samples", stratified_sortition, current_user, visibility: "all")
               flash[:notice] = I18n.t("sample_imports.remove_uploaded_samples.success", scope: "decidim.stratified_sortitions.admin")
               redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
             end

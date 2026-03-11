@@ -33,6 +33,21 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmBtn.addEventListener("click", () => {
       activateTab("participants-section");
 
+      // Log the view_participants action
+      const logUrl = confirmBtn.dataset.logUrl;
+      const csrfToken = confirmBtn.dataset.authenticityToken;
+      if (logUrl && csrfToken) {
+        fetch(logUrl, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": csrfToken,
+            "Content-Type": "application/json",
+          },
+        }).catch(() => {
+          // Silently ignore log errors
+        });
+      }
+
       // Close the modal
       const modal = document.getElementById("confirm-participants-modal");
       if (modal) {

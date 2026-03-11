@@ -11,7 +11,9 @@
     <button class="button button__lg button__transparent-secondary w-full md:w-auto" data-dialog-close="confirm-participants-modal">
       <span><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_participants_cancel") %></span>
     </button>
-    <button type="button" class="button button__lg button__secondary w-full md:w-auto" id="confirm-show-participants">
+    <button type="button" class="button button__lg button__secondary w-full md:w-auto" id="confirm-show-participants"
+            data-log-url="<%= log_view_participants_stratified_sortition_path(stratified_sortition) %>"
+            data-authenticity-token="<%= form_authenticity_token %>">
       <span><%= t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.confirm_participants_ok") %></span>
     </button>
   </div>

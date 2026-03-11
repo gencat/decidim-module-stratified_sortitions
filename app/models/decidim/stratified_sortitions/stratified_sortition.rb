@@ -16,6 +16,10 @@ module Decidim
 
       component_manifest_name "stratified_sortitions"
 
+      def self.log_presenter_class_for(_log)
+        Decidim::StratifiedSortitions::AdminLog::StratifiedSortitionPresenter
+      end
+
       has_many :strata, class_name: "Decidim::StratifiedSortitions::Stratum", foreign_key: "decidim_stratified_sortition_id", dependent: :destroy
       has_many :sample_imports, class_name: "Decidim::StratifiedSortitions::SampleImport", dependent: :destroy
       has_many :sample_participants, class_name: "Decidim::StratifiedSortitions::SampleParticipant", foreign_key: "decidim_stratified_sortition_id", dependent: :destroy
