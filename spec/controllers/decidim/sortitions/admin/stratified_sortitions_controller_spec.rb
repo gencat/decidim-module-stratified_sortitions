@@ -363,6 +363,114 @@ module Decidim
               expect(Decidim::StratifiedSortitions::Admin::SortitionResultsExportJob)
                 .to have_been_enqueued.with(anything, anything, "csv")
             end
+
+            it "traces the export_results action" do
+              expect { post(:export_results, params:) }
+                .to change(Decidim::ActionLog, :count).by(1)
+              expect(Decidim::ActionLog.last.action).to eq("export_results")
+            end
+          end
+        end
+
+        describe "execute_stratified_sortition" do
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+            }
+          end
+
+          let(:fair_service_result) { double("result", success?: true, error: nil) }
+          let(:fair_service) { double("fair_sortition_service", call: fair_service_result) }
+
+          before do
+            allow(FairSortitionService).to receive(:new).and_return(fair_service)
+          end
+
+          context "when the sortition executes successfully" do
+            it "redirects to the execute page" do
+              post(:execute_stratified_sortition, params:)
+              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
+            end
+
+            it "sets a notice flash message" do
+              post(:execute_stratified_sortition, params:)
+              expect(flash[:notice]).to be_present
+            end
+
+            it "traces the execute action" do
+              expect { post(:execute_stratified_sortition, params:) }
+                .to change(Decidim::ActionLog, :count).by(1)
+              expect(Decidim::ActionLog.last.action).to eq("execute")
+            end
+          end
+
+          context "when the sortition fails" do
+            let(:fair_service_result) { double("result", success?: false, error: "Something went wrong") }
+
+            it "redirects to the execute page" do
+              post(:execute_stratified_sortition, params:)
+              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
+            end
+
+            it "sets an error flash message" do
+              post(:execute_stratified_sortition, params:)
+              expect(flash[:error]).to be_present
+            end
+
+            it "does not trace the execute action" do
+              expect { post(:execute_stratified_sortition, params:) }
+                .not_to change(Decidim::ActionLog, :count)
+            end
+          end
+        end
+
+        describe "log_view_participants" do
+          let(:params) do
+            {
+              participatory_process_slug: component.participatory_space.slug,
+              id: stratified_sortition.id,
+            }
+          end
+
+          context "when the portfolio is not sampled" do
+            it "returns unprocessable_entity" do
+              post(:log_view_participants, params:)
+              expect(response).to have_http_status(:unprocessable_entity)
+            end
+
+            it "does not trace the action" do
+              expect { post(:log_view_participants, params:) }
+                .not_to change(Decidim::ActionLog, :count)
+            end
+          end
+
+          context "when the portfolio is sampled" do
+            let(:sample_import) { create(:sample_import, stratified_sortition:) }
+            let!(:participant) do
+              create(:sample_participant,
+                     decidim_stratified_sortition: stratified_sortition,
+                     decidim_stratified_sortitions_sample_import: sample_import)
+            end
+            let!(:portfolio) do
+              create(:panel_portfolio,
+                     :sampled,
+                     stratified_sortition:,
+                     panels: [[participant.id]],
+                     probabilities: [1.0],
+                     selection_probabilities: { participant.id => 1.0 })
+            end
+
+            it "returns ok" do
+              post(:log_view_participants, params:)
+              expect(response).to have_http_status(:ok)
+            end
+
+            it "traces the view_participants action" do
+              expect { post(:log_view_participants, params:) }
+                .to change(Decidim::ActionLog, :count).by(1)
+              expect(Decidim::ActionLog.last.action).to eq("view_participants")
+            end
           end
         end
 

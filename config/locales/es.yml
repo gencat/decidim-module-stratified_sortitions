@@ -278,6 +278,17 @@ es:
           count:
             one: 1 sorteo estratificado
             other: "%{count} sorteos estratificados"
+      admin_log:
+        stratified_sortition:
+          create: "%{user_name} ha creado el sorteo estratificado %{resource_name} en %{space_name}"
+          update: "%{user_name} ha actualizado el sorteo estratificado %{resource_name} en %{space_name}"
+          delete: "%{user_name} ha eliminado el sorteo estratificado %{resource_name} en %{space_name}"
+          duplicate: "%{user_name} ha duplicado el sorteo estratificado %{resource_name}"
+          import_sample: "%{user_name} ha importado una muestra en el sorteo estratificado %{resource_name} en %{space_name}"
+          remove_samples: "%{user_name} ha eliminado los registros importados del sorteo estratificado %{resource_name} en %{space_name}"
+          execute: "%{user_name} ha ejecutado el sorteo estratificado %{resource_name} en %{space_name}"
+          export_results: "%{user_name} ha exportado los resultados del sorteo estratificado %{resource_name} en %{space_name}"
+          view_participants: "%{user_name} ha consultado el listado de participantes seleccionadas del sorteo estratificado %{resource_name} en %{space_name}"
       errors:
         panel_portfolio:
           already_sampled: "La cartera ya ha sido muestreada"

@@ -22,6 +22,7 @@ module Decidim
           post :execute_stratified_sortition, on: :member
           post :export_results, on: :member
           post :export_charts_pdf, on: :member
+          post :log_view_participants, on: :member
         end
 
         resources :samples, only: [:show, :create] do
