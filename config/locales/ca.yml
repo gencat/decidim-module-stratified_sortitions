@@ -6,7 +6,7 @@ ca:
         created_at: Data de creació
         title: Títol
         description: Descripció
-        num_candidates: Nombre de candidats
+        num_candidates: Nombre de persones candidates a seleccionar
         selection_criteria: Criteris de selecció
         selected_profiles_description: Descripció dels perfils seleccionats
     errors:
@@ -42,14 +42,14 @@ ca:
           execute: Executar sorteig
           new_stratified_sortition: "Nou sorteig estratificat"
           title: "Accions"
-          census_management: Gestió cens
+          census_management: Gestionar mostra
         models:
           stratified_sortition:
             fields:
               created_at: Data de creació
               title: Títol
               description: Descripció
-              num_candidates: Nombre de candidats
+              num_candidates: Nombre de candidates a seleccionar
               selection_criteria: Criteris de selecció
               selected_profiles_description: Descripció dels perfils seleccionats
         stratified_sortitions:
@@ -100,7 +100,7 @@ ca:
               one: "1 participant seleccionat"
               other: "%{count} participants seleccionats"
             participant_id: ID
-            personal_data_1: Dada personal 1
+            personal_data_1: "Dada personal 1 (identificador únic)"
             personal_data_2: Dada personal 2
             personal_data_3: Dada personal 3
             personal_data_4: Dada personal 4
@@ -182,7 +182,8 @@ ca:
             remove_uploaded_samples: Eliminar tots els registres
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les registres?
             target: Objectiu
-            title: Importar nova mostra
+            title: Gestionar mostra
+            upload_census: Pujar una nova mostra
             upload_file: Afegir arxiu
             uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
@@ -252,7 +253,7 @@ ca:
             one: S'ha seleccionat 1 participant
             other: "S'han seleccionat %{count} participants"
           sortition_details: Detalls del sorteig
-          num_candidates: Nombre de candidats
+          num_candidates: Nombre de candidates a seleccionar
           status: Estat
           strata_count: Nombre d'estrats
           algorithm: Algorisme

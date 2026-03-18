@@ -78,9 +78,8 @@ module Decidim
           let(:rows) { CSV.parse(result.read, col_sep: Decidim.default_csv_col_sep) }
 
           it "has metadata headers in the first row" do
-            expect(rows[0]).to include("algorithm")
-            expect(rows[0]).to include("total_participants")
-            expect(rows[0]).to include("verification_seed")
+            expect(rows[0]).to include("Algorithm")
+            expect(rows[0]).to include("Total participants")
           end
 
           it "has metadata values in the second row" do
@@ -93,12 +92,12 @@ module Decidim
           end
 
           it "has participant headers in the fourth row" do
-            expect(rows[3]).to include("personal_data_1")
-            expect(rows[3]).to include("personal_data_2")
+            expect(rows[3]).to include("Personal data 1 (unique identifier)")
+            expect(rows[3]).to include("Personal data 2")
           end
 
           it "has a stratum column header derived from stratum name" do
-            expect(rows[3]).to include("stratum_Gender")
+            expect(rows[3]).to include("Gender")
           end
 
           it "has participant data starting at the fifth row" do
@@ -108,7 +107,7 @@ module Decidim
           end
 
           it "includes substratum names in the stratum column" do
-            stratum_col_idx = rows[3].index("stratum_Gender")
+            stratum_col_idx = rows[3].index("Gender")
             substratum_values = rows[4..].map { |row| row[stratum_col_idx] }
             expect(substratum_values).to include("Woman")
             expect(substratum_values).to include("Man")
@@ -170,7 +169,7 @@ module Decidim
           end
 
           it "has algorithm in metadata" do
-            expect(parsed["metadata"]["algorithm"]).to match(/LEXIMIN/)
+            expect(parsed["metadata"]["Algorithm"]).to match(/LEXIMIN/)
           end
 
           it "includes all selected participants" do
@@ -178,12 +177,12 @@ module Decidim
           end
 
           it "includes personal_data_1 for each participant" do
-            ids = parsed["participants"].map { |p| p["personal_data_1"] }
+            ids = parsed["participants"].map { |p| p["Personal data 1 (unique identifier)"] }
             expect(ids).to include("ID001", "ID002")
           end
 
           it "includes stratum substratum values for each participant" do
-            genders = parsed["participants"].map { |p| p["stratum_Gender"] }
+            genders = parsed["participants"].map { |p| p["Gender"] }
             expect(genders).to include("Woman", "Man")
           end
         end

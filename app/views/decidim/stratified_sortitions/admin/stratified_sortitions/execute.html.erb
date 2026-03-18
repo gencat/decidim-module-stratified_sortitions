@@ -57,7 +57,6 @@
                 <th><%= t(".generation_time") %></th>
                 <th><%= t(".num_panels") %></th>
                 <th><%= t(".selected_at") %></th>
-                <th><%= t(".verification_seed") %></th>
                 <th><%= t(".random_value_used") %></th>
                 <th><%= t(".selected_panel_probability") %></th>
               </tr>
@@ -71,9 +70,8 @@
                 <td><%= number_with_precision(@portfolio.generation_time_seconds, precision: 2) %>s</td>
                 <td><%= @portfolio.num_panels %></td>
                 <td><%= l @portfolio.selected_at, format: :decidim_short %></td>
-                <td><code><%= @portfolio.verification_seed || "-" %></code></td>
                 <td><code><%= @portfolio.random_value_used %></code></td>
-                <td><%= number_to_percentage(@portfolio.selected_panel_probability.to_f * 100, precision: 4) %></td>
+                <td><%= number_to_percentage(@portfolio.selected_panel_probability.to_f * 100, precision: 2) %></td>
               </tr>
             </tbody>
           </table>

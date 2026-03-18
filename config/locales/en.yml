@@ -6,7 +6,7 @@ en:
         created_at: Created At
         title: Title
         description: Description
-        num_candidates: Number of Candidates
+        num_candidates: Number of candidates to select
         selection_criteria: Selection Criteria
         selected_profiles_description: Selected Profiles Description
     errors:
@@ -42,14 +42,14 @@ en:
           execute: Execute sortition
           new_stratified_sortition: "New Stratified Sortition"
           title: "Actions"
-          census_management: Census management
+          census_management: Manage sample
         models:
           stratified_sortition:
             fields:
               created_at: Created At
               title: Title
               description: Description
-              num_candidates: Number of Candidates
+              num_candidates: Number of candidates to select
               selection_criteria: Selection Criteria
               selected_profiles_description: Selected Profiles Description
         stratified_sortitions:
@@ -182,7 +182,8 @@ en:
             confirm_remove_uploaded_samples: Are you sure you want to remove all uploaded samples?
             strata_not_configured: You must configure strata and substrata first
             target: Target
-            title: Import new sample
+            title: Manage sample
+            upload_census: Upload new sample
             upload_file: Upload file
             uploaded_file: Uploaded sample data
             uploaded_files: "The following files have been added:"
@@ -252,7 +253,7 @@ en:
             one: 1 participant has been selected
             other: "%{count} participants have been selected"
           sortition_details: Sortition details
-          num_candidates: Number of candidates
+          num_candidates: Number of candidates to select
           status: Status
           strata_count: Number of strata
           algorithm: Algorithm
