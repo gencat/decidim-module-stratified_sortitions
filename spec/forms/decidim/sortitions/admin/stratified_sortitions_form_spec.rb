@@ -13,7 +13,7 @@ module Decidim
         let(:decidim_component_id) { 1 }
         let(:title) { { en: "Title", es: "Título", ca: "Títol" } }
         let(:description) { { en: "Description", es: "Descripción", ca: "Descripció" } }
-        let(:selection_criteria) { { en: "Selection criteria", es: "Criterios de selección", ca: "Criteris de selecció" } }
+        let(:selection_criteria) { { en: "Selection criteria", es: "Criterios de elegibilidad", ca: "Criteris d'elegibilitat" } }
         let(:selected_profiles_description) { { en: "Profiles", es: "Perfiles", ca: "Perfils" } }
         let(:strata_params) { {} }
         let(:stratified_sortition_id) { nil }

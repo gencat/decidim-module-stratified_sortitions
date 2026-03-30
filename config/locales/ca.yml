@@ -7,7 +7,7 @@ ca:
         title: Títol
         description: Descripció
         num_candidates: Nombre de persones candidates a seleccionar
-        selection_criteria: Criteris de selecció
+        selection_criteria: Criteris d'elegibilitat
         selected_profiles_description: Descripció dels perfils seleccionats
     errors:
       messages:
@@ -50,7 +50,7 @@ ca:
               title: Títol
               description: Descripció
               num_candidates: Nombre de candidates a seleccionar
-              selection_criteria: Criteris de selecció
+              selection_criteria: Criteris d'elegibilitat
               selected_profiles_description: Descripció dels perfils seleccionats
         stratified_sortitions:
           create:
@@ -129,6 +129,8 @@ ca:
             description: Descripció
             name: Nom
             published: Publicat
+            selected_profiles_description_help: Pots indicar, si s'escau, els criteris d'estratificació utilitzats en el sorteig, i el motiu.
+            selection_criteria_help: Pots indicar, si s'escau, els criteris d'elegibilitat de les persones que han estat seleccionades per participar en el sorteig. 
           strata:
             title: Estrats
             add_stratum: Afegir estrat
@@ -244,7 +246,7 @@ ca:
         show:
           introduction: "Aquesta pàgina conté els detalls del sorteig estratificat %{reference}. Mitjançant aquest sorteig, s'han seleccionat %{num_candidates} candidats utilitzant un algorisme de selecció aleatòria estratificada que garanteix la representació justa en tots els estrats definits."
           description: Descripció
-          selection_criteria: Criteris de selecció
+          selection_criteria: Criteris d'elegibilitat
           selected_profiles_description: Descripció dels perfils seleccionats
           strata: Estrats
           max_quota: Quota màxima

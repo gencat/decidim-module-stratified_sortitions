@@ -129,6 +129,8 @@ en:
             description: Description
             name: Name
             published: Published
+            selected_profiles_description_help: You can indicate, if applicable, the stratification criteria used in the draw, and the reason.
+            selection_criteria_help: You can indicate, if applicable, the eligibility criteria of the people who have been selected to participate in the sortition.
           strata:
             title: Strata
             add_stratum: Add stratum

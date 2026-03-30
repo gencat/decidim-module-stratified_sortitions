@@ -7,7 +7,7 @@ es:
         title: Título
         description: Descripción
         num_candidates: Número de personas candidatas a seleccionar
-        selection_criteria: Criterios de selección
+        selection_criteria: Criterios de elegibilidad
         selected_profiles_description: Descripción de los perfiles seleccionados
     errors:
       messages:
@@ -50,7 +50,7 @@ es:
               title: Título
               description: Descripción
               num_candidates: Número de candidatas a seleccionar
-              selection_criteria: Criterios de selección
+              selection_criteria: Criterios de elegibilidad
               selected_profiles_description: Descripción de los perfiles seleccionados
         stratified_sortitions:
           create:
@@ -129,6 +129,8 @@ es:
             description: Descripción
             name: Nombre
             published: Publicado
+            selected_profiles_description_help: Puedes indicar, si corresponde, los criterios de estratificación utilizados en el sorteo, y la razón.
+            selection_criteria_help: Puedes indicar, si corresponde, los criterios de elegibilidad de las personas que han sido seleccionadas para participar en el sorteo.
           strata:
             title: Estratos
             add_stratum: Añadir estrato
@@ -244,7 +246,7 @@ es:
         show:
           introduction: 'Esta página contiene los detalles del sorteo estratificado %{reference}. Mediante este sorteo, se han seleccionado %{num_candidates} candidatos utilizando un algoritmo de selección aleatoria estratificada que garantiza la representación justa en todos los estratos definidos.'
           description: Descripción
-          selection_criteria: Criterios de selección
+          selection_criteria: Criterios de elegibilidad
           selected_profiles_description: Descripción de los perfiles seleccionados
           strata: Estratos
           max_quota: Cuota máxima
