@@ -14,7 +14,7 @@
       </div>
 
       <div class="row column mt-4">
-        <%= form.number_field :num_candidates %>
+        <%= form.number_field :num_candidates, readonly: stratified_sortition.executed? %>
       </div>
 
       <div class="row column">

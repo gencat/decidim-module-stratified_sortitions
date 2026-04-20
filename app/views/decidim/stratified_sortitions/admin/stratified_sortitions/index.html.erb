@@ -29,6 +29,9 @@
             <%= t("models.stratified_sortition.fields.num_candidates", scope: "decidim.stratified_sortitions.admin") %>
           </th>
           <th>
+            <%= t("models.stratified_sortition.fields.status", scope: "decidim.stratified_sortitions.admin") %>
+          </th>
+          <th>
             <%= t("models.stratified_sortition.fields.created_at", scope: "decidim.stratified_sortitions.admin") %>
           </th>
           <th class="actions"><%= t("actions.title", scope: "decidim.stratified_sortitions.admin") %></th>
@@ -42,6 +45,11 @@
             </td>
             <td>
               <%= stratified_sortition.num_candidates %>
+            </td>
+            <td>
+              <strong class="label <%= stratified_sortition_state_css_class(stratified_sortition) %>">
+                <%= t(stratified_sortition.status, scope: "decidim.stratified_sortitions.stratified_sortitions.filters") %>
+              </strong>
             </td>
             <td>
               <%= l(stratified_sortition.created_at, format: :decidim_short) if stratified_sortition.created_at %>

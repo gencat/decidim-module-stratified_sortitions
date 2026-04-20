@@ -20,8 +20,7 @@ en:
         cannot_change_substratum_name_with_sample_participants: "Cannot change substratum name when there are already imported participants"
         cannot_change_substratum_value_with_sample_participants: "Cannot change substratum value when there are already imported participants"
         cannot_change_substratum_range_with_sample_participants: "Cannot change substratum range when there are already imported participants"
-        cannot_change_stratum_position_with_sample_participants: "Cannot change stratum position when there are already imported participants"
-        cannot_change_substratum_position_with_sample_participants: "Cannot change substratum position when there are already imported participants"
+        cannot_change_num_candidates_when_executed: "Cannot change the number of candidates after the sortition has been executed"
   decidim:
     components:
       stratified_sortitions:
@@ -52,6 +51,7 @@ en:
               num_candidates: Number of candidates to select
               selection_criteria: Selection Criteria
               selected_profiles_description: Selected Profiles Description
+              status: Status
         stratified_sortitions:
           create:
             error: There's been a problem creating this stratified sortition
