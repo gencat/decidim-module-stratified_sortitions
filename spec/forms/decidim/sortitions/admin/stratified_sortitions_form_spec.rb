@@ -228,6 +228,8 @@ module Decidim
                 include_examples "allows the change"
               end
             end
+          end
+        end
 
         describe "num_candidates immutability when executed" do
           let!(:stratified_sortition) { create(:stratified_sortition, num_candidates: 5, status: "executed") }
