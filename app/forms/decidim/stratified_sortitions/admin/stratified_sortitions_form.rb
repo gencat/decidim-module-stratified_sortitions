@@ -47,11 +47,20 @@ module Decidim
         end
 
         validate :strata_immutable_when_sample_participants_exist
+        validate :num_candidates_immutable_when_executed
 
         private
 
+        def num_candidates_immutable_when_executed
+          return unless stratified_sortition&.executed?
+          return if stratified_sortition.num_candidates == num_candidates
+
+          errors.add(:num_candidates, :cannot_change_num_candidates_when_executed)
+        end
+
         def strata_immutable_when_sample_participants_exist
           return unless stratified_sortition&.sample_participants&.any?
+          return if stratified_sortition.executed?
 
           validate_strata_count
           validate_strata_attributes
@@ -78,10 +87,6 @@ module Decidim
             errors.add(:strata, :cannot_change_stratum_name_with_sample_participants) unless same_translated_attribute?(existing_stratum.name, stratum_form.name)
 
             errors.add(:strata, :cannot_change_stratum_kind_with_sample_participants) if existing_stratum.kind != stratum_form.kind
-
-            if existing_stratum.position.present? && existing_stratum.position != stratum_form.position.to_i
-              errors.add(:strata, :cannot_change_stratum_position_with_sample_participants)
-            end
           end
         end
 
@@ -119,10 +124,6 @@ module Decidim
 
             unless normalize_blank(existing_substratum.range) == normalize_blank(substratum_form.range)
               errors.add(:strata, :cannot_change_substratum_range_with_sample_participants)
-            end
-
-            if existing_substratum.position.present? && existing_substratum.position != substratum_form.position.to_i
-              errors.add(:strata, :cannot_change_substratum_position_with_sample_participants)
             end
           end
         end

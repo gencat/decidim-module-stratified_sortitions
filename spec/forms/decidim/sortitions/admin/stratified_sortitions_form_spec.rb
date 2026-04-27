@@ -13,7 +13,7 @@ module Decidim
         let(:decidim_component_id) { 1 }
         let(:title) { { en: "Title", es: "Título", ca: "Títol" } }
         let(:description) { { en: "Description", es: "Descripción", ca: "Descripció" } }
-        let(:selection_criteria) { { en: "Selection criteria", es: "Criterios de selección", ca: "Criteris de selecció" } }
+        let(:selection_criteria) { { en: "Selection criteria", es: "Criterios de elegibilidad", ca: "Criteris d'elegibilitat" } }
         let(:selected_profiles_description) { { en: "Profiles", es: "Perfiles", ca: "Perfils" } }
         let(:strata_params) { {} }
         let(:stratified_sortition_id) { nil }
@@ -177,10 +177,10 @@ module Decidim
                 include_examples "blocks the change with error", "cannot_change_stratum_kind_with_sample_participants"
               end
 
-              context "when changing stratum position" do
+              context "when changing stratum position (allowed)" do
                 let(:stratum_params) { base_stratum_params.merge(position: 5) }
 
-                include_examples "blocks the change with error", "cannot_change_stratum_position_with_sample_participants"
+                include_examples "allows the change"
               end
             end
 
@@ -222,27 +222,56 @@ module Decidim
                 include_examples "blocks the change with error", "cannot_change_substratum_range_with_sample_participants"
               end
 
-              context "when changing substratum position" do
+              context "when changing substratum position (allowed)" do
                 let(:stratum_params) { base_stratum_params.merge(substrata: { substratum.id.to_s => base_substratum_params.merge(position: 5) }) }
-
-                include_examples "blocks the change with error", "cannot_change_substratum_position_with_sample_participants"
-              end
-
-              context "when substratum position is nil in DB and form sends a position" do
-                let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: nil, max_quota_percentage: "10") }
-                let(:stratum_params) { base_stratum_params.merge(substrata: { substratum.id.to_s => base_substratum_params.merge(position: 0) }) }
 
                 include_examples "allows the change"
               end
             end
+          end
+        end
 
-            context "when stratum position is nil in DB and form sends a position" do
-              let!(:stratum) { create(:stratum, stratified_sortition:, name: { en: "Age" }, kind: "value", position: nil) }
-              let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: 0, max_quota_percentage: "10") }
-              let(:stratum_params) { base_stratum_params.merge(position: 0) }
+        describe "num_candidates immutability when executed" do
+          let!(:stratified_sortition) { create(:stratified_sortition, num_candidates: 5, status: "executed") }
+          let(:stratified_sortition_id) { stratified_sortition.id }
 
-              include_examples "allows the change"
+          context "when sortition is executed and num_candidates is unchanged" do
+            let(:num_candidates) { 5 }
+
+            it { is_expected.to be_valid }
+          end
+
+          context "when sortition is executed and num_candidates is changed" do
+            let(:num_candidates) { 10 }
+
+            it { is_expected.to be_invalid }
+
+            it "adds the correct error" do
+              form.valid?
+              expect(form.errors[:num_candidates]).to include(I18n.t("activemodel.errors.messages.cannot_change_num_candidates_when_executed"))
             end
+          end
+
+          context "when sortition is pending and num_candidates is changed" do
+            let!(:stratified_sortition) { create(:stratified_sortition, num_candidates: 5, status: "pending") }
+            let(:num_candidates) { 10 }
+
+            it { is_expected.to be_valid }
+          end
+        end
+
+        describe "strata validation skipped when executed" do
+          let!(:stratified_sortition) { create(:stratified_sortition, status: "executed") }
+          let!(:stratum) { create(:stratum, stratified_sortition:, name: { en: "Age" }, kind: "value", position: 0) }
+          let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: 0, max_quota_percentage: "10") }
+          let!(:sample_participant) { create(:sample_participant, decidim_stratified_sortition: stratified_sortition) }
+          let(:stratified_sortition_id) { stratified_sortition.id }
+
+          context "when changing only text fields on an executed sortition" do
+            let(:title) { { en: "New Title for Executed", es: "Nuevo Título", ca: "Nou Títol" } }
+            let(:description) { { en: "New Description", es: "Nueva Descripción", ca: "Nova Descripció" } }
+
+            it { is_expected.to be_valid }
           end
         end
       end

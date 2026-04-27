@@ -28,7 +28,7 @@ module Decidim
 
           transaction do
             update_stratified_sortition
-            update_strata(stratified_sortition)
+            update_strata(stratified_sortition) unless stratified_sortition.executed?
           end
 
           broadcast(:ok, stratified_sortition)

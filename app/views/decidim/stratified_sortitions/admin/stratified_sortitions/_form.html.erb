@@ -14,7 +14,7 @@
       </div>
 
       <div class="row column mt-4">
-        <%= form.number_field :num_candidates %>
+        <%= form.number_field :num_candidates, readonly: stratified_sortition.executed? %>
       </div>
 
       <div class="row column">
@@ -22,11 +22,11 @@
       </div>
 
       <div class="row column">
-        <%= form.translated :editor, :selection_criteria %>
+        <%= form.translated :editor, :selection_criteria, help_text: t("selection_criteria_help", scope: "decidim.stratified_sortitions.admin.stratified_sortitions.form") %>
       </div>
 
       <div class="row column">
-        <%= form.translated :editor, :selected_profiles_description %>
+        <%= form.translated :editor, :selected_profiles_description, help_text: t("selected_profiles_description_help", scope: "decidim.stratified_sortitions.admin.stratified_sortitions.form") %>
       </div>
     </div>
   </div>
