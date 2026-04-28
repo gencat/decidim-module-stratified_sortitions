@@ -43,7 +43,7 @@
         <%= form.number_field :max_quota_percentage,
             step: 0.1, label: t(".max_quota_percentage"),
             placeholder: t(".max_quota_percentage_placeholder"),
-            readonly: @stratified_sortition.executed? %>
+            readonly: @stratified_sortition&.executed? %>
       </div>
     </div>
   </div>
