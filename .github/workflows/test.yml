@@ -44,9 +44,9 @@ jobs:
         with:
           chromedriver-version: 119.0.6045.105
 
-      - name: Install cbc
+      - name: Install cbc and ImageMagick
         shell: "bash"
-        run: sudo apt update && sudo apt install -y coinor-cbc coinor-libcbc-dev
+        run: sudo apt update && sudo apt install -y coinor-cbc coinor-libcbc-dev imagemagick libmagickwand-dev
 
       - name: List Chrome
         shell: "bash"
