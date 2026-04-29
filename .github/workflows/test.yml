@@ -46,7 +46,7 @@ jobs:
 
       - name: Install cbc and ImageMagick
         shell: "bash"
-        run: sudo apt update && sudo apt install -y coinor-cbc coinor-libcbc-dev imagemagick libmagickwand-dev
+        run: sudo apt update && sudo apt install -y coinor-cbc coinor-libcbc-dev imagemagick
 
       - name: List Chrome
         shell: "bash"
