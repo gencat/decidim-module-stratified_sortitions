@@ -266,6 +266,7 @@ module Decidim
           let!(:substratum) { create(:substratum, stratum:, name: { en: "18-25" }, value: "young", range: nil, position: 0, max_quota_percentage: "10") }
           let!(:sample_participant) { create(:sample_participant, decidim_stratified_sortition: stratified_sortition) }
           let(:stratified_sortition_id) { stratified_sortition.id }
+          let(:num_candidates) { stratified_sortition.num_candidates }
 
           context "when changing only text fields on an executed sortition" do
             let(:title) { { en: "New Title for Executed", es: "Nuevo Título", ca: "Nou Títol" } }
