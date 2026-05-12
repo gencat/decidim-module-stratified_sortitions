@@ -14,6 +14,8 @@ module Decidim
       include Decidim::Randomable
       include Decidim::HasUploadValidations
 
+      delegate :mounted_engine, :mounted_admin_engine, :mounted_params, to: :component
+
       component_manifest_name "stratified_sortitions"
 
       def self.log_presenter_class_for(_log)
