@@ -24,7 +24,7 @@ module Decidim
 
         context "when the sortition has strata and substrata" do
           let!(:stratum) { create(:stratum, stratified_sortition: sortition) }
-          let!(:substratum) { create(:substratum, stratum: stratum) }
+          let!(:substratum) { create(:substratum, stratum:) }
 
           it "does not raise an error when destroying the component" do
             expect { component.destroy! }.not_to raise_error
@@ -76,7 +76,7 @@ module Decidim
 
         context "when the sortition has all associated records" do
           let!(:stratum) { create(:stratum, stratified_sortition: sortition) }
-          let!(:substratum) { create(:substratum, stratum: stratum) }
+          let!(:substratum) { create(:substratum, stratum:) }
           let!(:sample_import) { create(:sample_import, stratified_sortition: sortition) }
           let!(:sample_participant) do
             create(:sample_participant,
