@@ -133,12 +133,17 @@ module Decidim
         end
 
         def same_translated_attribute?(existing_value, form_value)
-          return true if existing_value == form_value
+          existing_hash = normalize_translated_hash(existing_value)
+          form_hash = normalize_translated_hash(form_value)
 
-          existing_hash = existing_value.is_a?(Hash) ? existing_value : {}
-          form_hash = form_value.is_a?(Hash) ? form_value : {}
+          locales = (existing_hash.keys + form_hash.keys).uniq
+          locales.all? { |locale| existing_hash[locale] == form_hash[locale] }
+        end
 
-          existing_hash.stringify_keys == form_hash.stringify_keys
+        def normalize_translated_hash(value)
+          hash = value.is_a?(Hash) ? value.stringify_keys : {}
+          hash = hash.except("machine_translations")
+          hash.transform_values { |v| v.to_s.strip.presence }.reject { |_, v| v.nil? }
         end
 
         def stratified_sortition
