@@ -143,7 +143,7 @@ module Decidim
         def normalize_translated_hash(value)
           hash = value.is_a?(Hash) ? value.stringify_keys : {}
           hash = hash.except("machine_translations")
-          hash.transform_values { |v| v.to_s.strip.presence }.reject { |_, v| v.nil? }
+          hash.transform_values { |v| v.to_s.strip.presence }.compact
         end
 
         def stratified_sortition
