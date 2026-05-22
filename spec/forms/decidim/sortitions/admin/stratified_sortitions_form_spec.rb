@@ -144,6 +144,47 @@ module Decidim
               include_examples "allows the change"
             end
 
+            describe "regression: machine_translations key in stored name does not trigger false immutability errors" do
+              context "when stratum name in DB contains machine_translations but form does not" do
+                before do
+                  stratum.update_columns(name: { "en" => "Age", "machine_translations" => { "ca" => "Edat" } })
+                end
+
+                context "and form sends the same name without machine_translations" do
+                  let(:stratum_params) { base_stratum_params.merge(name_en: "Age") }
+
+                  include_examples "allows the change"
+                end
+              end
+
+              context "when substratum name in DB contains machine_translations but form does not" do
+                before do
+                  substratum.update_columns(name: { "en" => "18-25", "machine_translations" => { "ca" => "18-25" } })
+                end
+
+                context "and form sends the same name without machine_translations" do
+                  include_examples "allows the change"
+                end
+              end
+
+              context "when both stratum and substratum names in DB contain machine_translations" do
+                before do
+                  stratum.update_columns(name: { "en" => "Age", "machine_translations" => { "es" => "Edad", "ca" => "Edat" } })
+                  substratum.update_columns(name: { "en" => "18-25", "machine_translations" => { "es" => "18-25", "ca" => "18-25" } })
+                end
+
+                context "and form sends the same names without machine_translations" do
+                  include_examples "allows the change"
+                end
+
+                context "and form changes the stratum name (still blocked)" do
+                  let(:stratum_params) { base_stratum_params.merge(name_en: "Different Name") }
+
+                  include_examples "blocks the change with error", "cannot_change_stratum_name_with_sample_participants"
+                end
+              end
+            end
+
             context "when changing max_quota_percentage (allowed)" do
               let(:stratum_params) { base_stratum_params.merge(substrata: { substratum.id.to_s => base_substratum_params.merge(max_quota_percentage: "25") }) }
 
