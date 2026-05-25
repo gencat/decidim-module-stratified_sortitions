@@ -11,9 +11,9 @@ Decidim.register_component(:stratified_sortitions) do |component|
   component.admin_engine = Decidim::StratifiedSortitions::AdminEngine
   component.icon = "media/images/decidim_stratified_sortitions.svg"
 
-  # component.on(:before_destroy) do |instance|
-  #   # Code executed before removing the component
-  # end
+  component.on(:before_destroy) do |instance|
+    Decidim::StratifiedSortitions::StratifiedSortition.where(decidim_component_id: instance.id).find_each(&:destroy!)
+  end
 
   component.permissions_class_name = "Decidim::StratifiedSortitions::Permissions"
 
