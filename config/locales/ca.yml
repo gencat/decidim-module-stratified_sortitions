@@ -41,7 +41,7 @@ ca:
           execute: Executar sorteig
           new_stratified_sortition: "Nou sorteig estratificat"
           title: "Accions"
-          census_management: Gestionar mostra
+          census_management: Gestiona la mostra
         models:
           stratified_sortition:
             fields:
@@ -74,8 +74,8 @@ ca:
             confirm_execute_body: En executar el sorteig aquest quedarà registrat a la plataforma i l'acció serà irreversible. No es podran editar les dades, la configuració dels estrats ni la mostra.
             confirm_execute_ok: Executar sorteig
             confirm_execute_cancel: Cancel·lar
-            export: Exportar
-            export_results: Exportar resultats
+            export: Exporta
+            export_results: Exporta els resultats
             export_csv: Resultats del sorteig estratificat com a CSV
             export_excel: Resultats del sorteig estratificat com a Excel
             export_json: Resultats del sorteig estratificat com a JSON
@@ -92,7 +92,7 @@ ca:
             total_participants: Total de participants
             num_panels: Nombre de panels
             selected_at: Seleccionat el
-            verification_seed: Seed de verificació
+            verification_seed: Llavor de verificació (seed)
             random_value_used: Valor aleatori utilitzat
             selected_panel_probability: Probabilitat del panel seleccionat
             selected_participants_title: Participants seleccionats
@@ -108,7 +108,7 @@ ca:
             confirm_participants_title: Mostra el llistat de les participants seleccionades
             confirm_participants_body: Estàs accedint a informació i dades personals. Aquesta acció quedarà registrada.
             confirm_participants_ok: Mostra
-            confirm_participants_cancel: Cancel·lar
+            confirm_participants_cancel: Cancel·la
             results: Resultats
             success: Sorteig estratificat executat amb èxit
             target: Objectiu
@@ -119,11 +119,11 @@ ca:
             selected: Sortejos estratificats seleccionats
             title: Sortejos estratificats
           new:
-            create: Crear
+            create: Crea
             title: Nou sorteig estratificat
           edit:
-            title: Editar sorteig estratificat
-            update: Actualitzar
+            title: Edita el sorteig estratificat
+            update: Actualitza
           form:
             data: Informació general
             description: Descripció
@@ -133,7 +133,7 @@ ca:
             selection_criteria_help: Pots indicar, si s'escau, els criteris d'elegibilitat de les persones que han estat seleccionades per participar en el sorteig. 
           strata:
             title: Estrats
-            add_stratum: Afegir estrat
+            add_stratum: Afegeix estrat
           stratum:
             up: Amunt
             down: Avall
@@ -165,7 +165,7 @@ ca:
           upload_sample:
             age: Grup d'edat
             candidates: Candidats
-            census_file: Triar un fitxer
+            census_file: Tria un fitxer
             census_file_label: Arxiu excel.csv amb les dades del cens
             configure_strata_first: Primer has de configurar els estrats i subestrats
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
@@ -173,7 +173,7 @@ ca:
             description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
             download_template: "Descarregar plantilla CSV"
             example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
-            execute_stratified_sortition: Executar sorteig
+            execute_stratified_sortition: Executa el sorteig
             execute_stratified_sortition_help: El sorteig no es pot executar fins que no es carreguin registres.
             filename_data: "%{filename}, el dia %{date}, número de registres %{count}"
             gender: Gènere
@@ -181,12 +181,12 @@ ca:
             help: "La mostra ha de ser un fitxer CSV o Excel.<br> Cada fila respresenta un candidat/candidata."
             no_data: Sense dades
             place: Lloc de naixement
-            remove_uploaded_samples: Eliminar tots els registres
+            remove_uploaded_samples: Elimina tots els registres
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les registres?
             target: Objectiu
             title: Gestionar mostra
-            upload_census: Pujar una nova mostra
-            upload_file: Pujar nova mostra
+            upload_census: Puja una nova mostra
+            upload_file: Puja nova mostra
             uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
             no_uploaded_files: "No hi ha fitxers carregats."
