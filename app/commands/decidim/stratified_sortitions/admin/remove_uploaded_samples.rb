@@ -31,15 +31,21 @@ module Decidim
         private
 
         def remove_participants
-          Decidim::StratifiedSortitions::SampleParticipant.where(
+          participant_scope = Decidim::StratifiedSortitions::SampleParticipant.where(
             decidim_stratified_sortition: @stratified_sortition
-          ).destroy_all
+          )
+
+          Decidim::StratifiedSortitions::SampleParticipantStratum.where(
+            decidim_stratified_sortitions_sample_participant_id: participant_scope.select(:id)
+          ).delete_all
+
+          participant_scope.delete_all
         end
 
         def remove_samples
           Decidim::StratifiedSortitions::SampleImport.where(
             stratified_sortition: @stratified_sortition
-          ).destroy_all
+          ).delete_all
         end
       end
     end
