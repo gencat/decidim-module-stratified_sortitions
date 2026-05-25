@@ -48,7 +48,11 @@ edit_link(
   <% if translated_attribute(stratified_sortition.selected_profiles_description).present? %>
     <section class="layout-main__section">
       <h2 class="h3">
-        <%= t("selected_profiles_description", scope: "decidim.stratified_sortitions.stratified_sortitions.show") %>
+        <% if stratified_sortition.executed? %>
+          <%= t("selected_profiles_description", scope: "decidim.stratified_sortitions.stratified_sortitions.show") %>
+        <% else %>
+          <%= t("to_be_selected_profiles_description", scope: "decidim.stratified_sortitions.stratified_sortitions.show") %>
+        <% end %>
       </h2>
       <div class="editor-content">
         <%= decidim_sanitize_editor_admin translated_attribute stratified_sortition.selected_profiles_description %>
