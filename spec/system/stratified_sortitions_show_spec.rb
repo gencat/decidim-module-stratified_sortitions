@@ -25,7 +25,7 @@ describe "Stratified sortition show page", type: :system do
     context "when the sortition is executed" do
       let!(:stratified_sortition) do
         create(:stratified_sortition, component:, status: :executed,
-               selected_profiles_description: { en: "Some profile description" })
+                                      selected_profiles_description: { en: "Some profile description" })
       end
 
       it "shows the 'selected profiles description' heading" do
@@ -41,7 +41,7 @@ describe "Stratified sortition show page", type: :system do
     context "when the sortition is not executed" do
       let!(:stratified_sortition) do
         create(:stratified_sortition, component:, status: :pending,
-               selected_profiles_description: { en: "Some profile description" })
+                                      selected_profiles_description: { en: "Some profile description" })
       end
 
       it "shows the 'to be selected profiles description' heading" do
