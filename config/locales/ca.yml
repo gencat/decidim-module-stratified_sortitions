@@ -8,7 +8,7 @@ ca:
         description: Descripció
         num_candidates: Nombre de persones candidates a seleccionar
         selection_criteria: Criteris d'elegibilitat
-        selected_profiles_description: Descripció dels perfils seleccionats
+        selected_profiles_description: Descripció dels perfils a seleccionar
     errors:
       messages:
         cannot_add_strata_with_sample_participants: "No es poden afegir estrats quan ja hi ha participants importats"
@@ -50,7 +50,7 @@ ca:
               description: Descripció
               num_candidates: Nombre de candidates a seleccionar
               selection_criteria: Criteris d'elegibilitat
-              selected_profiles_description: Descripció dels perfils seleccionats
+              selected_profiles_description: Descripció dels perfils a seleccionar
               status: Estat
         stratified_sortitions:
           create:
@@ -186,7 +186,7 @@ ca:
             target: Objectiu
             title: Gestionar mostra
             upload_census: Pujar una nova mostra
-            upload_file: Afegir arxiu
+            upload_file: Pujar nova mostra
             uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
             no_uploaded_files: "No hi ha fitxers carregats."
@@ -248,6 +248,7 @@ ca:
           description: Descripció
           selection_criteria: Criteris d'elegibilitat
           selected_profiles_description: Descripció dels perfils seleccionats
+          to_be_selected_profiles_description: Descripció dels perfils a seleccionar
           strata: Estrats
           max_quota: Quota màxima
           selected_participants: Participants seleccionats
@@ -266,11 +267,11 @@ ca:
           random_value_used: Valor aleatori utilitzat
           selected_panel_index: Índex del panell seleccionat
           selected_at: Seleccionat el
-          strata_charts: Distribució d'estrats
-          target: Objectiu
-          candidates: Candidats
+          strata_charts: Distribució dels perfils
+          target: Objectiu a assolir
+          candidates: Candidatures rebudes
           no_data: Sense dades
-          results: Resultats
+          results: Resultats del sorteig
           statuses:
             pending: Pendent
             executed: Executat

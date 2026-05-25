@@ -8,7 +8,7 @@ en:
         description: Description
         num_candidates: Number of candidates to select
         selection_criteria: Selection Criteria
-        selected_profiles_description: Selected Profiles Description
+        selected_profiles_description: Description of the profiles to be selected
     errors:
       messages:
         cannot_add_strata_with_sample_participants: "Cannot add strata when there are already imported participants"
@@ -50,7 +50,7 @@ en:
               description: Description
               num_candidates: Number of candidates to select
               selection_criteria: Selection Criteria
-              selected_profiles_description: Selected Profiles Description
+              selected_profiles_description: Description of the profiles to be selected
               status: Status
         stratified_sortitions:
           create:
@@ -185,8 +185,8 @@ en:
             strata_not_configured: You must configure strata and substrata first
             target: Target
             title: Manage sample
-            upload_census: Upload new sample
-            upload_file: Upload file
+            upload_census: Upload a new sample
+            upload_file: Upload new sample
             uploaded_file: Uploaded sample data
             uploaded_files: "The following files have been added:"
             no_uploaded_files: "No files uploaded."
@@ -247,7 +247,8 @@ en:
           introduction: 'This page contains the details of the stratified sortition %{reference}. By means of this sortition, %{num_candidates} candidates have been selected using a stratified random selection algorithm that ensures fair representation across all defined strata.'
           description: Description
           selection_criteria: Selection criteria
-          selected_profiles_description: Selected profiles description
+          selected_profiles_description: Description of the selected profiles
+          to_be_selected_profiles_description: Description of the profiles to be selected
           strata: Strata
           max_quota: Max quota
           selected_participants: Selected participants
@@ -266,11 +267,11 @@ en:
           random_value_used: Random value used
           selected_panel_index: Selected panel index
           selected_at: Selected at
-          strata_charts: Strata distribution
-          target: Target
-          candidates: Candidates
+          strata_charts: Distribution of profiles
+          target: Target to achieve
+          candidates: Received candidatures
           no_data: No data
-          results: Results
+          results: Sortition results
           statuses:
             pending: Pending
             executed: Executed

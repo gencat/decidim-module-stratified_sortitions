@@ -8,7 +8,7 @@ es:
         description: Descripción
         num_candidates: Número de personas candidatas a seleccionar
         selection_criteria: Criterios de elegibilidad
-        selected_profiles_description: Descripción de los perfiles seleccionados
+        selected_profiles_description: Descripción de los perfiles a seleccionar
     errors:
       messages:
         cannot_add_strata_with_sample_participants: "No se pueden añadir estratos cuando ya hay participantes importados"
@@ -50,7 +50,7 @@ es:
               description: Descripción
               num_candidates: Número de candidatas a seleccionar
               selection_criteria: Criterios de elegibilidad
-              selected_profiles_description: Descripción de los perfiles seleccionados
+              selected_profiles_description: Descripción de los perfiles a seleccionar
               status: Estado
         stratified_sortitions:
           create:
@@ -186,7 +186,7 @@ es:
             target: Objetivo
             title: Gestionar muestra
             upload_census: Subir una nueva muestra
-            upload_file: Subir archivo
+            upload_file: Subir nueva muestra
             uploaded_file: Datos de la muestra cargada
             uploaded_files: "Se han agregado los siguientes archivos:"
             no_uploaded_files: "No hay archivos cargados."
@@ -248,6 +248,7 @@ es:
           description: Descripción
           selection_criteria: Criterios de elegibilidad
           selected_profiles_description: Descripción de los perfiles seleccionados
+          to_be_selected_profiles_description: Descripción de los perfiles a seleccionar
           strata: Estratos
           max_quota: Cuota máxima
           selected_participants: Participantes seleccionados
@@ -266,11 +267,11 @@ es:
           random_value_used: Valor aleatorio utilizado
           selected_panel_index: Índice del panel seleccionado
           selected_at: Seleccionado el
-          strata_charts: Distribución de estratos
-          target: Objetivo
-          candidates: Candidatos
+          strata_charts: Distribución de los perfiles
+          target: Objetivo a conseguir
+          candidates: Candidaturas recibidas
           no_data: Sin datos
-          results: Resultados
+          results: Resultados del sorteo
           statuses:
             pending: Pendiente
             executed: Ejecutado
