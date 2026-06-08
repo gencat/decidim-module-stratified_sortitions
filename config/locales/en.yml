@@ -157,8 +157,8 @@ en:
             range: Range
             range_placeholder: Range (e.g. 0-18)
             title: Substratum
-            max_quota_percentage: Max quota (%)
-            max_quota_percentage_placeholder: Max quota %
+            max_quota_percentage: Objective %
+            max_quota_percentage_placeholder: Objective %
           update:
             error: There's been a problem updating this stratified sortition
             success: Stratified sortition successfully updated

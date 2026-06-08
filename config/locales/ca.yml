@@ -157,8 +157,8 @@ ca:
             range: Rang
             range_placeholder: Rang (p. ex. 0-18)
             title: Subestrat
-            max_quota_percentage: Quota màxima (%)
-            max_quota_percentage_placeholder: Quota màxima %
+            max_quota_percentage: Objectiu %
+            max_quota_percentage_placeholder: Objectiu %
           update:
             error: S'ha produït un problema en actualitzar aquest sorteig estratificat
             success: Sorteig estratificat actualitzat amb èxit
