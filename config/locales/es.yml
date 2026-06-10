@@ -169,9 +169,29 @@ es:
             census_file_label: Archivo excel.csv con los datos del censo
             configure_strata_first: Primero debes configurar los estratos y subestratos
             count_uploaded_files: "<b>%{count}</b> registros cargados."
-            description: "Debe ser un archivo generado en Excel y exportado en CSV con las siguientes columnas:"
+            description: El archivo de la muestra tiene que ser un CSV y tiene que tener un formatsimilar al del ejemplo siguiente:<br>Puedes descargar y utilizar la plantilla.
             download_template: "Descargar plantilla CSV"
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
+            example_headers:
+              personal_data_1: "Dato personal 1 (identificador único)"
+              personal_data_2: "Dato personal 2"
+              personal_data_3: "Dato personal 3"
+              personal_data_4: "Dato personal 4"
+              gender: "Género"
+              age: "Edad"
+            example_rows:
+              - - "11111111X"
+                - "Nombre ejemplo 1"
+                - "Teléfono Ejemplo 1"
+                - "correo1@ejemplo.com"
+                - "Hombre"
+                - "45"
+              - - "22222222Y"
+                - "Nombre ejemplo 2"
+                - "Teléfono Ejemplo 2"
+                - "correo2@ejemplo.com"
+                - "Mujer"
+                - "42"
             execute_stratified_sortition: Ejecutar sorteo
             execute_stratified_sortition_help: El sorteo no se puede ejecutar hasta que no se carguen registros.
             filename_data: "%{filename}, el día %{date}, número de registros %{count}"
@@ -190,8 +210,14 @@ es:
             uploaded_file: Datos de la muestra cargada
             uploaded_files: "Se han agregado los siguientes archivos:"
             no_uploaded_files: "No hay archivos cargados."
-            help_csv: Se admiten archivos CSV
-            help_format: Archivo .csv con el censo
+            help_csv: "<b>El archivo a cargar tiene que seguir las siguientes instrucciones:</b>
+              <ul><li>El formato del fichero tiene que ser .csv. Puedes descargar una plantilla.</li>
+              <li>La primera columna es obligatoria. Es el identificador único de cada participante y puede ser el DNI, un código generado aleatoriamente o cualquier otra forma de identificación que se quiera usar.</li>
+              <li>Las columnas 2,3 y 4 (Dato personal 2, 3, 4) son opcionales y no se utilizan para hacer el sorteo. Sirven para añadir los datos de contacto de cada participante.</li>
+              <li>Las columnas de los estratos son obligatorias y tienen que tener el mismo orden y nombre que el que hayamos configurado en el apartado anterior.</li>
+              <li>La información a incluir en las columnas tiene que coincidir con alguno de los Valores que hayamos indicado para cada estrato.</li>
+              <li>Si una participante no tiene datos en alguno de los estratos o no coincide con alguno de los valores configurados, será excluida del sorteo.</li></ul>"
+            help_submit: 'Al "Guardar" el sistema realizará la carga en segundo plano, puede tardar varios minutos dependiendo del volumen de participantes, por lo que al finalizar la carga será notificado vía email con el resultado.'
         import_mailer:
           subject: "Resultado de la importación de la muestra"
           import:
