@@ -157,8 +157,8 @@ ca:
             range: Rang
             range_placeholder: Rang (p. ex. 0-18)
             title: Subestrat
-            max_quota_percentage: Quota màxima (%)
-            max_quota_percentage_placeholder: Quota màxima %
+            max_quota_percentage: Objectiu %
+            max_quota_percentage_placeholder: Objectiu %
           update:
             error: S'ha produït un problema en actualitzar aquest sorteig estratificat
             success: Sorteig estratificat actualitzat amb èxit
@@ -170,9 +170,29 @@ ca:
             configure_strata_first: Primer has de configurar els estrats i subestrats
             confirm_remove_uploaded_samples: Estàs segur que vols eliminar totes les mostres carregades?
             count_uploaded_files: "<b>%{count}</b> registres carregats."
-            description: "Ha de ser un fitxer generat en excel i exportat en CSV amb las siguientes columnes:"
+            description: "El fitxer de la mostra ha de ser un CSV i ha de tenir un format similar al de l'exemple següent:<br>Pots descarregar i utilitzar la plantilla."
             download_template: "Descarregar plantilla CSV"
-            example: "Dada candidat 1,Dada candidat 2,Dada candidat 3,Dada candidat 4,Estrat 1,Estrat 2,Estrat 3,Estrat N<br>example@example.com,D,Superiors,34<br>example@example.com,E,Superiors,24<br><br>. . ."
+            example: "Dada personal 1 (identificador únic)| Dada personal 2 | Dada personal 3 | Dada personal 4 | Gènere | Edat<br>11111111X | Nom exemple 1 | Telèfon Exemple 1 | correu1@exemple.com | Home | 45<br>22222222X | Nom exemple 2 | Telèfon Exemple 2 | correu2@exemple.com | Dona | 42<br>"
+            example_headers:
+              personal_data_1: "Dada personal 1 (identificador únic)"
+              personal_data_2: "Dada personal 2"
+              personal_data_3: "Dada personal 3"
+              personal_data_4: "Dada personal 4"
+              gender: Gènere
+              age: Edat
+            example_rows:
+              - - "11111111X"
+                - "Nom exemple 1"
+                - "Telèfon Exemple 1"
+                - "correu1@exemple.com"
+                - "Home"
+                - "45"
+              - - "22222222X"
+                - "Nom exemple 2"
+                - "Telèfon Exemple 2"
+                - "correu2@exemple.com"
+                - "Dona"
+                - "42"
             execute_stratified_sortition: Executa el sorteig
             execute_stratified_sortition_help: El sorteig no es pot executar fins que no es carreguin registres.
             filename_data: "%{filename}, el dia %{date}, número de registres %{count}"
@@ -190,8 +210,14 @@ ca:
             uploaded_file: Dades de la mostra carregada
             uploaded_files: "S'han agregat els següents fitxers:"
             no_uploaded_files: "No hi ha fitxers carregats."
-            help_csv: Es suporten fitxers CSV
-            help_format: Fitxer .csv amb el cens
+            help_csv: "<b>L'arxiu a carregar ha de seguir les següents instruccions:</b>
+              <ul><li>El format del fitxer ha de ser .csv. Pots descarregar una plantilla.</li>
+              <li>La primera columna és obligatòria. És l'identificador únic de cada participant i pot ser el DNI, un codi generat aleatòriament o qualsevol altra forma d'identificació que es vulgui fer servir.</li>
+              <li>Les columnes 2,3 i 4 (Dada personal 2, 3, 4) són opcionals i no s'utilitzen per fer el sorteig. Serveixen per afegir-hi les dades de contacte de cada participant.</li>
+              <li>Les columnes dels estrats són obligatòries i han de tenir el mateix ordre i nom que el que hàgim configurat en l'apartat anterior.</li>
+              <li>La informació a incloure a les columnes ha de coincidir amb algun dels Valors que hàgim indicat per cada estrat.</li>
+              <li>Si una participant no té dades en algun dels estrats o no coincideix amb algun dels valors configurats, serà exclosa del sorteig.</li></ul>"
+            help_submit: 'En "Desar" el sistema realitzarà la càrrega de les dades en segon pla. Pot trigar varis minuts depenent del volum de participants. En finalitzar la càrrega, el resultat es notificarà via email.'
         import_mailer:
           subject: "Resultat de la importació de la mostra"
           import:

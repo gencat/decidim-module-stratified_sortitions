@@ -14,11 +14,27 @@
     </h1>
   </div>
   <div class="mt-1">
-    <%= t(".description") %>
+    <%= t(".description").html_safe %>
   </div>
   <div class="card-section mt-4 example-file-census-container">
-    <%= t(".example").html_safe %>
-    <div class="mt-2">
+    <table>
+      <tr>
+        <td><%= t('.example_headers.personal_data_1') %></td>
+        <td><%= t('.example_headers.personal_data_2') %></td>
+        <td><%= t('.example_headers.personal_data_3') %></td>
+        <td><%= t('.example_headers.personal_data_4') %></td>
+        <td><%= t('.example_headers.gender') %></td>
+        <td><%= t('.example_headers.age') %></td>
+      </tr>
+      <% Array(t('.example_rows')).each do |row| %>
+        <tr>
+          <% row.each do |cell| %>
+            <td><%= cell %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+    <div class="mt-12">
       <%= link_to t('.download_template'), download_template_samples_path(id: @stratified_sortition.id), class: 'button button__sm button__secondary' %>
     </div>
   </div>
@@ -27,7 +43,7 @@
       <%= form.upload :file,
             label: false,
             required: true,
-            help: [t(".help_csv"), t(".help_format")],
+            help: [t(".help_csv"), t(".help_submit")],
             button_label: t(".upload_file"),
             button_class: "button button__sm button__secondary upload-census-btn" %>
     <% end %>
