@@ -107,7 +107,10 @@ en:
             confirm_participants_ok: Show
             confirm_participants_cancel: Cancel
             results: Results
+            executing_notice: The sortition is being processed in the background. This page will update once it is complete.
+            execution_failed: "The sortition execution failed:"
             success: Stratified sortition successfully executed
+            executing: The sortition has been enqueued and is being processed in the background.
             target: Target
             title: Execute stratified sortition
           export_results:
@@ -244,6 +247,7 @@ en:
           create:
             success: "The sample is being loaded in the background. When it finishes you will receive an email with the import summary."
           remove_uploaded_samples:
+            enqueued: "The sample removal has been enqueued and will be processed in the background."
             success: "Uploaded samples have been successfully removed."
             error: "There was an error removing the uploaded samples."
       stratified_sortitions:
@@ -254,7 +258,9 @@ en:
         filters:
           all: All
           pending: Pending
+          executing: Executing
           executed: Executed
+          failed: Failed
           state: Status
         index:
           empty: There are no stratified sortitions yet.
@@ -300,7 +306,9 @@ en:
           results: Sortition results
           statuses:
             pending: Pending
+            executing: Executing
             executed: Executed
+            failed: Failed
         stratified_sortition:
           num_candidates: candidates to select
           strata_count: strata

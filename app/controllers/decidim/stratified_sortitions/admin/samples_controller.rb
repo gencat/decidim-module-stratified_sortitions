@@ -45,18 +45,9 @@ module Decidim
         def remove_multiple
           enforce_permission_to :upload_sample, :stratified_sortition
 
-          Decidim::StratifiedSortitions::Admin::RemoveUploadedSamples.call(stratified_sortition) do
-            on(:ok) do
-              Decidim.traceability.perform_action!("remove_samples", stratified_sortition, current_user, visibility: "all")
-              flash[:notice] = I18n.t("sample_imports.remove_uploaded_samples.success", scope: "decidim.stratified_sortitions.admin")
-              redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
-            end
-
-            on(:invalid) do
-              flash.now[:alert] = I18n.t("sample_imports.remove_uploaded_samples.error", scope: "decidim.stratified_sortitions.admin")
-              redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
-            end
-          end
+          Decidim::StratifiedSortitions::Admin::RemoveSamplesJob.perform_later(stratified_sortition, current_user)
+          flash[:notice] = I18n.t("sample_imports.remove_uploaded_samples.enqueued", scope: "decidim.stratified_sortitions.admin")
+          redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
         end
 
         private
@@ -69,7 +60,7 @@ module Decidim
         end
 
         def ensure_stratified_sortition_is_pending
-          if stratified_sortition.status != "pending"
+          unless stratified_sortition.status == "pending"
             flash[:alert] = t("decidim.stratified_sortitions.admin.samples.errors.pending")
             redirect_to upload_sample_stratified_sortition_path(stratified_sortition)
           end

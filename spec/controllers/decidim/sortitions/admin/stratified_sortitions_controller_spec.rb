@@ -380,48 +380,29 @@ module Decidim
             }
           end
 
-          let(:fair_service_result) { double("result", success?: true, error: nil) }
-          let(:fair_service) { double("fair_sortition_service", call: fair_service_result) }
-
           before do
-            allow(FairSortitionService).to receive(:new).and_return(fair_service)
+            allow_any_instance_of(Decidim::StratifiedSortitions::StratifiedSortition)
+              .to receive(:can_execute?).and_return(true)
           end
 
-          context "when the sortition executes successfully" do
-            it "redirects to the execute page" do
-              post(:execute_stratified_sortition, params:)
-              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
-            end
-
-            it "sets a notice flash message" do
-              post(:execute_stratified_sortition, params:)
-              expect(flash[:notice]).to be_present
-            end
-
-            it "traces the execute action" do
-              expect { post(:execute_stratified_sortition, params:) }
-                .to change(Decidim::ActionLog, :count).by(1)
-              expect(Decidim::ActionLog.last.action).to eq("execute")
-            end
+          it "redirects to the execute page" do
+            post(:execute_stratified_sortition, params:)
+            expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
           end
 
-          context "when the sortition fails" do
-            let(:fair_service_result) { double("result", success?: false, error: "Something went wrong") }
+          it "sets a notice flash message" do
+            post(:execute_stratified_sortition, params:)
+            expect(flash[:notice]).to be_present
+          end
 
-            it "redirects to the execute page" do
-              post(:execute_stratified_sortition, params:)
-              expect(response).to redirect_to(execute_stratified_sortition_path(stratified_sortition))
-            end
+          it "sets the sortition status to executing" do
+            post(:execute_stratified_sortition, params:)
+            expect(stratified_sortition.reload.status).to eq("executing")
+          end
 
-            it "sets an error flash message" do
-              post(:execute_stratified_sortition, params:)
-              expect(flash[:error]).to be_present
-            end
-
-            it "does not trace the execute action" do
-              expect { post(:execute_stratified_sortition, params:) }
-                .not_to change(Decidim::ActionLog, :count)
-            end
+          it "enqueues an ExecuteSortitionJob" do
+            expect { post(:execute_stratified_sortition, params:) }
+              .to have_enqueued_job(Decidim::StratifiedSortitions::Admin::ExecuteSortitionJob)
           end
         end
 
