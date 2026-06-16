@@ -42,11 +42,16 @@ module Decidim
           end
 
           context "when the service fails" do
-            let(:service_result) { double("result", success?: false) }
+            let(:service_result) { double("result", success?: false, error: "Some error") }
 
-            it "resets the sortition status to pending" do
+            it "sets the sortition status to failed" do
               job.perform(stratified_sortition, user)
-              expect(stratified_sortition.reload.status).to eq("pending")
+              expect(stratified_sortition.reload.status).to eq("failed")
+            end
+
+            it "stores the error message" do
+              job.perform(stratified_sortition, user)
+              expect(stratified_sortition.reload.execution_error).to eq("Some error")
             end
 
             it "does not trace the execute action" do
