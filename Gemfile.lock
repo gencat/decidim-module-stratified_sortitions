@@ -178,7 +178,7 @@ PATH
   remote: .
   specs:
     decidim-stratified_sortitions (1.0.0)
-      chartkick (~> 5.2.1)
+      chartkick (~> 5.1.2)
       decidim-admin (~> 0.29)
       decidim-core (~> 0.29)
       ruby-cbc (~> 0.3.19)
@@ -302,7 +302,7 @@ GEM
       actionpack (>= 5.0)
       cells (>= 4.1.6, < 5.0.0)
     charlock_holmes (0.7.9)
-    chartkick (5.2.1)
+    chartkick (5.1.5)
     childprocess (5.1.0)
       logger (~> 1.5)
     commonmarker (0.23.12)
