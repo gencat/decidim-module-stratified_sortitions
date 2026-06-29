@@ -68,15 +68,9 @@ module Decidim
             expect(response).to redirect_to(upload_sample_stratified_sortition_path(stratified_sortition))
           end
 
-          it "traces the remove_samples action" do
+          it "enqueues a RemoveSamplesJob" do
             expect { delete(:remove_multiple, params:) }
-              .to change(Decidim::ActionLog, :count).by(1)
-            expect(Decidim::ActionLog.last.action).to eq("remove_samples")
-          end
-
-          it "removes the sample participants" do
-            expect { delete(:remove_multiple, params:) }
-              .to change(Decidim::StratifiedSortitions::SampleParticipant, :count).by(-1)
+              .to have_enqueued_job(Decidim::StratifiedSortitions::Admin::RemoveSamplesJob)
           end
         end
       end

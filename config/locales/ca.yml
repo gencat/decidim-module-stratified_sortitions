@@ -110,7 +110,10 @@ ca:
             confirm_participants_ok: Mostra
             confirm_participants_cancel: Cancel·la
             results: Resultats
+            executing_notice: El sorteig s'està processant en segon pla. Aquesta pàgina s'actualitzarà quan hagi finalitzat.
+            execution_failed: "L'execució del sorteig ha fallat:"
             success: Sorteig estratificat executat amb èxit
+            executing: El sorteig ha estat encuat i s'està processant en segon pla.
             target: Objectiu
             title: Executar sorteig estratificat
           export_results:
@@ -244,6 +247,7 @@ ca:
           create:
             success: "La mostra s'està carregant en segon pla. Quan acabi rebràs un correu amb el resum de la importació."
           remove_uploaded_samples:
+            enqueued: "L'eliminació de la mostra ha estat encuada i es processarà en segon pla."
             success: "Les mostres carregades s'han eliminat correctament."
             error: "Hi ha hagut un error en eliminar les mostres carregades."
       stratified_sortitions:
@@ -254,7 +258,9 @@ ca:
         filters:
           all: Tots
           pending: Pendent
+          executing: Executant
           executed: Executat
+          failed: Fallat
           state: Estat
         index:
           empty: Encara no hi ha sortejos estratificats.
@@ -300,7 +306,9 @@ ca:
           results: Resultats del sorteig
           statuses:
             pending: Pendent
+            executing: Executant
             executed: Executat
+            failed: Fallat
         stratified_sortition:
           num_candidates: candidats a seleccionar
           strata_count: estrats

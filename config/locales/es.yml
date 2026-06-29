@@ -107,7 +107,10 @@ es:
             confirm_participants_ok: Muestra
             confirm_participants_cancel: Cancelar
             results: Resultados
+            executing_notice: El sorteo se está procesando en segundo plano. Esta página se actualizará cuando haya finalizado.
+            execution_failed: "La ejecución del sorteo ha fallado:"
             success: Sorteo estratificado ejecutado con éxito
+            executing: El sorteo ha sido encolado y se está procesando en segundo plano.
             target: Objetivo
             title: Ejecutar sorteo estratificado
           export_results:
@@ -244,6 +247,7 @@ es:
           create:
             success: "La muestra se está cargando en segundo plano. Cuando termine recibirás un correo con el resumen de la importación."
           remove_uploaded_samples:
+            enqueued: "La eliminación de la muestra ha sido encolada y se procesará en segundo plano."
             success: "Las muestras cargadas se han eliminado correctamente."
             error: "Ha ocurrido un error al eliminar las muestras cargadas."
       stratified_sortitions:
@@ -254,7 +258,9 @@ es:
         filters:
           all: Todos
           pending: Pendiente
+          executing: Ejecutando
           executed: Ejecutado
+          failed: Fallido
           state: Estado
         index:
           empty: Aún no hay sorteos estratificados.
@@ -300,7 +306,9 @@ es:
           results: Resultados del sorteo
           statuses:
             pending: Pendiente
+            executing: Ejecutando
             executed: Ejecutado
+            failed: Fallido
         stratified_sortition:
           num_candidates: candidatos a seleccionar
           strata_count: estratos

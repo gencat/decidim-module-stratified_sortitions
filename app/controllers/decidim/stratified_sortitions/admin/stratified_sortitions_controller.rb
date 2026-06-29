@@ -115,7 +115,7 @@ module Decidim
         end
 
         def execute
-          unless stratified_sortition.can_execute?
+          unless stratified_sortition.can_execute? || stratified_sortition.executing? || stratified_sortition.executed? || stratified_sortition.failed?
             redirect_to edit_stratified_sortition_path(stratified_sortition),
                         flash: { warning: t("stratified_sortitions.execute.empty_sample_participants", scope: "decidim.stratified_sortitions.admin") }
             return
@@ -139,14 +139,14 @@ module Decidim
         end
 
         def execute_stratified_sortition
-          @result = FairSortitionService.new(stratified_sortition).call
-          if @result.success?
-            stratified_sortition.update!(status: "executed")
-            Decidim.traceability.perform_action!("execute", stratified_sortition, current_user, visibility: "all")
-            flash[:notice] = I18n.t("stratified_sortitions.execute.success", scope: "decidim.stratified_sortitions.admin")
-          else
-            flash[:error] = @result.error
+          unless stratified_sortition.can_execute?
+            redirect_to execute_stratified_sortition_path(stratified_sortition)
+            return
           end
+
+          stratified_sortition.update!(status: "executing")
+          ExecuteSortitionJob.perform_later(stratified_sortition, current_user)
+          flash[:notice] = I18n.t("stratified_sortitions.execute.executing", scope: "decidim.stratified_sortitions.admin")
           redirect_to execute_stratified_sortition_path(stratified_sortition)
         end
 
