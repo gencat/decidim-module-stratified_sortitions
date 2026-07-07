@@ -4,7 +4,7 @@ module Decidim
   module StratifiedSortitions
     module Admin
       class ExecuteSortitionJob < ApplicationJob
-        queue_as :default
+        queue_as :stratified_sortitions
 
         def perform(stratified_sortition, user)
           result = FairSortitionService.new(stratified_sortition).call

@@ -32,8 +32,8 @@ module Decidim
         end
 
         describe ".queue_name" do
-          it "is queued as :exports" do
-            expect(described_class.queue_name).to eq("exports")
+          it "is queued as :stratified_sortitions" do
+            expect(described_class.queue_name).to eq("stratified_sortitions")
           end
         end
 
