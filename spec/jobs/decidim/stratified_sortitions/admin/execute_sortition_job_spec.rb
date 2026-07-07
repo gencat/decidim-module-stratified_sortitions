@@ -15,8 +15,8 @@ module Decidim
         let(:stratified_sortition) { create(:stratified_sortition, component:, status: "executing") }
 
         describe ".queue_name" do
-          it "is queued as :default" do
-            expect(described_class.queue_name).to eq("default")
+          it "is queued as :stratified_sortitions" do
+            expect(described_class.queue_name).to eq("stratified_sortitions")
           end
         end
 
