@@ -6,7 +6,7 @@ module Decidim
   module StratifiedSortitions
     module Admin
       class ImportSampleJob < ApplicationJob
-        queue_as :default
+        queue_as :stratified_sortitions
 
         def perform(file_content, filename, stratified_sortition, user)
           sample_import = Decidim::StratifiedSortitions::SampleImport.create!(
