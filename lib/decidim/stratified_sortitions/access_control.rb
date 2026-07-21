@@ -6,10 +6,16 @@ module Decidim
       module_function
 
       def allowed_user?(user)
+        return true unless restriction_enabled?
         return false unless user
 
         normalized_email = user_email(user)
         normalized_email.present? && allowed_emails.include?(normalized_email)
+      end
+
+      def restriction_enabled?
+        @restriction_enabled = ENV.fetch("STRATIFIED_SORTITIONS_RESTRICTION_ENABLED", "false") == "true"
+        @restriction_enabled
       end
 
       def allowed_emails
@@ -21,6 +27,7 @@ module Decidim
 
       def reset_cache!
         @allowed_emails = nil
+        @restriction_enabled = nil
       end
 
       def user_email(user)
