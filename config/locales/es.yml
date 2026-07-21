@@ -173,7 +173,9 @@ es:
             configure_strata_first: Primero debes configurar los estratos y subestratos
             count_uploaded_files: "<b>%{count}</b> registros cargados."
             description: El archivo de la muestra tiene que ser un CSV y tiene que tener un formatsimilar al del ejemplo siguiente:<br>Puedes descargar y utilizar la plantilla.
-            download_template: "Descargar plantilla CSV"
+            download_template: "Descargar plantilla"
+            download_template_csv: "Descargar plantilla como CSV"
+            download_template_xlsx: "Descargar plantilla como XLSX"
             example: "Dato candidato 1,Dato candidato 2,Dato candidato 3,Dato candidato 4,Estrato 1,Estrato 2,Estrato 3,Estrato N<br>example@example.com,D,Superiores,34<br>example@example.com,E,Superiores,24<br><br>. . ."
             example_headers:
               personal_data_1: "Dato personal 1 (identificador único)"
