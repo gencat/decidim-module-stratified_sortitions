@@ -14,6 +14,9 @@ module Decidim
 
         helper_method :stratified_sortitions, :stratified_sortition, :form_presenter, :blank_stratum
 
+        before_action :enforce_manage_stratified_sortition_permission,
+                only: [:execute, :execute_stratified_sortition, :export_charts_pdf, :export_results, :log_view_participants]
+
         def index
           enforce_permission_to :read, :stratified_sortitions
           @stratified_sortitions = stratified_sortitions
@@ -228,6 +231,10 @@ module Decidim
 
         def blank_substratum(stratum_form)
           Decidim::StratifiedSortitions::Admin::SubstratumForm.new(stratum: stratum_form.model)
+        end
+
+        def enforce_manage_stratified_sortition_permission
+          enforce_permission_to(:edit, :stratified_sortition, stratified_sortition:)
         end
       end
     end

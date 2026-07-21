@@ -4,6 +4,8 @@ require "decidim/stratified_sortitions/admin"
 require "decidim/stratified_sortitions/engine"
 require "decidim/stratified_sortitions/admin_engine"
 require "decidim/stratified_sortitions/component"
+require "decidim/stratified_sortitions/access_control"
+require "decidim/stratified_sortitions/admin_permissions_extension"
 
 module Decidim
   # Base module for this engine.

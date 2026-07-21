@@ -16,6 +16,8 @@ module Decidim
 
       helper_method :stratified_sortitions, :stratified_sortition
 
+      before_action :enforce_public_stratified_sortition_permission
+
       def index
         @stratified_sortitions = search.result
         @stratified_sortitions = reorder(@stratified_sortitions)
@@ -23,7 +25,7 @@ module Decidim
       end
 
       def show
-        raise ActionController::RoutingError, "Not Found" unless stratified_sortition
+        return user_has_no_permission unless stratified_sortition
 
         if current_component.settings.publish_sortitions
           @strata_data = strata_data(stratified_sortition) if stratified_sortition.strata_and_substrata_configured?
@@ -55,6 +57,10 @@ module Decidim
           search_text_cont: "",
           with_any_state: "all",
         }
+      end
+
+      def enforce_public_stratified_sortition_permission
+        enforce_permission_to :read, :stratified_sortition
       end
     end
   end
