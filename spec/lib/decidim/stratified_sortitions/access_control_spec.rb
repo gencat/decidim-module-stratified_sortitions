@@ -19,7 +19,7 @@ describe Decidim::StratifiedSortitions::AccessControl do
     it "normalizes and splits the env var" do
       ENV["STRATIFIED_SORTITIONS_ALLOWED_EMAILS"] = " Foo@Example.com, bar@example.com;baz@example.com "
 
-      expect(described_class.allowed_emails).to eq(%w[foo@example.com bar@example.com baz@example.com])
+      expect(described_class.allowed_emails).to eq(%w(foo@example.com bar@example.com baz@example.com))
     end
   end
 

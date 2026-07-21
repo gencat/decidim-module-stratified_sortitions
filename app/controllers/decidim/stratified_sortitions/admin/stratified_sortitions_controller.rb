@@ -15,7 +15,7 @@ module Decidim
         helper_method :stratified_sortitions, :stratified_sortition, :form_presenter, :blank_stratum
 
         before_action :enforce_manage_stratified_sortition_permission,
-                only: [:execute, :execute_stratified_sortition, :export_charts_pdf, :export_results, :log_view_participants]
+                      only: [:execute, :execute_stratified_sortition, :export_charts_pdf, :export_results, :log_view_participants]
 
         def index
           enforce_permission_to :read, :stratified_sortitions
