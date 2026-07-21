@@ -3,12 +3,6 @@
 require "spec_helper"
 
 describe Decidim::StratifiedSortitions::AccessControl do
-  User = Struct.new(:email, :admin) do
-    def admin?
-      admin
-    end
-  end
-
   after do
     described_class.reset_cache!
     ENV.delete("STRATIFIED_SORTITIONS_ALLOWED_EMAILS")
