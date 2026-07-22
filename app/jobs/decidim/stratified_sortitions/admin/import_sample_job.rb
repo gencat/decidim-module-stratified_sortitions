@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "csv"
+require "rubyXL"
 
 module Decidim
   module StratifiedSortitions
@@ -17,12 +18,10 @@ module Decidim
           processing_errors = []
           total_rows = 0
 
-          CSV.parse(file_content, headers: true, col_sep: ",") do |row|
+          each_import_row(file_content, filename) do |headers, row|
             total_rows += 1
-            @headers = row.headers
-            strata_headers = @headers[4..]
 
-            errors = process_row(row, strata_headers, stratified_sortition, sample_import)
+            errors = process_row(row, headers, stratified_sortition, sample_import)
 
             processing_errors << errors if errors.present?
           end
@@ -41,7 +40,59 @@ module Decidim
 
         private
 
-        def process_row(row, _strata_headers, stratified_sortition, sample_import)
+        def each_import_row(file_content, filename)
+          if File.extname(filename.to_s).casecmp(".xlsx").zero?
+            parse_xlsx_rows(file_content) { |headers, row| yield(headers, row) }
+          else
+            parse_csv_rows(file_content) { |headers, row| yield(headers, row) }
+          end
+        end
+
+        def parse_csv_rows(file_content)
+          CSV.parse(file_content, headers: true, col_sep: ",") do |row|
+            headers = row.headers
+            values = row.fields.map { |value| normalize_value(value) }
+            next if values.all?(&:blank?)
+
+            yield(headers, values)
+          end
+        end
+
+        def parse_xlsx_rows(file_content)
+          workbook = RubyXL::Parser.parse_buffer(file_content)
+          worksheet = workbook[0]
+          rows = worksheet&.sheet_data&.rows || []
+          return if rows.empty?
+
+          headers = extract_xlsx_row_values(rows.first)
+
+          rows.drop(1).each do |xlsx_row|
+            values = extract_xlsx_row_values(xlsx_row)
+            next if values.all?(&:blank?)
+
+            yield(headers, values)
+          end
+        end
+
+        def extract_xlsx_row_values(xlsx_row)
+          return [] unless xlsx_row&.cells
+
+          last_index = xlsx_row.cells.rindex { |cell| cell&.value.present? }
+          return [] unless last_index
+
+          (0..last_index).map do |index|
+            normalize_value(xlsx_row.cells[index]&.value)
+          end
+        end
+
+        def normalize_value(value)
+          return nil if value.nil?
+
+          normalized = value.is_a?(String) ? value.strip : value.to_s.strip
+          normalized.presence
+        end
+
+        def process_row(row, headers, stratified_sortition, sample_import)
           ActiveRecord::Base.transaction do
             participant = Decidim::StratifiedSortitions::SampleParticipant.find_or_create_by(
               personal_data_1: row[0]
@@ -79,20 +130,29 @@ module Decidim
           nil
         rescue StandardError => e
           {
-            row: row.to_h,
+            row: build_error_row(headers, row),
             error: e.message,
             backtrace: e.backtrace.first(3),
           }
         end
 
+        def build_error_row(headers, row)
+          return row if headers.blank?
+
+          headers.each_with_index.to_h do |header, index|
+            [header, row[index]]
+          end
+        end
+
         def find_substratum(stratum, value)
           if stratum.kind == "value"
+            normalized_value = normalize_value(value)
             Decidim::StratifiedSortitions::Substratum.find_by(
               decidim_stratified_sortitions_stratum_id: stratum.id,
-              value:
+              value: normalized_value
             )
           elsif stratum.kind == "numeric_range"
-            numeric_value = value.to_f
+            numeric_value = normalize_value(value).to_f
             stratum.substrata.find do |substratum|
               next if substratum.range.blank?
 
