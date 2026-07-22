@@ -1,0 +1,17 @@
+<%
+  stratified_sortitions_path = if model.respond_to?(:components) && !Decidim::StratifiedSortitions::AllowedEmails.allowed?(current_user&.email)
+                                 component = model.components.find { |item| item.manifest_name.to_s == "stratified_sortitions" }
+                                 main_component_path(component) if component
+                               end
+  visible_nav_items = Array(nav_items).reject { |item| item[:url] == stratified_sortitions_path }
+%>
+
+<% if visible_nav_items.present? %>
+  <% visible_nav_items.each do |item| %>
+    <li>
+      <%= link_to item[:url] do %>
+        <span><%= item[:name] %></span><%= icon "arrow-right-line" %>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>

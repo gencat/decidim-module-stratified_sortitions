@@ -1,0 +1,15 @@
+<%
+  stratified_sortitions_path = if model.respond_to?(:components) && !Decidim::StratifiedSortitions::AllowedEmails.allowed?(current_user&.email)
+                                 component = model.components.find { |item| item.manifest_name.to_s == "stratified_sortitions" }
+                                 main_component_path(component) if component
+                               end
+  visible_nav_items = Array(nav_items).reject { |item| item[:url] == stratified_sortitions_path }
+%>
+
+<div class="space-y-8">
+  <%= render :title %>
+</div>
+
+<% if visible_nav_items.present? %>
+  <%= cell "decidim/nav_links", visible_nav_items %>
+<% end %>
