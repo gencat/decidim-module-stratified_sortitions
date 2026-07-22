@@ -5,8 +5,6 @@ module Decidim
     module Admin
       class Permissions < Decidim::DefaultPermissions
         def permissions
-          return permission_action unless allowed_user_email?
-
           # The public part needs to be implemented yet
           return permission_action if permission_action.scope != :admin
 
@@ -69,10 +67,6 @@ module Decidim
 
         def stratified_sortition
           @stratified_sortition ||= context.fetch(:stratified_sortition, nil)
-        end
-
-        def allowed_user_email?
-          Decidim::StratifiedSortitions::AllowedEmails.allowed?(user&.email)
         end
       end
     end
