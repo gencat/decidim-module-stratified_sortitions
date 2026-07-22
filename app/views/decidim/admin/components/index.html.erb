@@ -1,0 +1,52 @@
+<% add_decidim_page_title(t("components.title", scope: "decidim.admin")) %>
+<%
+  allowed_emails = ENV.fetch("STRATIFIED_SORTITIONS_ALLOWED_EMAILS", "").split(",").map { |email| email.strip.downcase }.reject(&:blank?)
+  can_see_stratified_sortitions = allowed_emails.include?(current_user&.email.to_s.strip.downcase)
+  @components = if can_see_stratified_sortitions
+                         @components
+                       else
+                         @components.reject { |component| component.manifest_name.to_s == "stratified_sortitions" }
+                       end
+%>
+
+<div class="card">
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <%= t("components.title", scope: "decidim.admin") %>
+
+      <% if allowed_to?(:create, :component) %>
+      <div class="relative">
+        <button class="button button__sm button__secondary button--title" data-toggle="add-component-dropdown">
+          <%= t "components.index.add", scope: "decidim.admin" %>
+          <%= icon "arrow-down-s-line", class: "dropdown-filter-icon" %>
+        </button>
+        <div class="dropdown-pane" id="add-component-dropdown" data-dropdown data-auto-focus="true" data-close-on-click="true">
+          <ul class="vertical menu add-components font-normal">
+            <% @manifests.each do |manifest| %>
+              <% next if manifest.name.to_s == "stratified_sortitions" && !can_see_stratified_sortitions %>
+              <li>
+                <%= link_to new_component_path(type: manifest.name), class: manifest.name do %>
+                  <%= t("#{manifest.name}.name", scope: "decidim.components") %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <% end %>
+    </h1>
+  </div>
+
+  <%= render partial: "components_table", locals: { components: @components, view: :index } %>
+  <% if allowed_to?(:manage_trash, :component, participatory_space: current_participatory_space) %>
+    <div class="card mt-4">
+      <%= link_to manage_trash_components_path, class: "flex items-center underline text-secondary" do %>
+        <%= icon "delete-bin-2-line", class: "mr-2 fill-current text-secondary", role: "img" %>
+        <%= t("actions.view_deleted_components", scope: "decidim.admin") %>
+        <span class="ml-2">
+        <%= icon_with_tooltip("information-line", t("tooltips.deleted_component_info", scope: "decidim.admin")) %>
+      </span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
