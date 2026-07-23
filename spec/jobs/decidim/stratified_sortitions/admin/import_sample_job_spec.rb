@@ -54,7 +54,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
       "Dada personal 3",
       "Dada personal 4",
       "Género_#{gender_stratum.id}",
-      "Edad_#{age_stratum.id}"
+      "Edad_#{age_stratum.id}",
     ]
 
     headers.each_with_index do |header, col|
@@ -64,7 +64,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
     rows = [
       ["12345671Z", "a", "b", "c", "H", 18],
       ["12345672Z", "d", "e", "f", "D", 33],
-      ["12345673Z", "g", "h", "i", "H", 60]
+      ["12345673Z", "g", "h", "i", "H", 60],
     ]
 
     rows.each_with_index do |row, row_index|
@@ -158,7 +158,7 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
         expect do
           subject.perform(xlsx_content, filename, stratified_sortition, user)
         end.to change(Decidim::StratifiedSortitions::SampleParticipant, :count).by(3)
-          .and change(Decidim::StratifiedSortitions::SampleParticipantStratum, :count).by(6)
+                                                                               .and change(Decidim::StratifiedSortitions::SampleParticipantStratum, :count).by(6)
       end
 
       it "matches numeric and value strata from xlsx values" do

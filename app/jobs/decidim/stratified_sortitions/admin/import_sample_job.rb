@@ -40,11 +40,11 @@ module Decidim
 
         private
 
-        def each_import_row(file_content, filename)
+        def each_import_row(file_content, filename, &)
           if File.extname(filename.to_s).casecmp(".xlsx").zero?
-            parse_xlsx_rows(file_content) { |headers, row| yield(headers, row) }
+            parse_xlsx_rows(file_content, &)
           else
-            parse_csv_rows(file_content) { |headers, row| yield(headers, row) }
+            parse_csv_rows(file_content, &)
           end
         end
 
