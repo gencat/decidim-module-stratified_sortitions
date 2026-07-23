@@ -35,7 +35,20 @@
       <% end %>
     </table>
     <div class="mt-12">
-      <%= link_to t('.download_template'), download_template_samples_path(id: @stratified_sortition.id), class: 'button button__sm button__secondary' %>
+      <button type="button" class="button button__sm button__secondary" data-toggle="sample-template-dropdown">
+          <%= t(".download_template") %>
+          <%= icon "arrow-down-s-line", class: "dropdown-filter-icon" %>
+      </button>
+      <div class="dropdown-pane" id="sample-template-dropdown" data-dropdown data-position="bottom" data-alignment="left" data-auto-focus="true" data-close-on-click="true">
+        <ul class="vertical menu add-components">
+          <%= link_to download_template_samples_path(id: @stratified_sortition.id, format: :csv) do %>
+            <li><%= t(".download_template_csv") %></li>
+          <% end %>
+          <%= link_to download_template_samples_path(id: @stratified_sortition.id, format: :xlsx) do %>
+            <li><%= t(".download_template_xlsx") %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="row mt-4 <%= 'upload-disabled-wrapper' if @stratified_sortition.executed? %>">
