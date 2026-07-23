@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+require "rubyXL"
+require "rubyXL/convenience_methods/cell"
+require "rubyXL/convenience_methods/font"
+require "rubyXL/convenience_methods/workbook"
+require "rubyXL/convenience_methods/worksheet"
+
 module Decidim
   module StratifiedSortitions
     module Admin
@@ -19,8 +25,15 @@ module Decidim
         helper_method :stratified_sortitions, :stratified_sortition, :form_presenter, :blank_stratum, :blank_substratum
 
         def download_template
-          csv = generate_template_sample
-          send_data csv, filename: "sample_importation_template.csv", type: "text/csv"
+          if params[:format] == "xlsx"
+            send_data generate_template_sample_xlsx,
+                      filename: "sample_importation_template.xlsx",
+                      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          else
+            send_data generate_template_sample_csv,
+                      filename: "sample_importation_template.csv",
+                      type: "text/csv"
+          end
         end
 
         def create
@@ -90,7 +103,7 @@ module Decidim
           @blank_substratum ||= Decidim::StratifiedSortitions::Admin::SubstratumForm.new
         end
 
-        def generate_template_sample
+        def template_sample_headers
           personal_headers = [
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_1"),
             I18n.t("decidim.stratified_sortitions.admin.samples.template.personal_data_2"),
@@ -102,10 +115,27 @@ module Decidim
             translated_attribute(stratum.name)
           end
 
-          headers = personal_headers + strata_headers
+          personal_headers + strata_headers
+        end
+
+        def generate_template_sample_csv
+          headers = template_sample_headers
           CSV.generate(col_sep: ",") do |csv|
             csv << headers
           end
+        end
+
+        def generate_template_sample_xlsx
+          headers = template_sample_headers
+          workbook = RubyXL::Workbook.new
+          worksheet = workbook[0]
+
+          headers.each_with_index do |header, col|
+            worksheet.add_cell(0, col, header)
+            worksheet.change_column_width(col, 20)
+          end
+
+          workbook.stream.string
         end
       end
     end

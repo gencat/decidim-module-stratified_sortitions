@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "rubyXL"
 
 describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
   subject { described_class.new }
@@ -43,6 +44,37 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
   end
 
   let(:filename) { "sample.csv" }
+  let(:xlsx_content) do
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+
+    headers = [
+      "Dada personal 1 (identificador únic)",
+      "Dada personal 2",
+      "Dada personal 3",
+      "Dada personal 4",
+      "Género_#{gender_stratum.id}",
+      "Edad_#{age_stratum.id}",
+    ]
+
+    headers.each_with_index do |header, col|
+      worksheet.add_cell(0, col, header)
+    end
+
+    rows = [
+      ["12345671Z", "a", "b", "c", "H", 18],
+      ["12345672Z", "d", "e", "f", "D", 33],
+      ["12345673Z", "g", "h", "i", "H", 60],
+    ]
+
+    rows.each_with_index do |row, row_index|
+      row.each_with_index do |value, col_index|
+        worksheet.add_cell(row_index + 1, col_index, value)
+      end
+    end
+
+    workbook.stream.string
+  end
 
   before do
     allow(Decidim::StratifiedSortitions::Admin::ImportMailer).to receive(:import).and_return(double(deliver_now: true))
@@ -106,6 +138,38 @@ describe Decidim::StratifiedSortitions::Admin::ImportSampleJob do
       it "sends import notification email" do
         expect(Decidim::StratifiedSortitions::Admin::ImportMailer).to receive(:import).with(user, kind_of(Decidim::StratifiedSortitions::SampleImport))
         subject.perform(csv_content, filename, stratified_sortition, user)
+      end
+    end
+
+    context "when importing from xlsx" do
+      let(:filename) { "sample.xlsx" }
+
+      it "creates sample import with completed status" do
+        subject.perform(xlsx_content, filename, stratified_sortition, user)
+
+        sample_import = Decidim::StratifiedSortitions::SampleImport.last
+        expect(sample_import.status).to eq("completed")
+        expect(sample_import.total_rows).to eq(3)
+        expect(sample_import.imported_rows).to eq(3)
+        expect(sample_import.failed_rows).to eq(0)
+      end
+
+      it "creates sample participants and strata associations" do
+        expect do
+          subject.perform(xlsx_content, filename, stratified_sortition, user)
+        end.to change(Decidim::StratifiedSortitions::SampleParticipant, :count).by(3)
+                                                                               .and change(Decidim::StratifiedSortitions::SampleParticipantStratum, :count).by(6)
+      end
+
+      it "matches numeric and value strata from xlsx values" do
+        subject.perform(xlsx_content, filename, stratified_sortition, user)
+
+        participant = Decidim::StratifiedSortitions::SampleParticipant.find_by(personal_data_1: "12345672Z")
+        gender_association = participant.sample_participant_strata.find_by(decidim_stratified_sortitions_stratum: gender_stratum)
+        age_association = participant.sample_participant_strata.find_by(decidim_stratified_sortitions_stratum: age_stratum)
+
+        expect(gender_association.decidim_stratified_sortitions_substratum).to eq(female_substratum)
+        expect(age_association.decidim_stratified_sortitions_substratum).to eq(age_26_40)
       end
     end
 

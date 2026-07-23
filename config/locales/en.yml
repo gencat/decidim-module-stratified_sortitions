@@ -173,7 +173,9 @@ en:
             configure_strata_first: You must configure strata and substrata first
             count_uploaded_files: "<b>%{count}</b> records uploaded."
             description: The sample file must be a CSV and have a format similar to the example below:<br>You can download and use the template.
-            download_template: "Download CSV template"
+            download_template: "Download template"
+            download_template_csv: "Download as a CSV template"
+            download_template_xlsx: "Download as a XLSX template"
             example: "Candidate data 1,Candidate data 2,Candidate data 3,Candidate data 4,Stratum 1,Stratum 2,Stratum 3,Stratum N<br>example@example.com,D,Higher,34<br>example@example.com,E,Higher,24<br><br>. . ."
             example_headers:
               personal_data_1: "Personal data 1 (unique identifier)"
