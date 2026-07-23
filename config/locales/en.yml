@@ -22,6 +22,11 @@ en:
         cannot_change_substratum_range_with_sample_participants: "Cannot change substratum range when there are already imported participants"
         cannot_change_num_candidates_when_executed: "Cannot change the number of candidates after the sortition has been executed"
   decidim:
+    admin:
+      components:
+        index:
+          headers:
+            scope: Scope
     components:
       stratified_sortitions:
         name: Stratified Sortitions
