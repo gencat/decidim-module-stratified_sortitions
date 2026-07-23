@@ -40,14 +40,14 @@
   <div class="table-scroll">
     <table class="table-list">
       <thead>
-        <th><%= t("name", scope: "decidim.admin.components.index.headers") %></th>
-        <th><%= t("type", scope: "decidim.admin.components.index.headers") %></th>
-        <%= th_resource_scope_label(t("scope", scope: "decidim.admin.components.index.headers")) %>
-        <th><%= t("actions", scope: "decidim.admin.components.index.headers") %></th>
+        <th><%= t(".headers.name") %></th>
+        <th><%= t(".headers.type") %></th>
+        <th><%= t(".headers.scope") %></th>
+        <th><%= t(".headers.actions") %></th>
       </thead>
 
       <tbody>
-        <%= render partial: "component", collection: local_assigns.fetch(:components, @components) %>
+        <%= render partial: "component", collection: @components %>
       </tbody>
     </table>
   </div>

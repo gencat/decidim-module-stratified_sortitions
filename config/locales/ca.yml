@@ -22,6 +22,11 @@ ca:
         cannot_change_substratum_range_with_sample_participants: "No es pot canviar el rang del subestrat quan ja hi ha participants importats"
         cannot_change_num_candidates_when_executed: "No es pot canviar el nombre de candidats després que el sorteig hagi estat executat"
   decidim:
+    admin:
+      components:
+        index:
+          headers:
+            scope: Àmbit
     components:
       stratified_sortitions:
         name: Sortejos estratificats
