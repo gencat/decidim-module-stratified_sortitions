@@ -69,7 +69,12 @@ module Decidim
       end
 
       def filter_sections_stratified_sortitions
-        sections = [{ method: :with_any_state, collection: filter_state_values, label_scope: "decidim.stratified_sortitions.stratified_sortitions.filters", id: "state" }]
+        sections = [{
+          method: :with_any_state,
+          collection: filter_state_values,
+          label: t("state", scope: "decidim.stratified_sortitions.stratified_sortitions.filters"),
+          id: "state"
+        }]
         sections.reject { |item| item[:collection].blank? }
       end
 
