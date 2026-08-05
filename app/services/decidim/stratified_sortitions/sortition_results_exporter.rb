@@ -140,7 +140,9 @@ module Decidim
         ]
         @strata.each do |stratum|
           ps = participant.sample_participant_strata.find { |s| s.decidim_stratified_sortitions_stratum_id == stratum.id }
-          substratum_name = ps&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first
+          substratum = ps&.decidim_stratified_sortitions_substratum
+          values = substratum&.name&.values
+          substratum_name = values&.compact&.first
           row << (substratum_name || "-")
         end
         row

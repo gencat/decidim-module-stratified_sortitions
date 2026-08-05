@@ -70,7 +70,8 @@ module Decidim
 
       def build_stratum_chart(stratum, by_stratum, by_stratum_and_substratum)
         substrata = stratum.substrata.order(:position)
-        total = by_stratum[stratum.id]&.map(&:decidim_stratified_sortitions_sample_participant_id)&.uniq&.count || 0
+        participant_ids = by_stratum[stratum.id]&.map(&:decidim_stratified_sortitions_sample_participant_id)
+        total = participant_ids ? participant_ids.uniq.count : 0
         chart_data = substrata.map do |substratum|
           build_substratum_chart_row(stratum, substratum, by_stratum_and_substratum, total)
         end

@@ -102,7 +102,10 @@ module Decidim
       end
 
       def substratum_name_for(participant_stratum)
-        participant_stratum&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first || "-"
+        substratum = participant_stratum&.decidim_stratified_sortitions_substratum
+        values = substratum&.name&.values
+
+        values ? values.compact.first || "-" : "-"
       end
 
       def add_fairness_metrics(data, participant)

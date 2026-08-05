@@ -73,7 +73,7 @@ module Decidim
           method: :with_any_state,
           collection: filter_state_values,
           label: t("state", scope: "decidim.stratified_sortitions.stratified_sortitions.filters"),
-          id: "state"
+          id: "state",
         }]
         sections.reject { |item| item[:collection].blank? }
       end
