@@ -84,6 +84,12 @@ jobs:
       - name: Install javascript dependencies
         run: npm install
 
+      - name: Enable pgcrypto extension for test databases
+        shell: bash
+        run: |
+          psql postgresql://postgres:postgres@localhost:5432/template1 -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
+          psql postgresql://postgres:postgres@localhost:5432/postgres -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
+
       - name: Generate test_app
         run: |
           bundle exec rake test_app
