@@ -15,6 +15,7 @@ gem "bootsnap", "~> 1.18.6", require: false
 gem "puma", ">= 4.3"
 
 gem "chartkick", "~> 5.1.5"
+gem "wicked_pdf", "~> 2.8.2"
 
 group :development, :test do
   gem "byebug", ">= 11.1.3"
