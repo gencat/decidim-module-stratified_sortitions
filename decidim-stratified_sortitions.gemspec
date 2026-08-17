@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["199462+tramuntanal@users.noreply.github.com"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/gencat/decidim-module-stratified_sortitions"
-  s.required_ruby_version = ">= 3.1.1"
+  s.required_ruby_version = ">= 3.3.0"
 
   s.name = "decidim-stratified_sortitions"
   s.summary = "A decidim stratified sortitions module"
