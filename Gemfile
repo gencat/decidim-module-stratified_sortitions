@@ -9,12 +9,12 @@ DECIDIM_VERSION = { git: "https://github.com/decidim/decidim", branch: "release/
 gem "decidim", DECIDIM_VERSION
 gem "decidim-stratified_sortitions", path: "."
 
-gem "bootsnap"
+gem "bootsnap", "~> 1.18.6", require: false
 
 # COIN-OR CBC solver for LEXIMIN algorithm (ILP/LP optimization)
 gem "puma", ">= 4.3"
 
-gem "chartkick"
+gem "chartkick", "~> 5.1.5"
 
 group :development, :test do
   gem "byebug", ">= 11.1.3"
