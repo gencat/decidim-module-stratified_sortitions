@@ -84,6 +84,11 @@ jobs:
       - name: Install javascript dependencies
         run: npm install
 
+      - name: Enable pgcrypto for test databases
+        run: psql -h "$DATABASE_HOST" -U "$DATABASE_USERNAME" -d template1 -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
+        env:
+          PGPASSWORD: ${{ env.DATABASE_PASSWORD }}
+
       - name: Generate test_app
         run: |
           bundle exec rake test_app
