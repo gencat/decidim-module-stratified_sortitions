@@ -31,15 +31,15 @@ module Decidim
 
       def template_assigns
         {
-          title: t("pdf_title", name: translated_name(@stratified_sortition.title)),
-          subtitle: t("pdf_subtitle"),
-          belongs_to: t("pdf_belongs_to", space_name: participatory_space_name),
-          algorithm: t("pdf_algorithm", algorithm: algorithm_info),
-          executed_at: t("pdf_executed_at", date: execution_date),
-          no_data_text: t("pdf_no_data"),
-          col_target: t("target"),
-          col_candidates: t("candidates"),
-          col_results: t("results"),
+          title: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.pdf_title", name: translated_name(@stratified_sortition.title)),
+          subtitle: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.pdf_subtitle"),
+          belongs_to: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.pdf_belongs_to", space_name: participatory_space_name),
+          algorithm: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.pdf_algorithm", algorithm: algorithm_info),
+          executed_at: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.pdf_executed_at", date: execution_date),
+          no_data_text: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.pdf_no_data"),
+          col_target: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.target"),
+          col_candidates: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.candidates"),
+          col_results: I18n.t("decidim.stratified_sortitions.admin.stratified_sortitions.execute.results"),
           strata_chart_data: build_strata_chart_data,
         }
       end
@@ -82,10 +82,6 @@ module Decidim
         I18n.l(portfolio.selected_at, format: :decidim_short)
       rescue StandardError
         portfolio.selected_at.to_s
-      end
-
-      def t(key, **opts)
-        I18n.t(key, scope: "decidim.stratified_sortitions.admin.stratified_sortitions.execute", **opts)
       end
 
       def controller
