@@ -8,15 +8,14 @@ module Decidim
       describe SortitionResultsExportJob do
         subject(:job) { described_class.new }
 
-        let(:organization) { create(:organization) }
-        let(:user) { create(:user, :admin, organization:) }
-        let(:participatory_process) { create(:participatory_process, organization:) }
-        let(:component) { create(:stratified_sortition_component, participatory_space: participatory_process) }
-        let(:stratified_sortition) { create(:stratified_sortition, component:) }
+        let(:organization) { instance_double(Decidim::Organization) }
+        let(:user) { instance_double(Decidim::User, organization:) }
+        let(:stratified_sortition) { instance_double(Decidim::StratifiedSortitions::StratifiedSortition, id: 123) }
 
         let(:csv_data) { instance_double(Decidim::Exporters::ExportData, extension: "csv") }
         let(:excel_data) { instance_double(Decidim::Exporters::ExportData, extension: "xlsx") }
         let(:json_data) { instance_double(Decidim::Exporters::ExportData, extension: "json") }
+        let(:private_export) { instance_double(Decidim::PrivateExport) }
         let(:exporter_double) do
           instance_double(SortitionResultsExporter,
                           export_csv: csv_data,
@@ -28,6 +27,7 @@ module Decidim
 
         before do
           allow(SortitionResultsExporter).to receive(:new).and_return(exporter_double)
+          allow(job).to receive(:attach_archive).and_return(private_export)
           allow(Decidim::ExportMailer).to receive(:export).and_return(mailer_double)
         end
 
@@ -49,12 +49,11 @@ module Decidim
               expect(exporter_double).to have_received(:export_csv)
             end
 
-            it "sends the csv data to ExportMailer" do
+            it "creates a private export from csv and sends it to ExportMailer" do
               job.perform(user, stratified_sortition, "csv")
 
-              expect(Decidim::ExportMailer).to have_received(:export) do |_u, _name, data|
-                expect(data.extension).to eq("csv")
-              end
+              expect(job).to have_received(:attach_archive).with(csv_data, "sortition_results_123", user, "sortition_results")
+              expect(Decidim::ExportMailer).to have_received(:export).with(user, private_export)
             end
 
             it "delivers the email" do
@@ -69,12 +68,11 @@ module Decidim
               expect(exporter_double).to have_received(:export_excel)
             end
 
-            it "sends the xlsx data to ExportMailer" do
+            it "creates a private export from xlsx and sends it to ExportMailer" do
               job.perform(user, stratified_sortition, "excel")
 
-              expect(Decidim::ExportMailer).to have_received(:export) do |_u, _name, data|
-                expect(data.extension).to eq("xlsx")
-              end
+              expect(job).to have_received(:attach_archive).with(excel_data, "sortition_results_123", user, "sortition_results")
+              expect(Decidim::ExportMailer).to have_received(:export).with(user, private_export)
             end
           end
 
@@ -84,12 +82,11 @@ module Decidim
               expect(exporter_double).to have_received(:export_json)
             end
 
-            it "sends the json data to ExportMailer" do
+            it "creates a private export from json and sends it to ExportMailer" do
               job.perform(user, stratified_sortition, "json")
 
-              expect(Decidim::ExportMailer).to have_received(:export) do |_u, _name, data|
-                expect(data.extension).to eq("json")
-              end
+              expect(job).to have_received(:attach_archive).with(json_data, "sortition_results_123", user, "sortition_results")
+              expect(Decidim::ExportMailer).to have_received(:export).with(user, private_export)
             end
           end
 
@@ -100,19 +97,15 @@ module Decidim
             end
           end
 
-          it "uses 'sortition_results_<id>' as the export name" do
+          it "uses 'sortition_results_<id>' as the private export name" do
             job.perform(user, stratified_sortition, "csv")
 
-            expect(Decidim::ExportMailer).to have_received(:export).with(
-              anything,
-              "sortition_results_#{stratified_sortition.id}",
-              anything
-            )
+            expect(job).to have_received(:attach_archive).with(anything, "sortition_results_123", anything, "sortition_results")
           end
 
           it "passes the requesting user to the mailer" do
             job.perform(user, stratified_sortition, "csv")
-            expect(Decidim::ExportMailer).to have_received(:export).with(user, anything, anything)
+            expect(Decidim::ExportMailer).to have_received(:export).with(user, private_export)
           end
         end
       end
