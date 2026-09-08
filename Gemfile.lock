@@ -177,7 +177,7 @@ GIT
 PATH
   remote: .
   specs:
-    decidim-stratified_sortitions (1.0.0)
+    decidim-stratified_sortitions (0.0.1)
       chartkick (~> 5.1.2)
       decidim-admin (~> 0.29)
       decidim-core (~> 0.29)
