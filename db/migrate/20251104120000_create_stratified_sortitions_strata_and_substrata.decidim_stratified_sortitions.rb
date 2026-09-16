@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateDecidimStratifiedSortitionsStrataAndSubstrata < ActiveRecord::Migration[7.0]
+class CreateStratifiedSortitionsStrataAndSubstrata < ActiveRecord::Migration[7.0]
   def change
     create_table :decidim_stratified_sortitions_strata do |t|
       t.jsonb :name, null: false, default: "{}"

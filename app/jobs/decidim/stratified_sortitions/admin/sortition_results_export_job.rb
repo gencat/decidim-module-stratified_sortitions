@@ -7,6 +7,7 @@ module Decidim
       # to the requesting user as a zipped email attachment.
       # Follows the same pattern as Decidim::ExportJob in decidim-core.
       class SortitionResultsExportJob < ApplicationJob
+        include Decidim::PrivateDownloadHelper
         queue_as :stratified_sortitions
 
         def perform(user, stratified_sortition, format)
@@ -19,8 +20,9 @@ module Decidim
                         end
 
           export_name = "sortition_results_#{stratified_sortition.id}"
+          private_export = attach_archive(export_data, export_name, user, "sortition_results")
 
-          Decidim::ExportMailer.export(user, export_name, export_data).deliver_now
+          Decidim::ExportMailer.export(user, private_export).deliver_now
         end
       end
     end

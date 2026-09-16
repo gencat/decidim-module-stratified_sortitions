@@ -140,10 +140,22 @@ module Decidim
         ]
         @strata.each do |stratum|
           ps = participant.sample_participant_strata.find { |s| s.decidim_stratified_sortitions_stratum_id == stratum.id }
-          substratum_name = ps&.decidim_stratified_sortitions_substratum&.name&.values&.compact&.first
+          substratum_name = substratum_name_for(ps)
           row << (substratum_name || "-")
         end
         row
+      end
+
+      def substratum_name_for(participant_stratum)
+        return unless participant_stratum
+
+        substratum = participant_stratum.decidim_stratified_sortitions_substratum
+        return unless substratum
+
+        name = substratum.name
+        return unless name
+
+        name.values.compact.first
       end
 
       def style_header_row(worksheet, row_index, _col_count)
