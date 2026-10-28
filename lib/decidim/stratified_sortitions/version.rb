@@ -3,11 +3,11 @@
 module Decidim
   module StratifiedSortitions
     def self.version
-      "0.0.2"
+      "0.1.0"
     end
 
     def self.decidim_version
-      "~> 0.30"
+      "~> 0.31"
     end
   end
 end

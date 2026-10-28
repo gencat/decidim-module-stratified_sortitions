@@ -21,9 +21,12 @@ module Decidim
       end
 
       initializer "decidim_stratified_sortitions.register_icons" do
-        Decidim.icons.register(name: "seedling-line", icon: "seedling-line", category: "system", description: "", engine: :stratified_sortitions)
-        Decidim.icons.register(name: "bar-chart-box-line", icon: "bar-chart-box-line", category: "system", description: "", engine: :stratified_sortitions)
-        Decidim.icons.register(name: "group-line", icon: "group-line", category: "system", description: "", engine: :stratified_sortitions)
+        # Core, admin or sortitions may already register these icons
+        %w(seedling-line bar-chart-box-line group-line).each do |name|
+          next if Decidim.icons.all.has_key?(name)
+
+          Decidim.icons.register(name:, icon: name, category: "system", description: "", engine: :stratified_sortitions)
+        end
       end
 
       initializer "StratifiedSortitions.webpacker.assets_path" do

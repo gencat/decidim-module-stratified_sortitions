@@ -100,7 +100,7 @@ module Decidim
             cat_sum = sum_vars(cat_vars)
 
             # min <= sum <= max
-            model.enforce(cat_sum >= quota[:min]) if (quota[:min]).positive?
+            model.enforce(cat_sum >= quota[:min]) if quota[:min].positive?
             model.enforce(cat_sum <= quota[:max]) if quota[:max] < @cb.panel_size
           end
 

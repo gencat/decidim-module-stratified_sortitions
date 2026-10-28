@@ -1,6 +1,9 @@
 # Changelog
 Following Semantic Versioning 2.
 
+## Version 0.1.0
+- Make module compatible with Decidim v0.31.
+
 ## Version 0.0.2
 - Make module compatible with Decidim v0.30.
 - Add i18n-tasks gem and specs.
