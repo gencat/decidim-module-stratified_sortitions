@@ -17,6 +17,8 @@ module Decidim
       helper_method :stratified_sortitions, :stratified_sortition
 
       def index
+        return redirect_to stratified_sortition_path(single_stratified_sortition) if single_stratified_sortition
+
         @stratified_sortitions = search.result
         @stratified_sortitions = reorder(@stratified_sortitions)
         @stratified_sortitions = paginate(@stratified_sortitions)
@@ -33,6 +35,15 @@ module Decidim
       end
 
       private
+
+      # Returns the only stratified sortition of the component, if there is exactly one,
+      # so the index can be skipped when browsing from the participatory space.
+      def single_stratified_sortition
+        return unless request.format.html?
+        return unless search_collection.one?
+
+        @single_stratified_sortition ||= search_collection.first
+      end
 
       def stratified_sortition
         @stratified_sortition ||= search_collection.find_by(id: params[:id])
