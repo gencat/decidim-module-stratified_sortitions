@@ -2,6 +2,8 @@
 ca:
   activemodel:
     attributes:
+      sample_upload:
+        file: Fitxer
       stratified_sortition:
         created_at: Data de creació
         description: Descripció

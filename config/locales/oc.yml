@@ -2,6 +2,8 @@
 oc:
   activemodel:
     attributes:
+      sample_upload:
+        file: Fichièr
       stratified_sortition:
         created_at: Data de creacion
         description: Descripcion

@@ -2,6 +2,8 @@
 es:
   activemodel:
     attributes:
+      sample_upload:
+        file: Archivo
       stratified_sortition:
         created_at: Fecha de creación
         description: Descripción
