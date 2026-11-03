@@ -20,6 +20,7 @@ gem "wicked_pdf", "~> 2.8.2"
 group :development, :test do
   gem "byebug", ">= 11.1.3"
   gem "decidim-dev", DECIDIM_VERSION
+  gem "decidim-initiatives", DECIDIM_VERSION
   gem "rubocop"
   gem "rubocop-rails"
 end
