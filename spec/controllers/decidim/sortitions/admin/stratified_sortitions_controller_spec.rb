@@ -15,6 +15,9 @@ module Decidim
         before do
           request.env["decidim.current_organization"] = component.organization
           request.env["decidim.current_component"] = component
+          # Without it, Rails builds admin URLs for whichever space mounted
+          # components last, not for the process this component belongs to
+          routes.default_url_options[:script_name] = "/admin/participatory_processes/#{component.participatory_space.slug}/components/#{component.id}/manage"
           sign_in user, scope: :user
         end
 

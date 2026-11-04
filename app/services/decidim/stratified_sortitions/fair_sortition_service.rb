@@ -162,7 +162,7 @@ module Decidim
       # @param expected_ids [Array<Integer>] expected selected participant IDs
       # @param verification_seed [String] the seed used in the original draw
       # @return [Boolean] true if verification passes
-      def verify(expected_ids, verification_seed:)
+      def verify(expected_ids, verification_seed:) # rubocop:disable Naming/PredicateMethod
         portfolio = existing_portfolio
         return false unless portfolio&.sampled?
 

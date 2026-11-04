@@ -34,21 +34,19 @@
         </tr>
       <% end %>
     </table>
-    <div class="mt-12">
-      <button type="button" class="button button__sm button__secondary" data-toggle="sample-template-dropdown">
-          <%= t(".download_template") %>
-          <%= icon "arrow-down-s-line", class: "dropdown-filter-icon" %>
+    <div class="mt-12 relative inline-block">
+      <button type="button" class="button button__sm button__secondary" data-controller="dropdown" data-target="sample-template-dropdown">
+        <%= t(".download_template") %>
+        <%= icon "arrow-down-s-line", class: "!fill-white" %>
       </button>
-      <div class="dropdown-pane" id="sample-template-dropdown" data-dropdown data-position="bottom" data-alignment="left" data-auto-focus="true" data-close-on-click="true">
-        <ul class="vertical menu add-components">
-          <%= link_to download_template_samples_path(id: @stratified_sortition.id, format: :csv) do %>
-            <li><%= t(".download_template_csv") %></li>
-          <% end %>
-          <%= link_to download_template_samples_path(id: @stratified_sortition.id, format: :xlsx) do %>
-            <li><%= t(".download_template_xlsx") %></li>
-          <% end %>
-        </ul>
-      </div>
+      <ul id="sample-template-dropdown" class="dropdown dropdown__bottom" aria-hidden="true">
+        <li class="dropdown__item">
+          <%= link_to t(".download_template_csv"), download_template_samples_path(id: @stratified_sortition.id, format: :csv), class: "dropdown__button" %>
+        </li>
+        <li class="dropdown__item">
+          <%= link_to t(".download_template_xlsx"), download_template_samples_path(id: @stratified_sortition.id, format: :xlsx), class: "dropdown__button" %>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="row mt-4 <%= 'upload-disabled-wrapper' if @stratified_sortition.executed? %>">

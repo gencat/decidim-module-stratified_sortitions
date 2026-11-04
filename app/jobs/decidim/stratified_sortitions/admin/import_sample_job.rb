@@ -160,7 +160,7 @@ module Decidim
               min_value = range_parts[0].to_f
               max_value = range_parts[1].to_f
 
-              numeric_value >= min_value && numeric_value <= max_value
+              numeric_value.between?(min_value, max_value)
             end
           end
         end
