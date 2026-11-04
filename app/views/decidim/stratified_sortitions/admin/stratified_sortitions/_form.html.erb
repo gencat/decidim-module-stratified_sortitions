@@ -10,7 +10,7 @@
     </div>
     <div id="panel-data" class="card-section">
       <div class="row columns">
-        <%= form.translated :text_field, :title, autofocus: true, aria: { label: :title } %>
+        <%= form.translated :text_field, :title, autofocus: true, aria: { label: :title }, data: { controller: "character-counter" } %>
       </div>
 
       <div class="row column mt-4">

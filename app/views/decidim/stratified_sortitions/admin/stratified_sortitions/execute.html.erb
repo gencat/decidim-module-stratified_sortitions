@@ -25,24 +25,24 @@
       <%= t('.execute_stratified_sortition') %>
     </button>
     <% if stratified_sortition.panel_portfolio&.sampled? %>
-      <span class="exports button button__sm button__secondary" data-toggle="export-dropdown">
-        <%= t(".export") %>
-        <%= icon "arrow-down-s-line", class: "dropdown-filter-icon" %>
-      </span>
-      <div class="dropdown-pane" id="export-dropdown" data-dropdown data-position="bottom" data-alignment="right" data-auto-focus="true" data-close-on-click="true">
-        <ul class="vertical menu add-components">
-          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "csv"), method: :post do %>
-            <li class="exports--format--csv"><%= t(".export_csv") %></li>
-          <% end %>
-          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "excel"), method: :post do %>
-            <li class="exports--format--excel"><%= t(".export_excel") %></li>
-          <% end %>
-          <%= link_to export_results_stratified_sortition_path(stratified_sortition, format: "json"), method: :post do %>
-            <li class="exports--format--json"><%= t(".export_json") %></li>
-          <% end %>
-          <%= link_to export_charts_pdf_stratified_sortition_path(stratified_sortition), method: :post do %>
-            <li class="exports--format--pdf"><%= t(".export_charts_pdf") %></li>
-          <% end %>
+      <div class="relative">
+        <button type="button" class="exports button button__sm button__secondary" data-controller="dropdown" data-target="export-dropdown">
+          <%= t(".export") %>
+          <%= icon "arrow-down-s-line", class: "!fill-white" %>
+        </button>
+        <ul id="export-dropdown" class="dropdown dropdown__bottom" aria-hidden="true">
+          <li class="dropdown__item exports--format--csv">
+            <%= link_to t(".export_csv"), export_results_stratified_sortition_path(stratified_sortition, format: "csv"), method: :post, class: "dropdown__button" %>
+          </li>
+          <li class="dropdown__item exports--format--excel">
+            <%= link_to t(".export_excel"), export_results_stratified_sortition_path(stratified_sortition, format: "excel"), method: :post, class: "dropdown__button" %>
+          </li>
+          <li class="dropdown__item exports--format--json">
+            <%= link_to t(".export_json"), export_results_stratified_sortition_path(stratified_sortition, format: "json"), method: :post, class: "dropdown__button" %>
+          </li>
+          <li class="dropdown__item exports--format--pdf">
+            <%= link_to t(".export_charts_pdf"), export_charts_pdf_stratified_sortition_path(stratified_sortition), method: :post, class: "dropdown__button" %>
+          </li>
         </ul>
       </div>
     <% end %>
