@@ -50,12 +50,19 @@
 .substratum-fields {
   display: flex;
   gap: 1rem;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  
+  margin-bottom: 1rem;
+
   .translated-field {
     width: 100%;
   }
+}
+
+.stratified-sortition-substrata-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 
