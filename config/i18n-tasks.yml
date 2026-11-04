@@ -153,6 +153,7 @@ ignore_unused:
   - 'activemodel.attributes.sample_upload.*'
   - 'activemodel.attributes.stratified_sortition.*'
   - 'activemodel.errors.messages.cannot_{add,change,delete}_*'
+  - 'decidim.components.stratified_sortitions.name'
   - 'decidim.components.stratified_sortitions.settings.global.publish_sortitions'
   - 'decidim.components.stratified_sortitions.settings.step.announcement'
   - 'decidim.stratified_sortitions.admin_log.stratified_sortition.*'
