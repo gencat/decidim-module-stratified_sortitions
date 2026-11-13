@@ -2,6 +2,8 @@
 en:
   activemodel:
     attributes:
+      sample_upload:
+        file: File
       stratified_sortition:
         created_at: Created At
         description: Description

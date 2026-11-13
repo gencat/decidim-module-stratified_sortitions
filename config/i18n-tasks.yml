@@ -150,6 +150,7 @@ ignore_missing:
 
 ## Consider these keys used:
 ignore_unused:
+  - 'activemodel.attributes.sample_upload.*'
   - 'activemodel.attributes.stratified_sortition.*'
   - 'activemodel.errors.messages.cannot_{add,change,delete}_*'
   - 'decidim.components.stratified_sortitions.name'
