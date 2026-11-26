@@ -1,6 +1,10 @@
 # Changelog
 Following Semantic Versioning 2.
 
+## Version 0.1.1
+- Change workflow when there is only one stratified sortition: the index redirects to its show page.
+- The list of stratified sortitions appears when there is more than one.
+
 ## Version 0.1.0
 - Make module compatible with Decidim v0.31.
 
